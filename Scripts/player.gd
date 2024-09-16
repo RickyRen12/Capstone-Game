@@ -11,6 +11,7 @@ func _physics_process(delta):
 	direction.x = Input.get_axis("ui_left", "ui_right")
 	direction.y = Input.get_axis("ui_up", "ui_down")
 	
+	
 #store latest direction
 	if direction != last_direction:
 		last_direction = direction
@@ -21,7 +22,7 @@ func _physics_process(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed * delta)
 	if direction.y != 0:
-		velocity.y = direction.x * speed
+		velocity.y = direction.y * speed
 	else:
 		velocity.y = move_toward(velocity.y, 0, speed * delta)
 		
