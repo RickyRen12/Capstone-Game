@@ -4,7 +4,7 @@
 extends CharacterBody2D
 
 var last_direction = Vector2.ZERO
-const speed = 200
+const speed = 200	
 
 func _physics_process(delta):
 	var direction = Vector2.ZERO
