@@ -1,19 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://c00sxktkl1qp5"]
 
 [ext_resource type="PackedScene" uid="uid://crt118532wteg" path="res://player.tscn" id="1_rphlv"]
-<<<<<<< HEAD
 [ext_resource type="PackedScene" uid="uid://cqy7vytfevbuk" path="res://tile_map.tscn" id="2_yiec3"]
-=======
-[ext_resource type="PackedScene" uid="uid://cuc4cuo7sxpb2" path="res://world.tscn" id="2_2yi4k"]
->>>>>>> f5c2b8692b16f6d41fb8766221c94f7f365ea4fb
 
 [node name="Main" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_rphlv")]
 
-<<<<<<< HEAD
 [node name="TileMap" parent="." instance=ExtResource("2_yiec3")]
 z_index = -1
-=======
-[node name="World" parent="." instance=ExtResource("2_2yi4k")]
->>>>>>> f5c2b8692b16f6d41fb8766221c94f7f365ea4fb
