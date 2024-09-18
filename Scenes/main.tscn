@@ -1,6 +1,5 @@
 [gd_scene load_steps=4 format=3 uid="uid://c00sxktkl1qp5"]
 
-<<<<<<< Updated upstream
 [ext_resource type="PackedScene" uid="uid://crt118532wteg" path="res://player.tscn" id="1_rphlv"]
 [ext_resource type="PackedScene" uid="uid://bbsusbmuav3vp" path="res://Tile.tscn" id="2_uvu4f"]
 [ext_resource type="PackedScene" uid="uid://53uwa7gg3etl" path="res://Scenes/world.tscn" id="3_1g42h"]
@@ -8,15 +7,6 @@
 [node name="Main" type="Node2D"]
 
 [node name="World" parent="." instance=ExtResource("3_1g42h")]
-=======
-[ext_resource type="PackedScene" uid="uid://53uwa7gg3etl" path="res://Scenes/world.tscn" id="1_1miy1"]
-[ext_resource type="PackedScene" uid="uid://crt118532wteg" path="res://Scenes/player.tscn" id="1_rphlv"]
-[ext_resource type="PackedScene" uid="uid://cqy7vytfevbuk" path="res://Scenes/tile_map.tscn" id="2_yiec3"]
-
-[node name="Main" type="Node2D"]
-
-[node name="World" parent="." instance=ExtResource("1_1miy1")]
->>>>>>> Stashed changes
 
 [node name="Player" parent="." instance=ExtResource("1_rphlv")]
 
