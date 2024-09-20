@@ -12,3 +12,4 @@
 position = Vector2(414, 163)
 
 [node name="Node2D" parent="." instance=ExtResource("2_uvu4f")]
+position = Vector2(14, 24)
