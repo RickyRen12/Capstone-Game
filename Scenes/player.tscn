@@ -13,8 +13,8 @@ script = ExtResource("1_71kdi")
 shape = SubResource("CircleShape2D_gn0j5")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-enabled = false
-zoom = Vector2(3, 3)
+zoom = Vector2(1.5, 1.5)
+position_smoothing_enabled = true
 
 [node name="Skeleton" type="Node2D" parent="."]
 
