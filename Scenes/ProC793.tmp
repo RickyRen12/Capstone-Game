@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://ddcud8urvnqxa"]
+
+[ext_resource type="Script" path="res://Scenes/projectile.gd" id="1_8lovs"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3r0mm"]
+load_path = "res://.godot/imported/file.png-82476441ceffee80fa598573b37aeff7.ctex"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_onvic"]
+size = Vector2(205.785, 28.2086)
+
+[node name="Projectile" type="Node2D"]
+script = ExtResource("1_8lovs")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="THROWYKNIFE" type="Sprite2D" parent="Area2D"]
+position = Vector2(499, 98)
+rotation = -3.14159
+scale = Vector2(0.427632, -0.283601)
+texture = SubResource("CompressedTexture2D_3r0mm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(501, 94)
+rotation = -3.14159
+scale = Vector2(0.427632, -0.283601)
+shape = SubResource("RectangleShape2D_onvic")
