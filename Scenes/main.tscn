@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://c00sxktkl1qp5"]
+[gd_scene load_steps=6 format=3 uid="uid://c00sxktkl1qp5"]
 
 [ext_resource type="PackedScene" uid="uid://crt118532wteg" path="res://Scenes/player.tscn" id="1_rphlv"]
 [ext_resource type="PackedScene" uid="uid://bbsusbmuav3vp" path="res://Scenes/Tile.tscn" id="2_uvu4f"]
 [ext_resource type="PackedScene" uid="uid://53uwa7gg3etl" path="res://Scenes/world.tscn" id="3_1g42h"]
-[ext_resource type="PackedScene" path="res://Scenes/proj.tscn" id="4_1g7pd"]
+[ext_resource type="PackedScene" uid="uid://4yfm55aobbv1" path="res://Scenes/proj.tscn" id="4_1g7pd"]
+[ext_resource type="PackedScene" uid="uid://b3nrt8sxrcm5" path="res://enemy.tscn" id="5_nookk"]
 
 [node name="Main" type="Node2D"]
 
@@ -13,5 +14,8 @@
 position = Vector2(609, 348)
 
 [node name="Node2D" parent="." instance=ExtResource("2_uvu4f")]
+
+[node name="ENEMY" parent="." instance=ExtResource("5_nookk")]
+position = Vector2(287, 351)
 
 [node name="knife" parent="." instance=ExtResource("4_1g7pd")]
