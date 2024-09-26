@@ -23,7 +23,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3htte"]
-size = Vector2(280.653, 158.694)
+size = Vector2(1331.82, 1143.92)
 
 [node name="ENEMY" type="CharacterBody2D"]
 position = Vector2(0, -8)
@@ -46,7 +46,7 @@ collision_layer = 2
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detection_area"]
-position = Vector2(0.734604, -5.34058e-05)
+position = Vector2(-9.15527e-05, -2.93881)
 shape = SubResource("RectangleShape2D_3htte")
 
 [connection signal="body_entered" from="Detection_area" to="." method="_on_detection_area_body_entered"]

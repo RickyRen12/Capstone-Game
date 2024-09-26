@@ -11,9 +11,11 @@
 [node name="World" parent="." instance=ExtResource("3_1g42h")]
 
 [node name="Player" parent="." instance=ExtResource("1_rphlv")]
-position = Vector2(609, 348)
+position = Vector2(744, 340)
 
 [node name="Node2D" parent="." instance=ExtResource("2_uvu4f")]
+z_index = -2
+position = Vector2(1, 0)
 
 [node name="ENEMY" parent="." instance=ExtResource("5_nookk")]
 position = Vector2(287, 351)

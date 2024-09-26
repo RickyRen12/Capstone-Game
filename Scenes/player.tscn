@@ -37,7 +37,7 @@ func _physics_process(delta):
 [sub_resource type="CircleShape2D" id="CircleShape2D_gn0j5"]
 
 [node name="Player" type="CharacterBody2D"]
-position = Vector2(0, 1)
+position = Vector2(-147, -89)
 collision_layer = 3
 collision_mask = 3
 script = SubResource("GDScript_l0uhj")
@@ -62,6 +62,7 @@ position_smoothing_enabled = true
 [node name="Name" type="Label" parent="Skeleton"]
 offset_right = 40.0
 offset_bottom = 23.0
+metadata/_edit_use_anchors_ = true
 
 [node name="King-penguins-7795519640" type="Sprite2D" parent="Skeleton"]
 position = Vector2(1.90735e-06, -1.90735e-06)
