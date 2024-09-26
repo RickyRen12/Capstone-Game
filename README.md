@@ -1,2 +1,1 @@
-# THE GREATEST GAME EVER
-# I LOVE GAMBLING
+# da game
