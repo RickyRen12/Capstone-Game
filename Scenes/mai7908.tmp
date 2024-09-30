@@ -1,24 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://c00sxktkl1qp5"]
+[gd_scene load_steps=5 format=3 uid="uid://c00sxktkl1qp5"]
 
 [ext_resource type="PackedScene" uid="uid://crt118532wteg" path="res://Scenes/player.tscn" id="1_rphlv"]
 [ext_resource type="PackedScene" uid="uid://bbsusbmuav3vp" path="res://Scenes/Tile.tscn" id="2_uvu4f"]
 [ext_resource type="PackedScene" uid="uid://53uwa7gg3etl" path="res://Scenes/world.tscn" id="3_1g42h"]
-[ext_resource type="PackedScene" uid="uid://df8lcktqmdfy5" path="res://Scenes/proj.tscn" id="4_1g7pd"]
-[ext_resource type="PackedScene" uid="uid://b3nrt8sxrcm5" path="res://Scenes/enemy.tscn" id="5_nookk"]
+[ext_resource type="PackedScene" uid="uid://4yfm55aobbv1" path="res://Scenes/proj.tscn" id="4_1g7pd"]
 
 [node name="Main" type="Node2D"]
 
 [node name="World" parent="." instance=ExtResource("3_1g42h")]
-position = Vector2(-217, 15)
 
 [node name="Player" parent="." instance=ExtResource("1_rphlv")]
 position = Vector2(744, 340)
 
 [node name="Node2D" parent="." instance=ExtResource("2_uvu4f")]
 z_index = -2
-position = Vector2(-1, 1)
+position = Vector2(1, 0)
 
 [node name="knife" parent="." instance=ExtResource("4_1g7pd")]
-
-[node name="ENEMY" parent="." instance=ExtResource("5_nookk")]
-position = Vector2(67, 323)

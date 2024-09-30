@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_3v0p5"]
 [ext_resource type="Texture2D" uid="uid://c4np4886gduow" path="res://Assets/Enemies/penguin.png" id="2_ga76i"]
+[ext_resource type="Script" path="res://ray_cast_2d.gd" id="3_13xq1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qc62e"]
 size = Vector2(280.653, 154.286)
@@ -22,9 +23,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3htte"]
-size = Vector2(1331.82, 1143.92)
-
 [node name="ENEMY" type="CharacterBody2D"]
 position = Vector2(0, -8)
 script = ExtResource("1_3v0p5")
@@ -39,15 +37,8 @@ scale = Vector2(0.0413773, 0.0413773)
 sprite_frames = SubResource("SpriteFrames_gek5r")
 animation = &"new_animation"
 
-[node name="Detection_area" type="Area2D" parent="."]
-position = Vector2(3.05176e-05, 1.52588e-05)
-scale = Vector2(0.340278, 0.340278)
-collision_layer = 2
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Detection_area"]
-position = Vector2(-9.15527e-05, -2.93881)
-shape = SubResource("RectangleShape2D_3htte")
-
-[connection signal="body_entered" from="Detection_area" to="." method="_on_detection_area_body_entered"]
-[connection signal="body_exited" from="Detection_area" to="." method="_on_detection_area_body_exited"]
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(7.27596e-12, 0)
+scale = Vector2(0.999999, 0.999999)
+target_position = Vector2(222, 0)
+script = ExtResource("3_13xq1")
