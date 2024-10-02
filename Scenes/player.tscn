@@ -32,6 +32,11 @@ func _physics_process(delta):
 		velocity.y = move_toward(velocity.y, 0, speed * delta)
 		
 	move_and_slide()
+
+
+
+
+#Shooting mechanic
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4n4jn"]

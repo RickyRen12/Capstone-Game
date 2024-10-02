@@ -1,6 +1,8 @@
 ### Player.gd
 
 ###HELP MEEEEEEEEEEEEEE
+class_name Player
+
 extends CharacterBody2D
 
 var last_direction = Vector2.ZERO

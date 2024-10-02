@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://b3nrt8sxrcm5"]
+[gd_scene load_steps=6 format=3 uid="uid://cw318a1br2pnd"]
 
-[ext_resource type="Script" path="res://trash/enemy.gd" id="1_mgdcy"]
-[ext_resource type="Texture2D" uid="uid://c4np4886gduow" path="res://Assets/Enemies/penguin.png" id="2_ga76i"]
-[ext_resource type="Script" path="res://Scripts/ray_cast_2d.gd" id="3_t5yda"]
+[ext_resource type="Script" path="res://Scripts/REALenemy.gd" id="1_wg5k5"]
+[ext_resource type="Texture2D" uid="uid://c4np4886gduow" path="res://Assets/Enemies/penguin.png" id="2_4vmgq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qc62e"]
 size = Vector2(280.653, 154.286)
@@ -16,16 +15,19 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_ga76i")
+"texture": ExtResource("2_4vmgq")
 }],
 "loop": true,
 "name": &"new_animation",
 "speed": 5.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_4yyhi"]
+radius = 227.783
+
 [node name="ENEMY" type="CharacterBody2D"]
 position = Vector2(0, -8)
-script = ExtResource("1_mgdcy")
+script = ExtResource("1_wg5k5")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 position = Vector2(0.25, 0.250002)
@@ -33,12 +35,16 @@ scale = Vector2(0.340278, 0.340278)
 shape = SubResource("RectangleShape2D_qc62e")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+light_mask = 2
+visibility_layer = 2
 scale = Vector2(0.0413773, 0.0413773)
 sprite_frames = SubResource("SpriteFrames_gek5r")
 animation = &"new_animation"
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
-position = Vector2(7.27596e-12, 0)
-scale = Vector2(0.999999, 0.999999)
-target_position = Vector2(687.001, -1)
-script = ExtResource("3_t5yda")
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_4yyhi")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
