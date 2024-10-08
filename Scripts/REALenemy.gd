@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-var speed = 25
+var speed =90
 var player_chase = false
 var player = null
 
