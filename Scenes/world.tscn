@@ -1,4 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://53uwa7gg3etl"]
+[gd_scene load_steps=7 format=3 uid="uid://53uwa7gg3etl"]
+
+[ext_resource type="Texture2D" uid="uid://chkqd2unuih44" path="res://Assets/Level/ice.png" id="1_56cu8"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_yeph0"]
 a = Vector2(1131.5, -124.5)
@@ -12,8 +14,12 @@ b = Vector2(30.5, 694.5)
 a = Vector2(1121.5, 47)
 b = Vector2(-30.5, 47)
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_bvmgf"]
-b = Vector2(0, 648)
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_06uqp"]
+a = Vector2(-2, 2)
+b = Vector2(-3, -645)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sns21"]
+size = Vector2(259, 262)
 
 [node name="World" type="Node2D"]
 
@@ -32,4 +38,14 @@ position = Vector2(30.5, -47)
 shape = SubResource("SegmentShape2D_o4tjl")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
-shape = SubResource("SegmentShape2D_bvmgf")
+position = Vector2(3, 646)
+shape = SubResource("SegmentShape2D_06uqp")
+
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(538.5, 330)
+shape = SubResource("RectangleShape2D_sns21")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D/CollisionShape2D5"]
+position = Vector2(1.33514e-05, 0.500012)
+scale = Vector2(0.845588, 0.845588)
+texture = ExtResource("1_56cu8")

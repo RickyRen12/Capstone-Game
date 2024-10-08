@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://df8lcktqmdfy5"]
+
+[ext_resource type="Texture2D" uid="uid://dm5jcughg8s1a" path="res://Assets/Player/file.png" id="2_fh3uy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ev8wv"]
+size = Vector2(53, 8)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+
+[node name="knife" type="Sprite2D" parent="."]
+position = Vector2(421.064, 223.379)
+scale = Vector2(-0.253198, 0.211575)
+texture = ExtResource("2_fh3uy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(420, 221)
+shape = SubResource("RectangleShape2D_ev8wv")
