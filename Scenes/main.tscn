@@ -12,13 +12,13 @@
 position = Vector2(1, 1)
 
 [node name="Player" parent="." instance=ExtResource("1_rphlv")]
-position = Vector2(744, 340)
+position = Vector2(171, 108)
 
 [node name="Node2D" parent="." instance=ExtResource("2_uvu4f")]
 z_index = -2
-position = Vector2(-1, 2)
+position = Vector2(-585, -862)
 
 [node name="knife" parent="." instance=ExtResource("4_1g7pd")]
 
 [node name="ENEMY" parent="." instance=ExtResource("5_k1t14")]
-position = Vector2(1022, 93)
+position = Vector2(971, 211)
