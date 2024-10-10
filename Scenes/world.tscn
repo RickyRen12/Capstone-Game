@@ -2,50 +2,82 @@
 
 [ext_resource type="Texture2D" uid="uid://chkqd2unuih44" path="res://Assets/Level/ice.png" id="1_56cu8"]
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_yeph0"]
-a = Vector2(1131.5, -124.5)
-b = Vector2(1131.5, 523.5)
-
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_fb2sw"]
-a = Vector2(1182.5, 694.5)
-b = Vector2(30.5, 694.5)
-
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_o4tjl"]
-a = Vector2(1121.5, 47)
-b = Vector2(-30.5, 47)
-
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_06uqp"]
-a = Vector2(-2, 2)
-b = Vector2(-3, -645)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sns21"]
 size = Vector2(259, 262)
 
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_xfjiv"]
+b = Vector2(866, 0)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_flg8d"]
+a = Vector2(0, 433)
+b = Vector2(145, 433)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_8xfgb"]
+a = Vector2(144, 473)
+b = Vector2(144, 433)
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_b1024"]
+a = Vector2(721, 906)
+b = Vector2(-288, 906)
+
 [node name="World" type="Node2D"]
+position = Vector2(1, 0)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(20.5, 124.5)
-shape = SubResource("SegmentShape2D_yeph0")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(-30.5, -46.5)
-shape = SubResource("SegmentShape2D_fb2sw")
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(30.5, -47)
-shape = SubResource("SegmentShape2D_o4tjl")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(3, 646)
-shape = SubResource("SegmentShape2D_06uqp")
-
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(538.5, 330)
+position = Vector2(219, -495)
 shape = SubResource("RectangleShape2D_sns21")
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D/CollisionShape2D5"]
-position = Vector2(1.33514e-05, 0.500012)
+position = Vector2(1, 6)
 scale = Vector2(0.845588, 0.845588)
 texture = ExtResource("1_56cu8")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+scale = Vector2(0.5, 0.5)
+shape = SubResource("SegmentShape2D_xfjiv")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-288, 473)
+rotation = 1.5708
+scale = Vector2(0.5, 0.5)
+shape = SubResource("SegmentShape2D_xfjiv")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(433, 0)
+rotation = 1.5708
+scale = Vector2(0.5, 0.5)
+shape = SubResource("SegmentShape2D_xfjiv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SegmentShape2D_flg8d")
+
+[node name="CollisionShape2D6" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(288, 0)
+shape = SubResource("SegmentShape2D_flg8d")
+
+[node name="CollisionShape2D7" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SegmentShape2D_8xfgb")
+
+[node name="CollisionShape2D8" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(144, 0)
+shape = SubResource("SegmentShape2D_8xfgb")
+
+[node name="CollisionShape2D9" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(-288, 473)
+scale = Vector2(0.5, 0.5)
+shape = SubResource("SegmentShape2D_xfjiv")
+
+[node name="CollisionShape2D10" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(288, 473)
+scale = Vector2(0.5, 0.5)
+shape = SubResource("SegmentShape2D_xfjiv")
+
+[node name="CollisionShape2D11" type="CollisionShape2D" parent="StaticBody2D"]
+rotation = 1.5708
+scale = Vector2(0.5, 0.5)
+shape = SubResource("SegmentShape2D_xfjiv")
+
+[node name="CollisionShape2D12" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("SegmentShape2D_b1024")

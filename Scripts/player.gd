@@ -15,7 +15,7 @@ func _physics_process(delta):
 	
 	
 #store latest direction
-	if direction != last_direction:
+	if"disable_mode" direction != last_direction:
 		last_direction = direction
 		
 	#update direction and velocity
