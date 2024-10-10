@@ -10,7 +10,7 @@ extends CharacterBody2D
 
 var last_direction = Vector2.ZERO
 const speed = 200	
-var weapon_equipped = true
+var weapon_equipped = false
 var weapon_cooldown = true
 var proj = preload(\"res://Scenes/knife.tscn\") 
 
@@ -36,6 +36,13 @@ func _physics_process(delta):
 		
 	move_and_slide()
 	#Shooting mechanic
+	
+	if Input.is_action_just_pressed(\"e\"):
+		if weapon_equipped:
+			weapon_equipped = false
+		else:
+			weapon_equipped = true
+	
 	var mouse_pos = get_global_mouse_position()
 	$Marker2D.look_at(mouse_pos)
 	
@@ -55,8 +62,8 @@ size = Vector2(41, 54)
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(-147, -89)
-collision_layer = 3
-collision_mask = 3
+collision_layer = 7
+collision_mask = 7
 script = SubResource("GDScript_l0uhj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -64,7 +71,7 @@ position = Vector2(-6.5, 0)
 shape = SubResource("RectangleShape2D_4n4jn")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.1, 1.1)
+zoom = Vector2(1.2, 1.2)
 position_smoothing_enabled = true
 
 [node name="Marker2D" type="Marker2D" parent="."]
