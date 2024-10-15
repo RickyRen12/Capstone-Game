@@ -1,0 +1,91 @@
+[gd_scene load_steps=12 format=3 uid="uid://5cvhfsvwmsan"]
+
+[ext_resource type="Texture2D" uid="uid://ywhxmpt2qe41" path="res://Assets/Enemies/og-image.png" id="1_all67"]
+[ext_resource type="Script" path="res://Scenes/enemy_death.gd" id="2_had5r"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v76r2"]
+atlas = ExtResource("1_all67")
+region = Rect2(0, 141, 188, 141)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0v257"]
+atlas = ExtResource("1_all67")
+region = Rect2(188, 141, 188, 141)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vjfau"]
+atlas = ExtResource("1_all67")
+region = Rect2(376, 141, 188, 141)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_18ega"]
+atlas = ExtResource("1_all67")
+region = Rect2(564, 141, 188, 141)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wbnjh"]
+atlas = ExtResource("1_all67")
+region = Rect2(0, 282, 188, 141)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k2uix"]
+atlas = ExtResource("1_all67")
+region = Rect2(188, 282, 188, 141)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r7pl4"]
+atlas = ExtResource("1_all67")
+region = Rect2(376, 282, 188, 141)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4liuf"]
+atlas = ExtResource("1_all67")
+region = Rect2(564, 282, 188, 141)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q3gnd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v76r2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0v257")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vjfau")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_18ega")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbnjh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k2uix")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r7pl4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4liuf")
+}, {
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"DEATH",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_q3gnd")
+animation = &"DEATH"
+autoplay = "DEATH"
+frame = 7
+frame_progress = 0.500034
+script = ExtResource("2_had5r")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

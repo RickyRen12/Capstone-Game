@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+var EnemyDeath = preload("res://Scenes/EnemyDeath.tscn")
 var speed =90
 var player_chase = false
 var player = null
@@ -23,7 +24,13 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 
 func _on_hurt_box_area_entered(area: Area2D):
 	print("HURTTTTTTTTTT", health_amount)
-	if area.get_parent().has_method("get_damage_amount"):
-		var node = area.get_parent() as Node
-		health_amount -= node.get_damage_amount
+	if area.has_method("get_damage_amount"):
+		var node = area as Node
+		health_amount = health_amount - node.get_damage_amount()
 		print("AHHH", health_amount)
+		
+		if health_amount <= 0:
+			var EnemyDeath_instance = EnemyDeath.instantiate() as Node2D
+			EnemyDeath_instance.global_position = global_position
+			get_parent().add_child(EnemyDeath_instance)
+			queue_free()

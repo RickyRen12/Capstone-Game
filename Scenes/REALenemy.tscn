@@ -30,8 +30,8 @@ size = Vector2(100, 59.5)
 
 [node name="ENEMY" type="CharacterBody2D"]
 position = Vector2(0, -8)
-collision_layer = 2
-collision_mask = 5
+collision_layer = 4
+collision_mask = 2
 script = ExtResource("1_wg5k5")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
