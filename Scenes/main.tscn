@@ -15,17 +15,7 @@ position = Vector2(194, 167)
 
 [node name="Node2D" parent="." instance=ExtResource("2_uvu4f")]
 z_index = -2
-<<<<<<< HEAD
-position = Vector2(-255, -38)
-=======
 position = Vector2(-1720, -258)
->>>>>>> fdab86f41be6aac97f5872058becbaceff3d0c4a
 
 [node name="ENEMY" parent="." instance=ExtResource("5_k1t14")]
 position = Vector2(1280, 503)
-
-[node name="ENEMY2" parent="." instance=ExtResource("5_k1t14")]
-position = Vector2(1240, 837)
-
-[node name="ENEMY3" parent="." instance=ExtResource("5_k1t14")]
-position = Vector2(1060, 191)
