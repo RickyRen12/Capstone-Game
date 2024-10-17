@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://c00sxktkl1qp5"]
+
+[ext_resource type="PackedScene" uid="uid://crt118532wteg" path="res://Scenes/player.tscn" id="1_rphlv"]
+[ext_resource type="PackedScene" uid="uid://bbsusbmuav3vp" path="res://Scenes/Tile.tscn" id="2_uvu4f"]
+[ext_resource type="PackedScene" uid="uid://53uwa7gg3etl" path="res://Scenes/world.tscn" id="3_1g42h"]
+[ext_resource type="PackedScene" uid="uid://cw318a1br2pnd" path="res://Scenes/REALenemy.tscn" id="5_k1t14"]
+
+[node name="Main" type="Node2D"]
+
+[node name="World" parent="." instance=ExtResource("3_1g42h")]
+position = Vector2(1, 1)
+
+[node name="Player" parent="." instance=ExtResource("1_rphlv")]
+position = Vector2(194, 167)
+
+[node name="Node2D" parent="." instance=ExtResource("2_uvu4f")]
+z_index = -2
+position = Vector2(-271, -17)
+
+[node name="ENEMY" parent="." instance=ExtResource("5_k1t14")]
+position = Vector2(93, 407)

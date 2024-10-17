@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 var EnemyDeath = preload("res://Scenes/EnemyDeath.tscn")
-var speed =90
+var speed =200
 var player_chase = false
 var player = null
 var health_amount : int = 3
