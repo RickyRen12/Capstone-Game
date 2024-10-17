@@ -7,28 +7,15 @@
 
 [node name="Main" type="Node2D"]
 
-[node name="ENEMY3" parent="." instance=ExtResource("5_k1t14")]
-position = Vector2(1297, 170)
-
-[node name="ENEMY2" parent="." instance=ExtResource("5_k1t14")]
-position = Vector2(1179, 735)
-
-[node name="ENEMY" parent="." instance=ExtResource("5_k1t14")]
-position = Vector2(-59, 737)
-
 [node name="World" parent="." instance=ExtResource("3_1g42h")]
 position = Vector2(1, 1)
 
 [node name="Player" parent="." instance=ExtResource("1_rphlv")]
-position = Vector2(319, 168)
+position = Vector2(194, 167)
 
 [node name="Node2D" parent="." instance=ExtResource("2_uvu4f")]
 z_index = -2
-<<<<<<< Updated upstream
 position = Vector2(-293, -53)
 
 [node name="ENEMY" parent="." instance=ExtResource("5_k1t14")]
 position = Vector2(93, 407)
-=======
-position = Vector2(-1454, -1080)
->>>>>>> Stashed changes
