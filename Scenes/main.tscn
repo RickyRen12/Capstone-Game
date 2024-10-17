@@ -15,7 +15,13 @@ position = Vector2(194, 167)
 
 [node name="Node2D" parent="." instance=ExtResource("2_uvu4f")]
 z_index = -2
-position = Vector2(-293, -53)
+position = Vector2(-1720, -258)
 
 [node name="ENEMY" parent="." instance=ExtResource("5_k1t14")]
-position = Vector2(93, 407)
+position = Vector2(1280, 503)
+
+[node name="ENEMY2" parent="." instance=ExtResource("5_k1t14")]
+position = Vector2(1240, 837)
+
+[node name="ENEMY3" parent="." instance=ExtResource("5_k1t14")]
+position = Vector2(1060, 191)
