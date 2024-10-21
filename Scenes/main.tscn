@@ -18,28 +18,4 @@ z_index = -2
 position = Vector2(-1720, -258)
 
 [node name="ENEMY" parent="." instance=ExtResource("5_k1t14")]
-position = Vector2(1617, 452)
-
-[node name="ENEMY2" parent="." instance=ExtResource("5_k1t14")]
-position = Vector2(1147, 813)
-
-[node name="ENEMY3" parent="." instance=ExtResource("5_k1t14")]
-position = Vector2(994, 525)
-
-[node name="ENEMY4" parent="." instance=ExtResource("5_k1t14")]
-position = Vector2(1239, 217)
-
-[node name="ENEMY5" parent="." instance=ExtResource("5_k1t14")]
-position = Vector2(1004, 209)
-
-[node name="ENEMY6" parent="." instance=ExtResource("5_k1t14")]
-position = Vector2(1977, 443)
-
-[node name="ENEMY7" parent="." instance=ExtResource("5_k1t14")]
-position = Vector2(1256, 523)
-
-[node name="ENEMY8" parent="." instance=ExtResource("5_k1t14")]
-position = Vector2(1621, 188)
-
-[node name="ENEMY9" parent="." instance=ExtResource("5_k1t14")]
-position = Vector2(1985, 174)
+position = Vector2(1280, 503)
