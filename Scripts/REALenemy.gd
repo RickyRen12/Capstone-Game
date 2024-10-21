@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 var EnemyDeath = preload("res://Scenes/EnemyDeath.tscn")
-var speed =200
+var speed = 200
 var player_chase = false
 var player = null
 var health_amount : int = 3
@@ -9,11 +9,14 @@ var health_amount : int = 3
 func _physics_process(delta):
 	if player_chase:
 		position += (player.position - position)/speed
+	else:
+		speed = 10000
 	move_and_slide()
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	player = body
+	speed = 200
 	player_chase = true
 
 
