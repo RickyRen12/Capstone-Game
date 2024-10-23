@@ -95,7 +95,7 @@ b = Vector2(1546, 240)
 [node name="World" type="Node2D"]
 position = Vector2(1, 0)
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["walls"]]
 
 [node name="CollisionShape2D18" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(39, 0)
