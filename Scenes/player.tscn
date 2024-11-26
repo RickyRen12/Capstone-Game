@@ -76,8 +76,8 @@ size = Vector2(41, 54)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 position = Vector2(-147, -89)
-collision_layer = 7
-collision_mask = 7
+collision_layer = 15
+collision_mask = 15
 script = SubResource("GDScript_l0uhj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

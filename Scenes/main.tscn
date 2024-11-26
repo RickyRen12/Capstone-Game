@@ -18,4 +18,4 @@ z_index = -2
 position = Vector2(-1908, -326)
 
 [node name="ENEMY" parent="." instance=ExtResource("5_k1t14")]
-position = Vector2(1121, 661)
+position = Vector2(231, 764)

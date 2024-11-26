@@ -48,8 +48,8 @@ sprite_frames = SubResource("SpriteFrames_gek5r")
 animation = &"new_animation"
 
 [node name="Detection_area" type="Area2D" parent="."]
-collision_layer = 4
-collision_mask = 4
+collision_layer = 8
+collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detection_area"]
 shape = SubResource("CircleShape2D_4yyhi")
