@@ -49,7 +49,6 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 
 
 func _on_hurt_box_area_entered(area: Area2D):
-	print("HURTTTTTTTTTT", health_amount)
 	if area.has_method("get_damage_amount"):
 		var node = area as Node
 		health_amount = health_amount - node.get_damage_amount()
