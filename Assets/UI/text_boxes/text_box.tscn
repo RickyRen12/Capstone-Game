@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://dd7tw574h0c5k"]
+
+[node name="TextBox" type="MarginContainer"]

@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://bs51h2q514pym"]
+
+[ext_resource type="Script" path="res://Scripts/character_body_2d.gd" id="1_vcyfc"]
+[ext_resource type="Texture2D" uid="uid://cmd3ylw5nbqpg" path="res://Assets/Level/Untitled.png" id="2_ff57f"]
+[ext_resource type="PackedScene" uid="uid://b3a3263wgj0ht" path="res://Scenes/Interactions/Interaction_area.tscn" id="3_d1ese"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vxrh8"]
+size = Vector2(153, 187)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3g6a8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ff57f")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vae4a"]
+size = Vector2(944, 730)
+
+[node name="shop_NPC" type="CharacterBody2D"]
+script = ExtResource("1_vcyfc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, -0.5)
+shape = SubResource("RectangleShape2D_vxrh8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1, 0.741394)
+scale = Vector2(0.235632, 0.235632)
+sprite_frames = SubResource("SpriteFrames_3g6a8")
+
+[node name="InteractionArea" parent="." instance=ExtResource("3_d1ese")]
+action_name = "shop"
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(-1, -1)
+shape = SubResource("RectangleShape2D_vae4a")
