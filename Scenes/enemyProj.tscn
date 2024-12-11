@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dm16xy4cq45ph"]
 
-[ext_resource type="Script" path="res://Scenes/enemy_proj.gd" id="1_nr4eb"]
+[ext_resource type="Script" path="res://enemy_proj.gd" id="1_nr4eb"]
 [ext_resource type="Texture2D" uid="uid://nc6aikggj5dh" path="res://Assets/Enemies/Unit+6+Topic+4+H.W.+Answer+Key+24-25-1.png" id="2_8yuuy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r1vlh"]
