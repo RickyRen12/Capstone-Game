@@ -8,13 +8,17 @@ var text_box
 var text_box_position: Vector2
 var is_dialog_active = false
 var can_advance_line = false
+var sfx = AudioStream
 
-func start_dialog(position: Vector2, lines: Array[String]):
+signal dialog_finished
+
+func start_dialog(position: Vector2, lines: Array[String], speech_sfx: AudioStream, tail_position = 0.5):
 	if is_dialog_active:
 		return
 		
 	dialog_lines = lines
 	text_box_position = position
+	sfx = speech_sfx
 	show_text_box()
 	
 	is_dialog_active = true
