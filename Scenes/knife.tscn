@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dy41kmt5006jl"]
 
-[ext_resource type="Script" path="res://Scripts/knife.gd" id="1_3nr1r"]
+[ext_resource type="Script" path="res://Scripts/InteractionsAndGameElements/knife.gd" id="1_3nr1r"]
 [ext_resource type="Texture2D" uid="uid://dm5jcughg8s1a" path="res://Assets/Player/file.png" id="1_gxjop"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kx6ja"]

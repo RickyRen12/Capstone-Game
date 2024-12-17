@@ -84,7 +84,7 @@
 [ext_resource type="Texture2D" uid="uid://hftwwi15c6h0" path="res://Assets/Player/ezgif-7-fd0fdecd71-gif-jpg/frame_81_delay-0.1s.jpg" id="82_p5m4i"]
 [ext_resource type="Texture2D" uid="uid://b7f21l3c82di7" path="res://Assets/Player/ezgif-7-fd0fdecd71-gif-jpg/frame_82_delay-0.1s.jpg" id="83_bvsik"]
 [ext_resource type="Texture2D" uid="uid://c6e1pmk5u23hi" path="res://Assets/Player/ezgif-7-fd0fdecd71-gif-jpg/frame_83_delay-0.1s.jpg" id="84_jdbt7"]
-[ext_resource type="Script" path="res://Scripts/player_death.gd" id="85_t8lp0"]
+[ext_resource type="Script" path="res://Scripts/Player/player_death.gd" id="85_t8lp0"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_q7q2v"]
 animations = [{

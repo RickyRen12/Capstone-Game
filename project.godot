@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.3", "Forward Plus")
 [autoload]
 
 InteractionManager="*res://Scenes/Interactions/InteractionManager.tscn"
+DialogManager="*res://Scripts/InteractionsAndGameElements/DialogManager.gd"
 
 [display]
 

@@ -49,5 +49,5 @@ func display_letter():
 			timer.start(letter_time)
 
 
-func _on_level_display_timer_timeout() -> void:
-	pass # Replace with function body.
+func _on_level_display_timer_timeout():
+	display_letter()
