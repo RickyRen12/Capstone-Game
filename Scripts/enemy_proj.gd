@@ -20,12 +20,12 @@ func get_damage_amount_player() -> int:
 func _on_area_entered(area: Area2D) -> void:
 	print("area")
 	
-
-
 func _on_body_entered(body: Node2D) -> void:
 	if(body.is_in_group("walls")):
 		queue_free()
-	print("body")
+	if(body.is_in_group("player")):
+		queue_free()
+
 
 func holder():
 	print("please")

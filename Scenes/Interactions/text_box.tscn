@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dd7tw574h0c5k"]
+
+[ext_resource type="Texture2D" uid="uid://kscuevbwyie0" path="res://Assets/UI/text_boxes/new_text.png" id="1_bchbm"]
+
+[node name="TextBox" type="MarginContainer"]
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_bchbm")
+region_rect = Rect2(4, 4, 8, 8)
