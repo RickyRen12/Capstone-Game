@@ -1,8 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://dd7tw574h0c5k"]
+[gd_scene load_steps=3 format=3 uid="uid://dd7tw574h0c5k"]
 
-[ext_resource type="Texture2D" uid="uid://kscuevbwyie0" path="res://Assets/UI/text_boxes/new_text.png" id="1_bchbm"]
+[ext_resource type="Script" path="res://Scripts/InteractionsAndGameElements/text_box.gd" id="1_7p3yf"]
+[ext_resource type="Texture2D" uid="uid://ogakbpslj4g1" path="res://Assets/UI/text_boxes/new_text.png" id="1_bchbm"]
 
 [node name="TextBox" type="MarginContainer"]
+script = ExtResource("1_7p3yf")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="Label" type="Label" parent="MarginContainer"]
+layout_mode = 2
+vertical_alignment = 1
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 layout_mode = 2

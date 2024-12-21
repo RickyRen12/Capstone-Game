@@ -6,6 +6,7 @@ extends Node2D
 const base = "Press [Enter] to"
 var active_areas = []
 var can_interact = true
+var active_name:String = "wow"
 
 func register_area(area: InteractionArea):
 	active_areas.push_back(area)
@@ -13,7 +14,7 @@ func register_area(area: InteractionArea):
 func unregister_area(area: InteractionArea):
 	var index = active_areas.find(area)
 	if index != -1:
-		active_areas.remove(index)
+		active_areas.remove_at(index)
 		
 		
 func _sort_by_distance_to_player(area1, area2):
@@ -25,10 +26,10 @@ func _sort_by_distance_to_player(area1, area2):
 func _process(delta):
 	if active_areas.size() > 0 && can_interact:
 		active_areas.sort_custom(_sort_by_distance_to_player)
-		label.text = base + active_areas[0].active_name
+		label.text = base + active_areas[0].action_name
 		label.global_position = active_areas[0].global_position
 		label.global_position.y -= 36
-		label.global_position -= label.size() / 2
+		label.global_position.x -= label.size.x / 2
 	else:
 		label.hide()
 		
