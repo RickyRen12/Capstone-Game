@@ -1,10 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://dd7tw574h0c5k"]
+[gd_scene load_steps=4 format=3 uid="uid://3udapaorupv4"]
 
-[ext_resource type="Script" path="res://Scripts/InteractionsAndGameElements/text_box.gd" id="1_7p3yf"]
 [ext_resource type="Texture2D" uid="uid://ogakbpslj4g1" path="res://Assets/UI/text_boxes/new_text.png" id="1_bchbm"]
+[ext_resource type="Script" path="res://Scripts/text.gd" id="1_djciu"]
+[ext_resource type="FontFile" uid="uid://cka7shqgk4fcb" path="res://Assets/UI/text_boxes/Daydream.ttf" id="2_w8u8e"]
 
-[node name="TextBox" type="MarginContainer"]
-script = ExtResource("1_7p3yf")
+[node name="text_box" type="MarginContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_djciu")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_bchbm")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -15,9 +26,9 @@ theme_override_constants/margin_bottom = 8
 
 [node name="Label" type="Label" parent="MarginContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_w8u8e")
 vertical_alignment = 1
 
-[node name="NinePatchRect" type="NinePatchRect" parent="."]
-layout_mode = 2
-texture = ExtResource("1_bchbm")
-region_rect = Rect2(4, 4, 8, 8)
+[node name="LetterDisplayTimer" type="Timer" parent="."]
+one_shot = true
