@@ -1,7 +1,7 @@
 extends MarginContainer
 
 @onready var label = $MarginContainer/Label
-@onready var timer = $LevelDisplayTimer
+@onready var timer = $LetterDisplayTimer
 
 const MaxWidth = 256 
 
@@ -22,12 +22,12 @@ func display_text(text_to_display: String):
 	
 	if size.x > MaxWidth:
 		label.autowrap_mode = TextServer.AUTOWRAP_WORD
-		await resized
-		await resized 
+		await resized # await x resize
+		await resized # await y resize
 		custom_minimum_size.y = size.y
 		
 	global_position.x -= size.x / 2
-	global_position.y -= size.y + 24
+	global_position.y -= size.y + 36
 	
 	label.text = ""
 	display_letter()

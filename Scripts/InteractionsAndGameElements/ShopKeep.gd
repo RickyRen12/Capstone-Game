@@ -4,7 +4,12 @@ extends CharacterBody2D
 @onready var sprite = $AnimatedSprite2D
 @onready var speech_sound = preload("res://Assets/Level/sound/cha-ching-alert-new-sale-jam-fx-1-00-04.wav")
 
-const lines: Array[String] = ["YABA GABAGOOLE"]
+const lines: Array[String] = ["YABA GABAGOOLE", "WOW", "HOLY GUACAMOLE"]
+
+func _unhandled_input(event):
+	if event.is_action_pressed("interact"):
+		if interaction_area.get_overlapping_bodies().size() > 0:
+			DialogManager.start_dialog(global_position, lines, speech_sound	)
 
 func _ready():
 	interaction_area.interact = Callable(self, "_on_interact")
