@@ -24,6 +24,7 @@ func _physics_process(delta):
 	direction.y = Input.get_axis(\"ui_w\", \"ui_s\")
 	
 	
+	
 #store latest direction
 	if direction != last_direction:
 		last_direction = direction
@@ -38,7 +39,7 @@ func _physics_process(delta):
 	else:
 		velocity.y = move_toward(velocity.y, 0, speed * delta)
 	
-	
+
 #Dash
 	if Input.is_action_just_pressed(\"ui_q\") and dash_cooldown:
 		dash_cooldown = false
@@ -51,8 +52,8 @@ func _physics_process(delta):
 		
 		
 	move_and_slide()
-	#Shooting mechanic
 	
+	#Shooting mechanic
 	if Input.is_action_just_pressed(\"e\"):
 		if weapon_equipped:
 			weapon_equipped = false
