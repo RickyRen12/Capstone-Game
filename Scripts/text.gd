@@ -10,6 +10,7 @@ var letter_index = 0
 var letter_time = 0.03
 var space_time = 0.06
 var punctuation_time = 0.2
+var temp = 0
 
 signal finished_displaying()
 
@@ -30,7 +31,10 @@ func display_text(text_to_display: String):
 	global_position.y -= size.y + 36
 	
 	label.text = ""
-	display_letter()
+	
+	while text.length() > temp:
+		display_letter()
+		temp += 1
 	
 func display_letter():
 	label.text += text[letter_index]

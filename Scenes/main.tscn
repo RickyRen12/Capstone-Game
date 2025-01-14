@@ -22,4 +22,4 @@ position = Vector2(-1908, -326)
 position = Vector2(231, 764)
 
 [node name="shop_NPC" parent="." instance=ExtResource("5_isbtw")]
-position = Vector2(1803, 315)
+position = Vector2(401, 37)

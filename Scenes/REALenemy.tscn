@@ -60,7 +60,7 @@ collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurt_box"]
-position = Vector2(133.5, -34.5)
+position = Vector2(133, -35)
 shape = SubResource("RectangleShape2D_s6eyi")
 debug_color = Color(0.965911, 0.148667, 0.286393, 0.42)
 
