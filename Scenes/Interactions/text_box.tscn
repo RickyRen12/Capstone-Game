@@ -32,3 +32,5 @@ vertical_alignment = 1
 
 [node name="LetterDisplayTimer" type="Timer" parent="."]
 one_shot = true
+
+[connection signal="timeout" from="LetterDisplayTimer" to="." method="_on_letter_display_timer_timeout"]
