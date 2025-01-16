@@ -1,14 +1,14 @@
 [gd_scene load_steps=7 format=3 uid="uid://dgbu383lnl00v"]
 
 [ext_resource type="Script" path="res://Scripts/gambling_machine_1.gd" id="1_1wwyw"]
-[ext_resource type="Texture2D" uid="uid://g76lek0gxy6f" path="res://Assets/UI/images.png" id="1_r13hf"]
 [ext_resource type="PackedScene" uid="uid://b3a3263wgj0ht" path="res://Scenes/Interactions/Interaction_area.tscn" id="2_bgj5e"]
+[ext_resource type="Texture2D" uid="uid://dmwqatmx168d3" path="res://Assets/UI/GAMBLINGGGGGGGG.png" id="2_fykd2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_u1nrw"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_r13hf")
+"texture": ExtResource("2_fykd2")
 }],
 "loop": true,
 "name": &"default",
@@ -16,7 +16,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2b7e0"]
-size = Vector2(52, 52)
+size = Vector2(52, 46)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_00txs"]
 radius = 91.1373
@@ -26,7 +26,7 @@ script = ExtResource("1_1wwyw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(7.62939e-06, 7.62939e-06)
-scale = Vector2(0.228889, 0.228889)
+scale = Vector2(0.168389, 0.169016)
 sprite_frames = SubResource("SpriteFrames_u1nrw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -8,5 +8,5 @@ func _ready():
 	interaction_area.interact = Callable(self, "_start_gambling")
 	
 func _start_gambling():
-	print("WORKY???????????")
+	SceneSwitcher.switch_scene("res://Scenes/gamble_screen.tscn")
 	

@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://ry4d4q6dsroy"]
+
+[ext_resource type="Script" path="res://Scripts/gamble_screen.gd" id="1_yi81a"]
+
+[node name="GambleScreen" type="Node2D"]
+script = ExtResource("1_yi81a")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 497.0
+offset_top = 266.0
+offset_right = 982.0
+offset_bottom = 482.0
+text = "AHHHHH"
+
+[node name="Button" type="Button" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+scale = Vector2(14.8041, 102.827)
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

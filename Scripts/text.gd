@@ -31,10 +31,8 @@ func display_text(text_to_display: String):
 	global_position.y -= size.y + 36
 	
 	label.text = ""
-	
-	while text.length() > temp:
-		display_letter()
-		temp += 1
+	display_letter()
+
 	
 func display_letter():
 	label.text += text[letter_index]
@@ -53,5 +51,5 @@ func display_letter():
 			timer.start(letter_time)
 
 
-func _on_level_display_timer_timeout():
+func _on_letter_display_timer_timeout():
 	display_letter()
