@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://crt118532wteg"]
+[gd_scene load_steps=7 format=3 uid="uid://crt118532wteg"]
 
 [ext_resource type="Script" path="res://Scripts/InteractionsAndGameElements/dynamic_cam.gd" id="1_sdejc"]
 [ext_resource type="Texture2D" uid="uid://1fnj36ywrnnx" path="res://Assets/Player/king-penguin-7795519_640.jpg" id="2_8kuay"]
+[ext_resource type="PackedScene" uid="uid://c0i538cetsg2x" path="res://Scenes/UI/healthbar.tscn" id="3_ywxrm"]
 
 [sub_resource type="GDScript" id="GDScript_l0uhj"]
 script/source = "### Player.gd
@@ -10,20 +11,30 @@ script/source = "### Player.gd
 extends CharacterBody2D
 
 var PlayerDeath = preload(\"res://Scenes/player_death.tscn\")
+var proj = preload(\"res://Scenes/knife.tscn\")
+@onready var HealthBar = $CanvasLayer/Healthbar
+
 var last_direction = Vector2.ZERO
 var speed = 200	
 var weapon_equipped = false
 var weapon_cooldown = true
 var dash_cooldown = true
 var health_amount : int = 5
-var proj = preload(\"res://Scenes/knife.tscn\") 
+var currency_amt = 10 
+
+#checks for weapons
+var default_gun = true
+var shotgun = false
+
+
+func _ready():
+		HealthBar.init_health(health_amount)
+
 
 func _physics_process(delta):
 	var direction = Vector2.ZERO
 	direction.x = Input.get_axis(\"ui_a\", \"ui_d\")
 	direction.y = Input.get_axis(\"ui_w\", \"ui_s\")
-	
-	
 	
 #store latest direction
 	if direction != last_direction:
@@ -49,12 +60,11 @@ func _physics_process(delta):
 		speed = temp
 		await get_tree().create_timer(2).timeout
 		dash_cooldown = true
-		
-		
 	move_and_slide()
 	
 	#Shooting mechanic
 	if Input.is_action_just_pressed(\"e\"):
+		print(shotgun)
 		if weapon_equipped:
 			weapon_equipped = false
 		else:
@@ -62,30 +72,58 @@ func _physics_process(delta):
 	
 	var mouse_pos = get_global_mouse_position()
 	$Marker2D.look_at(mouse_pos)
-	
-	if Input.is_action_just_pressed(\"left_mouse\") and weapon_equipped and weapon_cooldown:
+	#default gun
+	if Input.is_action_just_pressed(\"left_mouse\") and weapon_equipped and weapon_cooldown and default_gun:
 		weapon_cooldown = false
 		var proj_instance = proj.instantiate()
 		proj_instance.rotation = $Marker2D.rotation
 		proj_instance.global_position = $Marker2D.global_position
 		add_child(proj_instance)
-		
 		await get_tree().create_timer(0.4).timeout
 		weapon_cooldown = true
+	#shotgun
+	if Input.is_action_just_pressed(\"left_mouse\") and weapon_equipped and weapon_cooldown and shotgun:
+		weapon_cooldown = false
+		var spread_angle = 0.3
+		for i in range(3):#number of bullets
+			var proj_instance = proj.instantiate()
+			proj_instance.rotation = $Marker2D.rotation + (i - 1) * spread_angle
+			proj_instance.global_position = $Marker2D.global_position
+			add_child(proj_instance)
+			await get_tree().create_timer(0.05).timeout
+		await get_tree().create_timer(0.4).timeout
+		weapon_cooldown = true
+			
+	
 
-
-
+#functions to swap between shooting type/weapon
+func swap_to_shotgun():
+	shotgun = true
+	default_gun = false
 
 
 func _on_detection_area_area_entered(area: Area2D) -> void:
+	#taking damage
 	if area.has_method(\"get_damage_amount_player\"):
 		var node = area as Node
 		health_amount = health_amount - node.get_damage_amount_player()
+		HealthBar.health = health_amount
 		print(\":D\", health_amount)
+		
+	#player dies
 	if health_amount <= 0:
 		var PlayerDeath_instance = PlayerDeath.instantiate() as Node2D
 		PlayerDeath_instance.global_position = global_position
 		get_parent().add_child(PlayerDeath_instance)
+		
+func return_currency_amt():
+	return currency_amt
+	
+func change_currency_amt(num1: int) -> int:
+	print(currency_amt)
+	currency_amt = currency_amt + num1
+	return false
+	
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4n4jn"]
@@ -105,7 +143,7 @@ position = Vector2(-6.5, 0)
 shape = SubResource("RectangleShape2D_4n4jn")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.3, 1.3)
+zoom = Vector2(1.1, 1.1)
 position_smoothing_enabled = true
 position_smoothing_speed = 4.0
 script = ExtResource("1_sdejc")
@@ -139,5 +177,20 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-6, -1.90735e-06)
 scale = Vector2(0.0854167, 0.0854167)
 texture = ExtResource("2_8kuay")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Healthbar" parent="CanvasLayer" instance=ExtResource("3_ywxrm")]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -275.0
+offset_top = -56.0
+offset_right = -35.0
+offset_bottom = -38.0
+grow_horizontal = 0
+grow_vertical = 0
 
 [connection signal="area_entered" from="Detection_area" to="." method="_on_detection_area_area_entered"]

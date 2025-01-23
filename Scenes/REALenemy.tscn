@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cw318a1br2pnd"]
+[gd_scene load_steps=8 format=3 uid="uid://cw318a1br2pnd"]
 
 [ext_resource type="Script" path="res://Scripts/REALenemy.gd" id="1_wg5k5"]
 [ext_resource type="Texture2D" uid="uid://c4np4886gduow" path="res://Assets/Enemies/penguin.png" id="2_4vmgq"]
+[ext_resource type="PackedScene" uid="uid://c0i538cetsg2x" path="res://Scenes/UI/healthbar.tscn" id="3_bkhu7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qc62e"]
 size = Vector2(280.653, 154.286)
@@ -63,6 +64,12 @@ collision_mask = 2
 position = Vector2(133, -35)
 shape = SubResource("RectangleShape2D_s6eyi")
 debug_color = Color(0.965911, 0.148667, 0.286393, 0.42)
+
+[node name="Healthbar" parent="." instance=ExtResource("3_bkhu7")]
+offset_left = -61.0
+offset_top = -38.0
+offset_right = 60.0
+offset_bottom = -34.0
 
 [connection signal="body_entered" from="Detection_area" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Detection_area" to="." method="_on_area_2d_body_exited"]

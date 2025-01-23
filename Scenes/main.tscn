@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c00sxktkl1qp5"]
+[gd_scene load_steps=8 format=3 uid="uid://c00sxktkl1qp5"]
 
 [ext_resource type="PackedScene" uid="uid://crt118532wteg" path="res://Scenes/player.tscn" id="1_rphlv"]
 [ext_resource type="PackedScene" uid="uid://bbsusbmuav3vp" path="res://Scenes/Tile.tscn" id="2_uvu4f"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bs51h2q514pym" path="res://Scenes/shop_npc.tscn" id="5_isbtw"]
 [ext_resource type="PackedScene" uid="uid://cw318a1br2pnd" path="res://Scenes/REALenemy.tscn" id="5_k1t14"]
 [ext_resource type="PackedScene" uid="uid://dgbu383lnl00v" path="res://Scenes/GamblingMachine1.tscn" id="6_qy5oe"]
+[ext_resource type="PackedScene" uid="uid://brwikuddmqcqf" path="res://Scenes/Interactions/Shop_buy.tscn" id="7_j2grr"]
 
 [node name="Main" type="Node2D"]
 
@@ -13,7 +14,7 @@
 position = Vector2(1, 1)
 
 [node name="Player" parent="." instance=ExtResource("1_rphlv")]
-position = Vector2(194, 167)
+position = Vector2(1822, 402)
 
 [node name="Node2D" parent="." instance=ExtResource("2_uvu4f")]
 z_index = -2
@@ -23,7 +24,10 @@ position = Vector2(-1908, -326)
 position = Vector2(231, 764)
 
 [node name="shop_NPC" parent="." instance=ExtResource("5_isbtw")]
-position = Vector2(401, 37)
+position = Vector2(1029, 196)
 
-[node name="StaticBody2D" parent="." instance=ExtResource("6_qy5oe")]
-position = Vector2(33, 41)
+[node name="Shop_buy" parent="." instance=ExtResource("7_j2grr")]
+position = Vector2(966, 330)
+
+[node name="Gambling_machine_1" parent="." instance=ExtResource("6_qy5oe")]
+position = Vector2(2112, 653)

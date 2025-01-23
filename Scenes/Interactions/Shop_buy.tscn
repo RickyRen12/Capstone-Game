@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://brwikuddmqcqf"]
+
+[ext_resource type="Script" path="res://Scripts/InteractionsAndGameElements/static_body_2d.gd" id="1_wvu7g"]
+[ext_resource type="Texture2D" uid="uid://bdc0ee71qq44w" path="res://Assets/Player/gun-159053_1920.png" id="2_h0bgc"]
+[ext_resource type="PackedScene" uid="uid://b3a3263wgj0ht" path="res://Scenes/Interactions/Interaction_area.tscn" id="3_762ob"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vlffg"]
+size = Vector2(44, 11)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7kkew"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_h0bgc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wp5vo"]
+size = Vector2(71, 67)
+
+[node name="Shop_buy" type="StaticBody2D"]
+script = ExtResource("1_wvu7g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_vlffg")
+debug_color = Color(0.863812, 0.32623, 0.392763, 0.42)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.0229514, 0.0229514)
+sprite_frames = SubResource("SpriteFrames_7kkew")
+
+[node name="InteractionArea" parent="." instance=ExtResource("3_762ob")]
+action_name = "purchase the shotgun"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("RectangleShape2D_wp5vo")
