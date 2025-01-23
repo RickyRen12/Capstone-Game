@@ -62,4 +62,5 @@ func _on_hurt_box_area_entered(area: Area2D):
 		var EnemyDeath_instance = EnemyDeath.instantiate() as Node2D
 		EnemyDeath_instance.global_position = global_position
 		get_parent().add_child(EnemyDeath_instance)
+		
 		queue_free()

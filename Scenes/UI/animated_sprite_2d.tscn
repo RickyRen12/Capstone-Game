@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://csl2g7nutl03e"]
+
+[ext_resource type="Texture2D" uid="uid://r83fdci0j0bi" path="res://Assets/Level/1000_F_105526561_NWY80S7wdhqYX09ZwYn7DP9sy9InTg8g.jpg" id="1_qc04v"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mdlk8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_qc04v")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_mdlk8")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
