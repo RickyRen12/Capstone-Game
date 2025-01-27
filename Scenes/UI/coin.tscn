@@ -1,13 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://csl2g7nutl03e"]
+[gd_scene load_steps=5 format=3 uid="uid://bo2ch4dixulpv"]
 
-[ext_resource type="Texture2D" uid="uid://c67jiglankiy" path="res://Assets/poker_ship.png" id="1_krs4m"]
-[ext_resource type="Script" path="res://Scripts/InteractionsAndGameElements/coin.gd" id="2_0j2pk"]
+[ext_resource type="Texture2D" uid="uid://c67jiglankiy" path="res://Assets/poker_ship.png" id="1_f36fj"]
+[ext_resource type="Script" path="res://Scripts/InteractionsAndGameElements/coin.gd" id="2_ihnyc"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mdlk8"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_krs4m")
+"texture": ExtResource("1_f36fj")
 }],
 "loop": true,
 "name": &"default",
@@ -21,11 +21,13 @@ size = Vector2(436, 390)
 position = Vector2(-2.38419e-07, 0)
 scale = Vector2(0.174359, 0.174359)
 sprite_frames = SubResource("SpriteFrames_mdlk8")
-script = ExtResource("2_0j2pk")
+script = ExtResource("2_ihnyc")
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_irf0e")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

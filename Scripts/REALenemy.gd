@@ -1,9 +1,11 @@
 extends CharacterBody2D
 
 var EnemyDeath = preload("res://Scenes/EnemyDeath.tscn")
+var coin = preload("res://Scenes/UI/coin.tscn")
 var proj = preload("res://Scenes/enemyProj.tscn") 
 @onready var HealthBar = $Healthbar
 
+var rng = RandomNumberGenerator.new()
 var speed = 200
 var player_chase = false
 var will_shoot = false
@@ -62,5 +64,12 @@ func _on_hurt_box_area_entered(area: Area2D):
 		var EnemyDeath_instance = EnemyDeath.instantiate() as Node2D
 		EnemyDeath_instance.global_position = global_position
 		get_parent().add_child(EnemyDeath_instance)
+		
+		var my_random_number = rng.randf_range(0, 10.0)
+		
+		if(my_random_number < 5):
+			var coin_instance = coin.instantiate() as Node2D
+			coin_instance.global_position = global_position
+			get_parent().add_child(coin_instance)
 		
 		queue_free()

@@ -14,14 +14,11 @@
 position = Vector2(1, 1)
 
 [node name="Player" parent="." instance=ExtResource("1_rphlv")]
-position = Vector2(1822, 402)
+position = Vector2(1041, 388)
 
 [node name="Node2D" parent="." instance=ExtResource("2_uvu4f")]
 z_index = -2
 position = Vector2(-1908, -326)
-
-[node name="ENEMY" parent="." instance=ExtResource("5_k1t14")]
-position = Vector2(231, 764)
 
 [node name="shop_NPC" parent="." instance=ExtResource("5_isbtw")]
 position = Vector2(1029, 196)
@@ -31,3 +28,15 @@ position = Vector2(966, 330)
 
 [node name="Gambling_machine_1" parent="." instance=ExtResource("6_qy5oe")]
 position = Vector2(2112, 653)
+
+[node name="ENEMY" parent="." instance=ExtResource("5_k1t14")]
+position = Vector2(231, 764)
+
+[node name="ENEMY2" parent="." instance=ExtResource("5_k1t14")]
+position = Vector2(-25, 572)
+
+[node name="ENEMY3" parent="." instance=ExtResource("5_k1t14")]
+position = Vector2(522, 536)
+
+[node name="ENEMY4" parent="." instance=ExtResource("5_k1t14")]
+position = Vector2(259, 565)
