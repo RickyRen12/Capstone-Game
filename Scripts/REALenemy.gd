@@ -11,31 +11,23 @@ var player_chase = false
 var will_shoot = false
 var gun_cooldown = true
 var player = null
-var health_amount : int = 6
+var health_amount : int = 100
 
 func _ready():
 	HealthBar.init_health(health_amount)
+
 
 func _physics_process(delta):
 	if player_chase and player:
 		position += (player.position - position)/speed
 	else:
 		speed = 10000
-	move_and_slide()
+	move_and_collide(velocity * delta)
 
 	if player:
 		$Marker2D.look_at(player.position)
-		
-	if will_shoot and gun_cooldown and player:
-		gun_cooldown = false
-		var proj_instance = proj.instantiate()
-		proj_instance.rotation = $Marker2D.rotation
-		proj_instance.global_position = $Marker2D.global_position
-		add_child(proj_instance)
-		
-		await get_tree().create_timer(1).timeout
-		gun_cooldown = true
-
+	#enemy shooting
+	
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	player = body
@@ -73,3 +65,6 @@ func _on_hurt_box_area_entered(area: Area2D):
 			get_parent().add_child(coin_instance)
 		
 		queue_free()
+
+
+	
