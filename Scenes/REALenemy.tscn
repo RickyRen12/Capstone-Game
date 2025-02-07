@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://c4np4886gduow" path="res://Assets/Enemies/penguin.png" id="2_4vmgq"]
 [ext_resource type="PackedScene" uid="uid://c0i538cetsg2x" path="res://Scenes/UI/healthbar.tscn" id="3_bkhu7"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qc62e"]
-size = Vector2(280.653, 154.286)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_64y1g"]
+size = Vector2(94, 53)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gek5r"]
 animations = [{
@@ -27,18 +27,18 @@ animations = [{
 radius = 227.783
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s6eyi"]
-size = Vector2(95, 53)
+size = Vector2(98, 58)
 
 [node name="ENEMY" type="CharacterBody2D"]
 position = Vector2(0, -8)
 collision_layer = 4
 script = ExtResource("1_wg5k5")
 
-[node name="Marker2D" type="Marker2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_64y1g")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
-scale = Vector2(0.340278, 0.340278)
-shape = SubResource("RectangleShape2D_qc62e")
+[node name="Marker2D" type="Marker2D" parent="."]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 light_mask = 2
