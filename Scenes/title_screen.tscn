@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvd5qn8pmemix"]
+
+[ext_resource type="Script" path="res://title_screen.gd" id="1_1ck12"]
+[ext_resource type="Texture2D" uid="uid://bvo85xfto75j0" path="res://Assets/UI/TitleCard.png" id="2_c6q7x"]
+
+[node name="TitleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1ck12")
+
+[node name="StartButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 490.0
+offset_top = 393.0
+offset_right = 630.0
+offset_bottom = 430.0
+text = "START THE GAME"
+
+[node name="QuitButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 489.0
+offset_top = 470.0
+offset_right = 630.0
+offset_bottom = 501.0
+text = "QUIT STUPID"
+
+[node name="OptionsButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 466.0
+offset_top = 432.0
+offset_right = 653.0
+offset_bottom = 463.0
+text = "OPTIONS BC YOU SUCK"
+
+[node name="TitleCard" type="Sprite2D" parent="."]
+position = Vector2(577, 270)
+scale = Vector2(0.524782, 0.441788)
+texture = ExtResource("2_c6q7x")
+
+[connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_QuitButton_pressed"]
