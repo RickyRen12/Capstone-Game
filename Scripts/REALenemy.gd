@@ -11,7 +11,7 @@ var player_chase = false
 var will_shoot = false
 var gun_cooldown = true
 var player = null
-var health_amount : int = 100
+var health_amount : int = 10
 
 func _ready():
 	HealthBar.init_health(health_amount)

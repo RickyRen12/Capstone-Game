@@ -20,8 +20,11 @@ var weapon_equipped = false
 var weapon_cooldown = true
 var dash_cooldown = true
 var health_amount : int = 5
+var accel = 800
+var friction = 900
 var currency_amt = 10 
 var knockback_power = 300
+var control_state = true
 
 #checks for weapons
 var default_gun = true
@@ -38,21 +41,23 @@ func _physics_process(delta):
 	var direction = Vector2.ZERO
 	direction.x = Input.get_axis(\"ui_a\", \"ui_d\")
 	direction.y = Input.get_axis(\"ui_w\", \"ui_s\")
+	direction = direction.normalized()
 	
 #store latest direction
 	if direction != last_direction:
 		last_direction = direction
 		
 	#update direction and velocity
-	if direction.x != 0:
-		velocity.x = direction.x * speed
-	else:
-		velocity.x = move_toward(velocity.x, 0, speed * delta)
-	if direction.y != 0:
-		velocity.y = direction.y * speed
-	else:
-		velocity.y = move_toward(velocity.y, 0, speed * delta)
-	
+	if(control_state):
+		if direction.x != 0:
+			velocity.x = direction.x * speed
+		else:
+			velocity.x = move_toward(velocity.x, 0, speed * delta)
+		if direction.y != 0:
+			velocity.y = direction.y * speed
+		else:
+			velocity.y = move_toward(velocity.y, 0, speed * delta)
+		
 
 #Dash
 	if Input.is_action_just_pressed(\"ui_q\") and dash_cooldown:
@@ -77,7 +82,7 @@ func _physics_process(delta):
 	$Marker2D.look_at(mouse_pos)
 	
 	#default gun
-	if Input.is_action_just_pressed(\"left_mouse\") and weapon_equipped and weapon_cooldown and default_gun:
+	if Input.is_action_just_pressed(\"left_mouse\") and weapon_equipped and weapon_cooldown and default_gun and control_state:
 		weapon_cooldown = false
 		var proj_instance = proj.instantiate()
 		proj_instance.rotation = $Marker2D.rotation
@@ -86,7 +91,7 @@ func _physics_process(delta):
 		await get_tree().create_timer(0.4).timeout
 		weapon_cooldown = true
 	#shotgun
-	if Input.is_action_just_pressed(\"left_mouse\") and weapon_equipped and weapon_cooldown and shotgun:
+	if Input.is_action_just_pressed(\"left_mouse\") and weapon_equipped and weapon_cooldown and shotgun and control_state:
 		weapon_cooldown = false
 		var spread_angle = 0.3
 		for i in range(3):#number of bullets
@@ -108,7 +113,7 @@ func swap_to_shotgun():
 
 func _on_detection_area_area_entered(area: Area2D) -> void:
 	#taking damage
-	if area.has_method(\"get_damage_amount_player\"):
+	if area.has_method(\"get_damage_amount_player\") and control_state:
 		var node = area as Node
 		health_amount = health_amount - node.get_damage_amount_player()
 		HealthBar.health = health_amount
@@ -139,6 +144,10 @@ func change_currency_amt(num1: int) -> int:
 func knockback():
 	var knockbackDirection = -velocity.normalized() * knockback_power
 	velocity = knockbackDirection
+	control_state = false
+	await get_tree().create_timer(.5).timeout
+	print(\"huzz\")
+	control_state = true
 	move_and_slide()
 "
 
