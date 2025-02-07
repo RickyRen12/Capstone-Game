@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://bpwp7ajlxxqrh"]
+
+[ext_resource type="Script" path="res://Scripts/death_screen.gd" id="1_c0i50"]
+[ext_resource type="Texture2D" uid="uid://clo462dunhdmp" path="res://Assets/UI/DeathCard.png" id="2_rcwyc"]
+
+[node name="Death Screen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_c0i50")
+
+[node name="restartbutton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 508.0
+offset_top = 346.0
+offset_right = 679.0
+offset_bottom = 382.0
+text = "RELOAD LEVEL"
+
+[node name="quit button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 511.0
+offset_top = 393.0
+offset_right = 667.0
+offset_bottom = 424.0
+text = "QUIT YOU QUITTER"
+
+[node name="DeathCard" type="Sprite2D" parent="."]
+position = Vector2(611, 217)
+scale = Vector2(0.477897, 0.385655)
+texture = ExtResource("2_rcwyc")
+
+[connection signal="pressed" from="restartbutton" to="." method="_on_ReloadButton_pressed"]
+[connection signal="pressed" from="quit button" to="." method="_on_QuitButton_pressed"]
