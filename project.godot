@@ -19,6 +19,7 @@ config/features=PackedStringArray("4.3", "Forward Plus")
 InteractionManager="*res://Scenes/Interactions/InteractionManager.tscn"
 DialogManager="*res://Scripts/InteractionsAndGameElements/DialogManager.gd"
 SceneSwitcher="*res://Scripts/scene_switcher.gd"
+PlayerManager="*res://Scripts/Player/player_manager.gd"
 
 [display]
 
