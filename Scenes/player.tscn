@@ -150,15 +150,21 @@ func change_currency_amt(num1: int) -> int:
 
 
 func knockback(areaposition):
+	areaposition.x += 150
 	var knockback_direction = (global_position - areaposition).normalized()
 	velocity = knockback_direction * knockback_power
 	if abs(knockback_direction.x) < 0.2: 
 		knockback_direction.x = 0.2 * sign(knockback_direction.x)
+	
+	velocity.x = knockback_direction.x * knockback_power
+	velocity.y = knockback_direction.y * knockback_power
+	
+	#adjust y knockback
 	if areaposition.y > self.global_position.y:
-		velocity.y *= 1.5
+		velocity.y *= .8
 	else:
-		velocity.y *= 2.5
-	print(areaposition, position, velocity)
+		velocity.y *= .8
+	print(areaposition, position)
 	control_state = false
 	for n in range(1,10):
 		if n == 5:
