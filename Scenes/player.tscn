@@ -24,6 +24,7 @@ var accel = 800
 var friction = 700
 var currency_amt = 10 
 var knockback_power = 300
+var invincible = false
 var control_state = true
 
 #checks for weapons
@@ -121,23 +122,25 @@ func Dash():
 
 func _on_detection_area_area_entered(area: Area2D) -> void:
 	#taking damage
-	if area.has_method(\"get_damage_amount_player\") and control_state:
-		var node = area as Node
-		health_amount = health_amount - node.get_damage_amount_player()
-		HealthBar.health = health_amount
-		print(\":D\", health_amount)
-	
-	if area.name == \"Hurt_box\":
-		health_amount = health_amount - 1
-		HealthBar.health = health_amount
-		knockback(area.global_position)
+	if invincible == false:
+		if area.has_method(\"get_damage_amount_player\") and control_state:
+			var node = area as Node
+			health_amount = health_amount - node.get_damage_amount_player()
+			HealthBar.health = health_amount
+			print(\":D\", health_amount)
+		
+		if area.name == \"Hurt_box\":
+			health_amount = health_amount - 1
+			HealthBar.health = health_amount
+			print(area.get_node(\"CollisionShape2D\").shape)
+			knockback(area.global_position)
 
-	
-	#player dies
-	if health_amount <= 0:
-		var PlayerDeath_instance = PlayerDeath.instantiate() as Node2D
-		PlayerDeath_instance.global_position = global_position
-		get_parent().add_child(PlayerDeath_instance)
+		
+		#player dies
+		if health_amount <= 0:
+			var PlayerDeath_instance = PlayerDeath.instantiate() as Node2D
+			PlayerDeath_instance.global_position = global_position
+			get_parent().add_child(PlayerDeath_instance)
 		
 		
 func return_currency_amt():
@@ -150,29 +153,32 @@ func change_currency_amt(num1: int) -> int:
 
 
 func knockback(areaposition):
-	areaposition.x += 150
-	var knockback_direction = (global_position - areaposition).normalized()
-	velocity = knockback_direction * knockback_power
-	if abs(knockback_direction.x) < 0.2: 
-		knockback_direction.x = 0.2 * sign(knockback_direction.x)
-	
-	velocity.x = knockback_direction.x * knockback_power
-	velocity.y = knockback_direction.y * knockback_power
-	
-	#adjust y knockback
-	if areaposition.y > self.global_position.y:
-		velocity.y *= .8
-	else:
-		velocity.y *= .8
-	print(areaposition, position)
-	control_state = false
-	for n in range(1,10):
-		if n == 5:
-			control_state = true
-		await get_tree().create_timer(.05).timeout
-		if last_direction.x + last_direction.y == 0:
-			break;
-	control_state = true
+	if not invincible:
+		invincible = true
+		areaposition.x += 150
+		var knockback_direction = (global_position - areaposition).normalized()
+		velocity = knockback_direction * knockback_power
+		if abs(knockback_direction.x) < 0.2: 
+			knockback_direction.x = 0.2 * sign(knockback_direction.x)
+		
+		velocity.x = knockback_direction.x * knockback_power
+		velocity.y = knockback_direction.y * knockback_power
+		
+		#adjust y knockback
+		if areaposition.y > self.global_position.y:
+			velocity.y *= .8
+		else:
+			velocity.y *= .8
+		print(areaposition, position)
+		control_state = false
+		for n in range(1,10):
+			if n == 5:
+				control_state = true
+			await get_tree().create_timer(.05).timeout
+			if last_direction.x + last_direction.y == 0:
+				break;
+		invincible = false
+		control_state = true
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4n4jn"]
@@ -183,8 +189,8 @@ size = Vector2(40, 53)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 position = Vector2(-147, -89)
-collision_layer = 11
-collision_mask = 11
+collision_layer = 13
+collision_mask = 13
 script = SubResource("GDScript_l0uhj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
