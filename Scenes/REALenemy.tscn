@@ -18,7 +18,7 @@ tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/enabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.233333),
+"times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -35,7 +35,7 @@ _data = {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bb8wu"]
 shader = ExtResource("2_51o4t")
-shader_parameter/enabled = true
+shader_parameter/enabled = false
 shader_parameter/tint = Color(1, 1, 1, 1)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gek5r"]
