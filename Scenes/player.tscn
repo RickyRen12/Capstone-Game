@@ -14,6 +14,7 @@ var PlayerDeath = preload(\"res://Scenes/player_death.tscn\")
 var proj = preload(\"res://Scenes/knife.tscn\")
 @onready var HealthBar = $CanvasLayer/Healthbar
 
+var projectile_damage: int = 5
 var last_direction = Vector2.ZERO
 var speed = 250
 var weapon_equipped = false
@@ -63,7 +64,6 @@ func _physics_process(delta):
 	
 	#Shooting mechanic
 	if Input.is_action_just_pressed(\"e\"):
-		print(shotgun)
 		if weapon_equipped:
 			weapon_equipped = false
 		else:
@@ -78,6 +78,7 @@ func _physics_process(delta):
 		var proj_instance = proj.instantiate()
 		proj_instance.rotation = $Marker2D.rotation
 		proj_instance.global_position = $Marker2D.global_position
+		proj_instance.set_damage_amount(projectile_damage)
 		add_child(proj_instance)
 		await get_tree().create_timer(0.4).timeout
 		weapon_cooldown = true
@@ -152,6 +153,14 @@ func change_currency_amt(num1: int) -> int:
 	return false
 
 
+
+func return_damage_amt_player():
+	return projectile_damage
+
+func change_damage_amt_player(num1: int) -> int:
+	projectile_damage = num1
+	return false
+	
 func knockback(areaposition):
 	if not invincible:
 		invincible = true
@@ -189,8 +198,8 @@ size = Vector2(40, 53)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 position = Vector2(-147, -89)
-collision_layer = 13
-collision_mask = 13
+collision_layer = 15
+collision_mask = 15
 script = SubResource("GDScript_l0uhj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

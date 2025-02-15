@@ -17,6 +17,10 @@ func _on_visible_on_screen_enabler_2d_screen_exited() -> void:
 func get_damage_amount() -> int:
 	return damage_amount	
 
+func set_damage_amount(num1: int) -> int:
+	damage_amount = num1
+	return false
+
 func _on_area_entered(area: Area2D) -> void:
 	print("area")
 

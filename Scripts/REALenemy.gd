@@ -4,6 +4,7 @@ var EnemyDeath = preload("res://Scenes/EnemyDeath.tscn")
 var coin = preload("res://Scenes/UI/coin.tscn")
 var proj = preload("res://Scenes/enemyProj.tscn") 
 @onready var HealthBar = $Healthbar
+@onready var hit_flash_animation = $Hit_flash_animation
 
 var rng = RandomNumberGenerator.new()
 var speed = 200
@@ -50,6 +51,7 @@ func _on_hurt_box_area_entered(area: Area2D):
 		health_amount = health_amount - node.get_damage_amount()
 		HealthBar.health = health_amount
 		print(health_amount)
+		hit_flash_animation.play("hit_flash")
 		
 	#kills enemy
 	if health_amount <= 0:
