@@ -9,7 +9,7 @@ enum Ability
 	none, double_or_nothing
 }
 
-#Dictionary for cooldowns, this is basically a hasmap, ITS JUST LIKE DATA STRUCTURES FR
+#Dictionary for cooldowns, this is basically a hashmap, ITS JUST LIKE DATA STRUCTURES FR
 var ability_cooldowns = {
 	Ability.double_or_nothing: 0.0
 }
@@ -44,7 +44,7 @@ func end_ability():
 #Ability definitions start here(what the abilities gonne do fr fr no capppppppp)
 func double_or_nothing():
 	if player:
-		player.chnage_damage_amount_player(player.get_damager_amount_player() * 2)
+		player.change_damage_mult_amt_player(2)
 		await get_tree().create_timer(5.0).timeout
-		player.chnage_damage_amount_player(player.get_damager_amount_player() / 2)
+		player.change_damage_mult_amt_player(1)
 	end_ability()
