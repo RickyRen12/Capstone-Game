@@ -46,5 +46,5 @@ func double_or_nothing():
 	if player:
 		player.chnage_damage_amount_player(player.get_damager_amount_player() * 2)
 		await get_tree().create_timer(5.0).timeout
-		player.chnage_damage_amount(player.get_damager_amount() / 2)
+		player.chnage_damage_amount_player(player.get_damager_amount_player() / 2)
 	end_ability()
