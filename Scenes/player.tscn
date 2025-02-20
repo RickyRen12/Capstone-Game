@@ -116,23 +116,30 @@ func swap_to_shotgun():
 	default_gun = false
 
 func Dash():
+	print(\"dash\")
 	dash_cooldown = false
 	var accel_temp = accel
 	var temp = speed
-	speed = speed * 4
+	speed = speed * 7
 	accel = 1000000000000000
-	for n in range(1,5):
-		await get_tree().create_timer(.04).timeout
+	for n in range(1,4):
+		await get_tree().create_timer(.01).timeout
 		if last_direction.x + last_direction.y == 0:
 			break;
 	speed = temp
 	accel = accel_temp
-	friction = friction * 4
-	await get_tree().create_timer(2).timeout
-	friction = friction / 4
+	friction = friction * 10
+	await get_tree().create_timer(0.1).timeout
+	friction = friction / 10
+	velocity = Vector2.ZERO
 	dash_cooldown = true
 
 func _on_detection_area_area_entered(area: Area2D) -> void:
+	#player dies
+	if health_amount <= 0:
+		var PlayerDeath_instance = PlayerDeath.instantiate() as Node2D
+		PlayerDeath_instance.global_position = global_position
+		get_parent().add_child(PlayerDeath_instance)
 	#taking projectile damage
 	if invincible == false:
 		if area.has_method(\"get_damage_amount_player\") and control_state:
@@ -145,11 +152,7 @@ func _on_detection_area_area_entered(area: Area2D) -> void:
 			health_amount -= damage_multiplier
 			HealthBar.health = health_amount
 			knockback(area.global_position)
-		#player dies
-		if health_amount <= 0:
-			var PlayerDeath_instance = PlayerDeath.instantiate() as Node2D
-			PlayerDeath_instance.global_position = global_position
-			get_parent().add_child(PlayerDeath_instance)
+
 
 func knockback(areaposition):
 	if not invincible:
@@ -219,7 +222,6 @@ position = Vector2(-6.5, 0)
 shape = SubResource("RectangleShape2D_4n4jn")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.1, 1.1)
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 script = ExtResource("1_sdejc")
