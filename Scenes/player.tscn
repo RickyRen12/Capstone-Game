@@ -13,7 +13,9 @@ extends CharacterBody2D
 var PlayerDeath = preload(\"res://Scenes/player_death.tscn\")
 var proj = preload(\"res://Scenes/knife.tscn\")
 @onready var HealthBar = $CanvasLayer/Healthbar
+var ability_manager = AbilityManager
 
+var equipped_ability
 var projectile_damage: int = 1
 var last_direction = Vector2.ZERO
 var speed = 250
@@ -39,11 +41,10 @@ func is_player():
 func _ready():
 	HealthBar.init_health(health_amount)
 	PlayerManager.set_player(self)
-
+	ability_manager.player = self
+	equipped_ability = ability_manager.Ability_nums.double_or_nothing
 
 func _physics_process(delta):
-
-		
 	#update direction and velocity
 	if(control_state):
 		var direction = Vector2.ZERO
@@ -96,14 +97,23 @@ func _physics_process(delta):
 			await get_tree().create_timer(0.05).timeout
 		await get_tree().create_timer(1).timeout
 		weapon_cooldown = true
-			
-	
+	if Input.is_action_just_pressed(\"ability\"):
+		if equipped_ability != ability_manager.Ability_nums.none:
+			ability_manager.use_ability(equipped_ability)
+		else:
+			print(\"No ability equipped boy\")
+
+func equip_ability(ability):
+	if ability in ability_manager.ability_cooldowns.keys():
+		equipped_ability = ability
+		print(\"Equipped ability: \", ability_manager.Ability_nums.keys()[ability])
+	else:
+		print(\"Are you fucking slow\")
 
 #functions to swap between shooting type/weapon
 func swap_to_shotgun():
 	shotgun = true
 	default_gun = false
-
 
 func Dash():
 	dash_cooldown = false
@@ -122,56 +132,24 @@ func Dash():
 	friction = friction / 4
 	dash_cooldown = true
 
-
 func _on_detection_area_area_entered(area: Area2D) -> void:
-	#taking damage
+	#taking projectile damage
 	if invincible == false:
 		if area.has_method(\"get_damage_amount_player\") and control_state:
 			var node = area as Node
-			health_amount = (health_amount - node.get_damage_amount_player()) * damage_multiplier
+			health_amount -= node.get_damage_amount_player() * damage_multiplier
 			HealthBar.health = health_amount
 			print(\":D\", health_amount)
-		
+		#taking touching damage
 		if area.name == \"Hurt_box\":
-			health_amount = health_amount - 1
+			health_amount -= damage_multiplier
 			HealthBar.health = health_amount
-			print(area.get_node(\"CollisionShape2D\").shape)
 			knockback(area.global_position)
-
-		
 		#player dies
 		if health_amount <= 0:
 			var PlayerDeath_instance = PlayerDeath.instantiate() as Node2D
 			PlayerDeath_instance.global_position = global_position
 			get_parent().add_child(PlayerDeath_instance)
-		
-		
-func return_currency_amt():
-	return currency_amt
-	
-	
-func change_currency_amt(num1: int) -> int:
-	currency_amt = currency_amt + num1
-	return false
-
-
-
-func return_damage_amt_player():
-	return projectile_damage
-
-func change_damage_amt_player(num1: int) -> int:
-	projectile_damage = num1
-	return false
-
-
-
-func return_damage_mult_amt_player():
-	return damage_multiplier
-
-func change_damage_mult_amt_player(num1: int) -> int:
-	damage_multiplier = num1
-	return false
-
 
 func knockback(areaposition):
 	if not invincible:
@@ -200,6 +178,28 @@ func knockback(areaposition):
 				break;
 		invincible = false
 		control_state = true
+
+#all the returns and changing of number variables and stuff
+func return_currency_amt():
+	return currency_amt
+
+func change_currency_amt(num1: int) -> int:
+	currency_amt = currency_amt + num1
+	return false
+
+func return_damage_amt_player():
+	return projectile_damage
+
+func change_damage_amt_player(num1: int) -> int:
+	projectile_damage = num1
+	return false
+
+func return_damage_taken_mult_player():
+	return damage_multiplier
+
+func change_damage_taken_mult_player(num1: int) -> int:
+	damage_multiplier = num1
+	return false
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4n4jn"]
