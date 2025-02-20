@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://cvej4fcfew3xl"]
+
+[ext_resource type="Texture2D" uid="uid://ce2bitdvfmyvt" path="res://Assets/UI/double.png" id="1_tb0dw"]
+
+[node name="ProgressBar" type="ProgressBar"]
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 9.0
+show_percentage = false
+
+[node name="Double" type="Sprite2D" parent="."]
+position = Vector2(8, 8.5)
+scale = Vector2(0.045082, 0.05)
+texture = ExtResource("1_tb0dw")
