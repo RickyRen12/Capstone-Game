@@ -7,12 +7,18 @@ var proj = preload("res://Scenes/enemyProj.tscn")
 @onready var hit_flash_animation = $Hit_flash_animation
 
 var rng = RandomNumberGenerator.new()
-var speed = 200
 var player_chase = false
 var will_shoot = false
 var gun_cooldown = true
 var player = null
 var health_amount : int = 10
+var chase_speed = 100
+var knockback_power = 1200
+#if you wanna make the enemy run away when hit make the knockback decay smaller
+var knockback_decay = 600
+var is_knocked_back = false  # Track knockback state
+var knockback = Vector2.ZERO
+
 
 func _ready():
 	HealthBar.init_health(health_amount)
@@ -20,19 +26,29 @@ func _ready():
 
 func _physics_process(delta):
 	if player_chase and player:
-		position += (player.position - position)/speed
+		var direction = (player.position - position).normalized()
+		knockback = knockback.move_toward(Vector2.ZERO, knockback_decay * delta)
+		velocity = velocity.move_toward(direction * chase_speed + knockback, 200 * delta)
 	else:
-		speed = 10000
+		velocity = Vector2.ZERO
 	move_and_collide(velocity * delta)
 
 	if player:
 		$Marker2D.look_at(player.position)
 	#enemy shooting
-	
+	if will_shoot and gun_cooldown and player:
+		gun_cooldown = false
+		var proj_instance = proj.instantiate()
+		proj_instance.rotation = $Marker2D.rotation
+		proj_instance.global_position = $Marker2D.global_position
+		add_child(proj_instance)
+		
+		await get_tree().create_timer(0.4).timeout
+		await get_tree().create_timer(1).timeout
+		gun_cooldown = true
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	player = body
-	speed = 200
 	player_chase = true
 	will_shoot = true
 
@@ -52,6 +68,8 @@ func _on_hurt_box_area_entered(area: Area2D):
 		HealthBar.health = health_amount
 		print(health_amount)
 		hit_flash_animation.play("hit_flash")
+		var knockback_direction = (global_position - area.global_position).normalized()
+		knockback = knockback_direction * knockback_power
 		
 	#kills enemy
 	if health_amount <= 0:
@@ -67,6 +85,3 @@ func _on_hurt_box_area_entered(area: Area2D):
 			get_parent().add_child(coin_instance)
 		
 		queue_free()
-
-
-	
