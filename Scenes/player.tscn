@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://crt118532wteg"]
+[gd_scene load_steps=8 format=3 uid="uid://crt118532wteg"]
 
 [ext_resource type="Script" path="res://Scripts/InteractionsAndGameElements/dynamic_cam.gd" id="1_sdejc"]
 [ext_resource type="Texture2D" uid="uid://1fnj36ywrnnx" path="res://Assets/Player/king-penguin-7795519_640.jpg" id="2_8kuay"]
 [ext_resource type="PackedScene" uid="uid://c0i538cetsg2x" path="res://Scenes/UI/healthbar.tscn" id="3_ywxrm"]
+[ext_resource type="PackedScene" uid="uid://d26by3t5qswud" path="res://ability_bar.tscn" id="4_s6ffl"]
 
 [sub_resource type="GDScript" id="GDScript_l0uhj"]
 script/source = "### Player.gd
@@ -269,5 +270,11 @@ offset_right = -35.0
 offset_bottom = -38.0
 grow_horizontal = 0
 grow_vertical = 0
+
+[node name="ProgressBar" parent="CanvasLayer" instance=ExtResource("4_s6ffl")]
+offset_left = 1078.0
+offset_top = 519.0
+offset_right = 1116.0
+offset_bottom = 575.0
 
 [connection signal="area_entered" from="Detection_area" to="." method="_on_detection_area_area_entered"]
