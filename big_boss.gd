@@ -12,7 +12,7 @@ var will_shoot = false
 var gun_cooldown = true
 var player = null
 var health_amount : int = 10
-var chase_speed = 250
+var chase_speed = 100
 var knockback_power = 1200
 #if you wanna make the enemy run away when hit make the knockback decay smaller
 var knockback_decay = 600
@@ -36,6 +36,7 @@ func _physics_process(delta):
 	if player:
 		$Marker2D.look_at(player.position)
 	#enemy shooting
+	var count = 0
 	if will_shoot and gun_cooldown and player:
 		gun_cooldown = false
 		var spread_angle = 0.2
@@ -45,8 +46,11 @@ func _physics_process(delta):
 			proj_instance.global_position = $Marker2D.global_position
 			add_child(proj_instance)
 		await get_tree().create_timer(0.1).timeout
+		count += 1
 		gun_cooldown = true
-	await get_tree().create_timer(1).timeout
+	if count == 20:
+		await get_tree().create_timer(3).timeout
+		count = 0
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	player = body

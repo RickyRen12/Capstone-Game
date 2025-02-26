@@ -134,12 +134,6 @@ func Dash():
 	dash_cooldown = true
 
 func _on_detection_area_area_entered(area: Area2D) -> void:
-	#player dies
-	if health_amount <= 0:
-		var PlayerDeath_instance = PlayerDeath.instantiate() as Node2D
-		PlayerDeath_instance.global_position = global_position
-		get_parent().add_child(PlayerDeath_instance)
-		SceneSwitcher.switch_scene(\"res://Scenes/death_screen.tscn\")
 	#taking projectile damage
 	if invincible == false:
 		if area.has_method(\"get_damage_amount_player\") and control_state:
@@ -152,7 +146,12 @@ func _on_detection_area_area_entered(area: Area2D) -> void:
 			health_amount -= damage_multiplier
 			HealthBar.health = health_amount
 			knockback(area.global_position)
-
+	#player dies
+	if health_amount <= 0:
+		var PlayerDeath_instance = PlayerDeath.instantiate() as Node2D
+		PlayerDeath_instance.global_position = global_position
+		get_parent().add_child(PlayerDeath_instance)
+		SceneSwitcher.switch_scene(\"res://Scenes/death_screen.tscn\")
 
 func knockback(areaposition):
 	if not invincible:

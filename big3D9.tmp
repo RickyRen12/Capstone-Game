@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://cxpm0yni6xl5m"]
+
+[ext_resource type="Script" path="res://big_boss.gd" id="1_mg8bs"]
+[ext_resource type="Texture2D" uid="uid://b3k2x6m28epvj" path="res://Assets/thefirstbossoffirstbosses.png" id="2_13rfu"]
+[ext_resource type="PackedScene" uid="uid://c0i538cetsg2x" path="res://Scenes/UI/healthbar.tscn" id="3_sylvn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0mkr7"]
+size = Vector2(160, 127.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qfmwe"]
+radius = 560.044
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hgfxi"]
+size = Vector2(159, 126)
+
+[node name="BigBoss" type="CharacterBody2D"]
+script = ExtResource("1_mg8bs")
+
+[node name="Thefirstbossoffirstbosses" type="Sprite2D" parent="."]
+position = Vector2(543, 312)
+scale = Vector2(0.359728, 0.354225)
+texture = ExtResource("2_13rfu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(543, 311.25)
+shape = SubResource("RectangleShape2D_0mkr7")
+
+[node name="Detection_area" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detection_area"]
+position = Vector2(542, 315)
+shape = SubResource("CircleShape2D_qfmwe")
+
+[node name="Hurt_box" type="Area2D" parent="."]
+position = Vector2(-133, 35)
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurt_box"]
+position = Vector2(676.5, 276)
+shape = SubResource("RectangleShape2D_hgfxi")
+debug_color = Color(0.965911, 0.148667, 0.286393, 0.42)
+
+[node name="Healthbar" parent="." instance=ExtResource("3_sylvn")]
+offset_left = 358.0
+offset_top = 218.0
+offset_right = 738.0
+offset_bottom = 237.0
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(542, 310)
+
+[connection signal="body_entered" from="Detection_area" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Detection_area" to="." method="_on_area_2d_body_exited"]
+[connection signal="area_entered" from="Hurt_box" to="." method="_on_hurt_box_area_entered"]
