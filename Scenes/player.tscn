@@ -139,6 +139,7 @@ func _on_detection_area_area_entered(area: Area2D) -> void:
 		var PlayerDeath_instance = PlayerDeath.instantiate() as Node2D
 		PlayerDeath_instance.global_position = global_position
 		get_parent().add_child(PlayerDeath_instance)
+		SceneSwitcher.switch_scene(\"res://Scenes/death_screen.tscn\")
 	#taking projectile damage
 	if invincible == false:
 		if area.has_method(\"get_damage_amount_player\") and control_state:
