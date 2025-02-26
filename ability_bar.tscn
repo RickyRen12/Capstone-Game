@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://d26by3t5qswud"]
+
+[ext_resource type="Script" path="res://ability_bar.gd" id="1_bfdfj"]
+[ext_resource type="Texture2D" uid="uid://ce2bitdvfmyvt" path="res://Assets/UI/double.png" id="1_l7fml"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r5akj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8gglf"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="ProgressBar" type="ProgressBar"]
+z_index = 21
+z_as_relative = false
+offset_left = -10.0
+offset_top = -14.0
+offset_right = 10.0
+offset_bottom = 16.0
+theme_override_styles/background = SubResource("StyleBoxEmpty_r5akj")
+theme_override_styles/fill = SubResource("StyleBoxFlat_8gglf")
+value = 50.0
+fill_mode = 3
+show_percentage = false
+script = ExtResource("1_bfdfj")
+
+[node name="Double" type="Sprite2D" parent="."]
+z_index = 20
+z_as_relative = false
+position = Vector2(10, 15)
+scale = Vector2(0.0911765, 0.0897059)
+texture = ExtResource("1_l7fml")
+region_enabled = true
+region_rect = Rect2(64, 0, 224, 340)

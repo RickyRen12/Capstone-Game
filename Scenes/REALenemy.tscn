@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/REALenemy.gd" id="1_wg5k5"]
 [ext_resource type="Texture2D" uid="uid://c4np4886gduow" path="res://Assets/Enemies/penguin.png" id="2_4vmgq"]
-[ext_resource type="Shader" uid="uid://b0miyfdixwuq4" path="res://Scenes/UI/hit_flash.tres" id="2_51o4t"]
+[ext_resource type="Shader" uid="uid://dp2tg3t1n14wg" path="res://Scenes/UI/hit_flash.tres" id="2_51o4t"]
 [ext_resource type="PackedScene" uid="uid://c0i538cetsg2x" path="res://Scenes/UI/healthbar.tscn" id="3_bkhu7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_64y1g"]
