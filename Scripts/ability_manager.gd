@@ -1,7 +1,8 @@
 extends Node
 
-var player: Node = null
 
+var player: Node = null
+var progress_bar : ProgressBar = null
 #number all of the abilities
 enum Ability_nums
 {
@@ -21,8 +22,7 @@ var ability_cooldown_durations = {
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-
+	progress_bar = get_node("CanvasLayer/ProgressBar")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -32,9 +32,11 @@ func _process(delta):
 			
 
 func use_ability(ability):
-	print("WORK")
 	if current_ability == Ability_nums.none and ability_cooldowns[ability] <= 0:
 		current_ability = ability
+		if progress_bar:
+			print("WOW")
+			progress_bar.bar_fill_up(int(ability_cooldown_durations[ability]))
 		match ability:
 			Ability_nums.double_or_nothing:
 				double_or_nothing()

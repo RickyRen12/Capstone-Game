@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://cxpm0yni6xl5m"]
 
-[ext_resource type="Script" path="res://big_boss.gd" id="1_mg8bs"]
+[ext_resource type="Script" path="res://Scripts/big_boss.gd" id="1_mg8bs"]
 [ext_resource type="Texture2D" uid="uid://b3k2x6m28epvj" path="res://Assets/thefirstbossoffirstbosses.png" id="2_13rfu"]
 [ext_resource type="PackedScene" uid="uid://c0i538cetsg2x" path="res://Scenes/UI/healthbar.tscn" id="3_sylvn"]
 

@@ -9,10 +9,11 @@ func _process(delta: float) -> void:
 	pass
 	
 func bar_fill_up(seconds: int) -> void:
+	set_value_no_signal(100)
 	var duration = float(seconds)
 	var time_elapsed = 0.0
 	while time_elapsed < duration:
 		await get_tree().create_timer(0.1).timeout # Small delay for smooth filling
 		time_elapsed += 0.1
-		value = (time_elapsed / duration) * max_value # Gradually fill up
+		value = max_value * (1 - (time_elapsed / duration)) # Gradually fill up
 	set_value_no_signal(0)
