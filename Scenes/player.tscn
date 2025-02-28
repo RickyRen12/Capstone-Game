@@ -157,6 +157,7 @@ func _on_detection_area_area_entered(area: Area2D) -> void:
 	if health_amount <= 0:
 		control_state = false
 		ability_bar.queue_free()
+		self.queue_free()
 		var PlayerDeath_instance = PlayerDeath.instantiate() as Node2D
 		PlayerDeath_instance.global_position = global_position
 		get_parent().add_child(PlayerDeath_instance)
