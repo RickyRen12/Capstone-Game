@@ -6,7 +6,7 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r5akj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8gglf"]
-bg_color = Color(0.389287, 0.389287, 0.389287, 1)
+bg_color = Color(0.419813, 0.419813, 0.419813, 0.737255)
 
 [node name="ProgressBar" type="ProgressBar"]
 z_index = 21
