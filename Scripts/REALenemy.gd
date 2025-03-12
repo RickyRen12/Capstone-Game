@@ -43,8 +43,7 @@ func _physics_process(delta):
 		proj_instance.global_position = $Marker2D.global_position
 		add_child(proj_instance)
 		
-		await get_tree().create_timer(0.4).timeout
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(1.4).timeout
 		gun_cooldown = true
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
