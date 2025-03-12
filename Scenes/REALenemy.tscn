@@ -1,12 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://cw318a1br2pnd"]
+[gd_scene load_steps=12 format=3 uid="uid://cw318a1br2pnd"]
 
 [ext_resource type="Script" path="res://Scripts/REALenemy.gd" id="1_wg5k5"]
 [ext_resource type="Texture2D" uid="uid://c4np4886gduow" path="res://Assets/Enemies/penguin.png" id="2_4vmgq"]
 [ext_resource type="Shader" uid="uid://b0miyfdixwuq4" path="res://Scenes/UI/hit_flash.tres" id="2_51o4t"]
 [ext_resource type="PackedScene" uid="uid://c0i538cetsg2x" path="res://Scenes/UI/healthbar.tscn" id="3_bkhu7"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_64y1g"]
-size = Vector2(94, 53)
 
 [sub_resource type="Animation" id="Animation_d3cnx"]
 length = 0.4
@@ -78,10 +75,6 @@ position = Vector2(0, -8)
 collision_layer = 5
 collision_mask = 5
 script = ExtResource("1_wg5k5")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -0.5)
-shape = SubResource("RectangleShape2D_64y1g")
 
 [node name="Marker2D" type="Marker2D" parent="."]
 
