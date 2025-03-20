@@ -8,6 +8,8 @@ var min_size  = 4
 var max_size = 10
 var hspread = 0
 var cull = 0.5 # chance to cull room
+var path  # AStar pathfinding object
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	randomize()
@@ -30,11 +32,33 @@ func make_rooms():
 	await get_tree().create_timer(1.1).timeout
 	print("POOOOOO")
 	#kill rooms
+	var room_positions = []
 	for room in $Rooms.get_children():
 		if randf() < cull:
 			room.queue_free()
 		else:
 			room.set_deferred("body_mode", RigidBody2D.FREEZE_MODE_STATIC)
+			room_positions.append(Vector3(room.position.x, room.position.y, 0))
+	await get_tree().process_frame
+	# generate spanning tree (path)
+	path = find_mst(room_positions)
+
+func find_mst(nodes):
+	# Prim's algorithm
+	# Given an array of positions (nodes), generates a minimum
+	# spanning tree
+	# Returns an AStar object
+
+	# Initialize the AStar and add the first point
+	var path = AStar2D.new()
+	path.add_point(path.get_available_point_id(), nodes.pop_front())
+	while nodes:
+		var min_dist = INF
+		var min_p = null
+		var p = null
+
+
+
 func _draw():
 	for room in $Rooms.get_children():
 		draw_rect(Rect2(room.position - room.size, room.size * 2), Color(252, 255, 255), false)
