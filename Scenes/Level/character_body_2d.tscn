@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://d06qbn8qmi6qk"]
+
+[ext_resource type="Script" path="res://Scripts/Level/character_body_2d.gd" id="1_jh3pi"]
+
+[node name="CharacterBody2D" type="RigidBody2D"]
+lock_rotation = true
+script = ExtResource("1_jh3pi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]

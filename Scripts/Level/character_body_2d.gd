@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends RigidBody2D
 
 var size
 
@@ -7,3 +7,5 @@ func make_room(_pos, _size):
 	size = _size
 	var s = RectangleShape2D.new()
 	s.extents = size
+	s.custom_solver_bias = 0.75
+	$CollisionShape2D.shape = s
