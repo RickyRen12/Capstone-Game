@@ -6,10 +6,10 @@ var Player = preload("res://Scenes/player.tscn")
 
 var tile_size = 32
 var num_rooms = 50
-var min_size  = 10
-var max_size = 14
+var min_size  = 15
+var max_size = 20
 var hspread = 70
-var path_thickness = 3  # Set this to control the thickness of the paths (e.g., 2 for 2 tiles wide)
+var path_thickness = 7  # Set this to control the thickness of the paths (e.g., 2 for 2 tiles wide)
 var cull = 0.5 # chance to cull room
 var path  # AStar pathfinding object
 
@@ -216,18 +216,18 @@ func find_mst(nodes):
 	return path
 
 
-#func _draw():
-	#for room in $Rooms.get_children():
-		#draw_rect(Rect2(room.position - room.size, room.size * 2),
-			#Color(0, 1, 0), false)
-	#if path:
-		#for p in path.get_point_ids():
-			#for c in path.get_point_connections(p):
-				#var pp = path.get_point_position(p)
-				#var cp = path.get_point_position(c)
-				#draw_line(Vector2(pp.x, pp.y),
-					#Vector2(cp.x, cp.y),
-					#Color(1, 1, 0, 1), 15, true)
+func _draw():
+	for room in $Rooms.get_children():
+		draw_rect(Rect2(room.position - room.size, room.size * 2),
+			Color(0, 1, 0), false)
+	if path:
+		for p in path.get_point_ids():
+			for c in path.get_point_connections(p):
+				var pp = path.get_point_position(p)
+				var cp = path.get_point_position(c)
+				draw_line(Vector2(pp.x, pp.y),
+					Vector2(cp.x, cp.y),
+					Color(1, 1, 0, 1), 15, true)
 
 
 
