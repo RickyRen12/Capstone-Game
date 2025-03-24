@@ -1,17 +1,22 @@
 extends Node2D
 
 var Room = preload("res://Scenes/Level/character_body_2d.tscn")
+var Player = preload("res://Scenes/player.tscn")
+
 
 var tile_size = 32
 var num_rooms = 50
-var min_size  = 8
-var max_size = 12
+var min_size  = 10
+var max_size = 14
 var hspread = 70
 var path_thickness = 3  # Set this to control the thickness of the paths (e.g., 2 for 2 tiles wide)
 var cull = 0.5 # chance to cull room
 var path  # AStar pathfinding object
+
 var start_room = null
 var end_room = null
+var play_mode = false
+var player = null
 
 @onready var Map = $TileMap
 
@@ -52,9 +57,11 @@ func make_rooms():
 
 func make_map():
 	print("Generating map...")
+	find_start_room()
+	find_end_room()
 	# Clear the TileMap
 	Map.clear()
-
+	
 	# Fill TileMap with walls and carve out empty spaces
 	var full_rect = Rect2()
 	for room in $Rooms.get_children():
@@ -144,20 +151,35 @@ func carve_path(pos1, pos2):
 				for j in range(path_thickness):
 					Map.set_cell(0, Vector2i(x2 + i, y + j), 0, Vector2i(0, 0))
 
-#
-#func find_start_room():
-	#var min_x = INF
-	#for room in $Rooms.get_children():
-		#if room.position.x < min_x:
-			#start_room = room
-			#min_x = room.position.x
-#
-#func find_end_room():
-	#var max_x = -INF
-	#for room in $Rooms.get_children():
-		#if room.position.x > max_x:
-			#end_room = room
-			#max_x = room.position.x
+
+func find_start_room():
+	var min_x = INF  # Initialize with a very large value
+	start_room = null  # Reset the start_room variable
+	
+	# Loop through all rooms to find the leftmost room
+	for room in $Rooms.get_children():
+		if room.position.x < min_x:
+			start_room = room
+			min_x = room.position.x
+	
+	# Ensure the start_room is valid
+	if start_room:
+		print("Start Room Found: ", start_room.name)
+		print("Start Room Position: ", start_room.position)
+		print("Start Room Size: ", start_room.size)
+		
+		# Calculate the center of the start room
+		var start_room_center = start_room.position + (start_room.size / 2)
+		print("Start Room Center: ", start_room_center)
+	else:
+		print("Error: No start room found!")
+
+func find_end_room():
+	var max_x = -INF
+	for room in $Rooms.get_children():
+		if room.position.x > max_x:
+			end_room = room
+			max_x = room.position.x
 
 
 func find_mst(nodes):
@@ -214,5 +236,26 @@ func _input(event):
 		for n in $Rooms.get_children():
 			n.queue_free()
 		make_rooms()
+		
 	if event.is_action_pressed('ui_focus_next'):
 		make_map()
+		
+	if event.is_action_pressed("ui_cancel"):
+		var player = Player.instantiate()  # Instantiate the player scene
+		add_child(player)  # Add the player to the scene tree
+		
+		# Ensure the start_room is valid
+		if start_room:
+			# Calculate the center of the start room
+			var start_room_center = start_room.position + (start_room.size / 2)
+			player.position = start_room_center  # Set the player's position to the center of the start room
+		else:
+			print("Error: No start room found!")
+		
+		# Switch to the player's camera
+		if player.has_node("Camera2D"):  # Ensure the player has a Camera2D node
+			print("Player Position: ", player.position) 
+			var player_camera = player.get_node("Camera2D")
+			player_camera.make_current()  # Set the player's camera as the active camera
+		
+		play_mode = true  # Enable play mode
