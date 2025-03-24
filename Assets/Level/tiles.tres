@@ -1,0 +1,22 @@
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://diuc361phhicu"]
+
+[ext_resource type="Texture2D" uid="uid://co007wtfqwwao" path="res://Assets/Level/Black.png" id="1_5tiw3"]
+[ext_resource type="Texture2D" uid="uid://bqtaigmimhce2" path="res://Assets/Level/Grey.png" id="2_17gyq"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w0wq6"]
+texture = ExtResource("1_5tiw3")
+0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_plc46"]
+texture = ExtResource("2_17gyq")
+0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+
+[resource]
+sources/2 = SubResource("TileSetAtlasSource_plc46")
+sources/1 = SubResource("TileSetAtlasSource_w0wq6")
