@@ -4,9 +4,10 @@ var Room = preload("res://Scenes/Level/character_body_2d.tscn")
 
 var tile_size = 32
 var num_rooms = 50
-var min_size  = 4
-var max_size = 10
-var hspread = 0
+var min_size  = 8
+var max_size = 12
+var hspread = 70
+var path_thickness = 3  # Set this to control the thickness of the paths (e.g., 2 for 2 tiles wide)
 var cull = 0.5 # chance to cull room
 var path  # AStar pathfinding object
 var start_room = null
@@ -52,8 +53,6 @@ func make_rooms():
 func make_map():
 	print("Generating map...")
 	# Clear the TileMap
-	#find_start_room()
-	#find_start_room()
 	Map.clear()
 
 	# Fill TileMap with walls and carve out empty spaces
@@ -78,7 +77,7 @@ func make_map():
 			Map.set_cell(0, Vector2i(x, y), 1, Vector2i(0, 0))
 
 	# Carve rooms and corridors
-	var corridors = []  # Track carved corridors to avoid duplicates
+	var carved_connections = {}  # Track which connections have already been carved
 	for room in $Rooms.get_children():
 		var collision_shape = room.get_node("CollisionShape2D")
 		if collision_shape and collision_shape.shape:
@@ -102,39 +101,48 @@ func make_map():
 					Map.set_cell(0, Vector2i(x, y), 0, Vector2i(0, 0))
 
 			# Carve out corridors
-			var closest_point = path.get_closest_point(Vector2(room.position.x, room.position.y))
+			var closest_point = path.get_closest_point(room.position)
 			for connection in path.get_point_connections(closest_point):
-				if not connection in corridors:
-					var start = Map.local_to_map(Vector2(path.get_point_position(closest_point).x, path.get_point_position(closest_point).y))
-					var end = Map.local_to_map(Vector2(path.get_point_position(connection).x, path.get_point_position(connection).y))
+				# Create a unique key for the connection to avoid duplicates
+				var key = str(min(closest_point, connection)) + "-" + str(max(closest_point, connection))
+				if not carved_connections.has(key):
+					var start = Map.local_to_map(path.get_point_position(closest_point))
+					var end = Map.local_to_map(path.get_point_position(connection))
 					carve_path(start, end)
-					corridors.append(connection)
+					carved_connections[key] = true  # Mark this connection as carved
 		else:
 			print("Warning: Room missing CollisionShape2D or shape:", room.name)
 
 	print("Map generation complete.")
 
 
-func carve_path(start: Vector2i, end: Vector2i):
-	# Carves a path between two points
-	var x_diff = sign(end.x - start.x)
-	var y_diff = sign(end.y - start.y)
+
+
+func carve_path(pos1, pos2):
+	# Carve a straight horizontal or vertical path between two points
+	var x1 = pos1.x
+	var y1 = pos1.y
+	var x2 = pos2.x
+	var y2 = pos2.y
 	
-	# Handle cases where x_diff or y_diff is 0
-	if x_diff == 0:
-		x_diff = 1  # Default to moving right
-	if y_diff == 0:
-		y_diff = 1  # Default to moving down
-
-	# Carve along the x-axis
-	for x in range(start.x, end.x + x_diff, x_diff):
-		Map.set_cell(0, Vector2i(x, start.y), 0, Vector2i(0, 0))  # Carve the main path
-		Map.set_cell(0, Vector2i(x, start.y + y_diff), 0, Vector2i(0, 0))  # Widen the path
-
-	# Carve along the y-axis
-	for y in range(start.y, end.y + y_diff, y_diff):
-		Map.set_cell(0, Vector2i(end.x, y), 0, Vector2i(0, 0))  # Carve the main path
-		Map.set_cell(0, Vector2i(end.x + x_diff, y), 0, Vector2i(0, 0))  # Widen the path
+	# Carve horizontally first, then vertically
+	if x1 != x2:
+		# Horizontal path
+		var step = 1 if x2 > x1 else -1
+		for x in range(x1, x2 + step, step):
+			# Carve a path_thickness x path_thickness area to widen the corridor
+			for i in range(path_thickness):
+				for j in range(path_thickness):
+					Map.set_cell(0, Vector2i(x + i, y1 + j), 0, Vector2i(0, 0))
+	
+	if y1 != y2:
+		# Vertical path
+		var step = 1 if y2 > y1 else -1
+		for y in range(y1, y2 + step, step):
+			# Carve a path_thickness x path_thickness area to widen the corridor
+			for i in range(path_thickness):
+				for j in range(path_thickness):
+					Map.set_cell(0, Vector2i(x2 + i, y + j), 0, Vector2i(0, 0))
 
 #
 #func find_start_room():
@@ -153,29 +161,36 @@ func carve_path(start: Vector2i, end: Vector2i):
 
 
 func find_mst(nodes):
-	#Prim's algorithm
+	# Prim's algorithm to generate a Minimum Spanning Tree (MST)
 	path = AStar2D.new()
 	path.add_point(path.get_available_point_id(), nodes.pop_front())
 	
-	#repeat until no more node remains
+	# Repeat until no more nodes remain
 	while nodes:
-		var minD = INF #minimum distance so far
-		var minP = null #position of that node
-		var p = null #current position
-		#loop through all points in the path
+		var minD = INF  # Minimum distance so far
+		var minP = null  # Position of the closest node
+		var p = null  # Current position in the path
+		
+		# Loop through all points in the path
 		for p1 in path.get_point_ids():
-			var p3
-			p3 = path.get_point_position(p1)
-			#loop though the remaining nodes
+			var p3 = path.get_point_position(p1)
+			# Loop through the remaining nodes
 			for p2 in nodes:
 				if p3.distance_to(p2) < minD:
 					minD = p3.distance_to(p2)
 					minP = p2
 					p = p3
+		
+		# Add the closest node to the path
 		var n = path.get_available_point_id()
 		path.add_point(n, minP)
-		path.connect_points(path.get_closest_point(p), n)
+		
+		# Ensure no duplicate connections
+		if not path.are_points_connected(path.get_closest_point(p), n):
+			path.connect_points(path.get_closest_point(p), n)
+		
 		nodes.erase(minP)
+	
 	return path
 
 

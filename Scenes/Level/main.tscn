@@ -9,7 +9,7 @@ script = ExtResource("1_iyd5s")
 [node name="Rooms" type="Node" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.075, 0.075)
+zoom = Vector2(0.05, 0.05)
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("2_y0ymk")
