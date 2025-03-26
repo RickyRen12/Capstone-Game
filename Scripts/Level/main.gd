@@ -88,35 +88,32 @@ func make_map():
 	for room in $Rooms.get_children():
 		var collision_shape = room.get_node("CollisionShape2D")
 		if collision_shape and collision_shape.shape:
-			# Scale up the room size (e.g., 1.5x bigger)
+			# Scale up the room size (e.g., 1.75x bigger)
 			var scale_factor = 1.75  # Adjust this value to make rooms bigger or smaller
 			var scaled_room_size = room.size * scale_factor
 			
-			# Calculate room size in tiles
+			# Calculate room size in tiles (scaled)
 			var room_size_tiles = (scaled_room_size / tile_size).floor()
-			
-			# Convert room_size_tiles to Vector2i
 			var room_size_tiles_int = Vector2i(room_size_tiles)
 
 			# Calculate the room's top-left corner in tile coordinates
 			var room_center_tile = Map.local_to_map(room.position)
 			var room_top_left_tile = room_center_tile - room_size_tiles_int
 
-			# Carve out the room (tile ID 0)
-			for x in range(room_top_left_tile.x, room_top_left_tile.x + room_size_tiles_int.x * 2):
-				for y in range(room_top_left_tile.y, room_top_left_tile.y + room_size_tiles_int.y * 2):
+			# Carve out the INNER part of the room (leaving a 2-tile border)
+			for x in range(room_top_left_tile.x + 2, room_top_left_tile.x + room_size_tiles_int.x * 2 - 2):
+				for y in range(room_top_left_tile.y + 2, room_top_left_tile.y + room_size_tiles_int.y * 2 - 2):
 					Map.set_cell(0, Vector2i(x, y), 0, Vector2i(0, 0))
 
-			# Carve out corridors
+			# Carve out corridors (unchanged)
 			var closest_point = path.get_closest_point(room.position)
 			for connection in path.get_point_connections(closest_point):
-				# Create a unique key for the connection to avoid duplicates
 				var key = str(min(closest_point, connection)) + "-" + str(max(closest_point, connection))
 				if not carved_connections.has(key):
 					var start = Map.local_to_map(path.get_point_position(closest_point))
 					var end = Map.local_to_map(path.get_point_position(connection))
 					carve_path(start, end)
-					carved_connections[key] = true  # Mark this connection as carved
+					carved_connections[key] = true
 		else:
 			print("Warning: Room missing CollisionShape2D or shape:", room.name)
 
