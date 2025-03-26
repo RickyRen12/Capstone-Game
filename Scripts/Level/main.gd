@@ -100,7 +100,7 @@ func make_map():
 			var room_center_tile = Map.local_to_map(room.position)
 			var room_top_left_tile = room_center_tile - room_size_tiles_int
 
-			# Carve out the INNER part of the room (leaving a 2-tile border)
+			# Carve out the INNER part of the room (leaving a 2-tile border) idk why it doesnt work tho
 			for x in range(room_top_left_tile.x + 2, room_top_left_tile.x + room_size_tiles_int.x * 2 - 2):
 				for y in range(room_top_left_tile.y + 2, room_top_left_tile.y + room_size_tiles_int.y * 2 - 2):
 					Map.set_cell(0, Vector2i(x, y), 0, Vector2i(0, 0))
