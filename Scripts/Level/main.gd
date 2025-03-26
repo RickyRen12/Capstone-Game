@@ -66,6 +66,7 @@ func make_map():
 	var full_rect = Rect2()
 	for room in $Rooms.get_children():
 		var collision_shape = room.get_node("CollisionShape2D")
+		collision_shape.set_deferred("disabled", true)
 		if collision_shape and collision_shape.shape:
 			# Calculate the room's bounding rectangle in world coordinates
 			var room_size = collision_shape.shape.size * 2
@@ -77,16 +78,19 @@ func make_map():
 	# Convert world coordinates to tilemap coordinates
 	var topleft = Map.local_to_map(full_rect.position)
 	var bottomright = Map.local_to_map(full_rect.end)
+	
 
 	# Fill the TileMap with walls (tile ID 1)
-	for x in range(topleft.x, bottomright.x + 1):
-		for y in range(topleft.y, bottomright.y + 1):
-			Map.set_cell(0, Vector2i(x, y), 1, Vector2i(0, 0))
+	for x in range(topleft.x/3, bottomright.x / 3 + 1):
+		for y in range(topleft.y/3, bottomright.y + 1/3 + 1):
+			Map.set_cell(0, Vector2i(x*3, y*3), 1, Vector2i(0, 0))
+			
 
 	# Carve rooms and corridors
 	var carved_connections = {}  # Track which connections have already been carved
 	for room in $Rooms.get_children():
 		var collision_shape = room.get_node("CollisionShape2D")
+		
 		if collision_shape and collision_shape.shape:
 			# Scale up the room size (e.g., 1.75x bigger)
 			var scale_factor = 1.75  # Adjust this value to make rooms bigger or smaller
@@ -102,10 +106,10 @@ func make_map():
 
 			# Carve out the INNER part of the room (leaving a 2-tile border) idk why it doesnt work tho
 			for x in range(room_top_left_tile.x + 2, room_top_left_tile.x + room_size_tiles_int.x * 2 - 2):
-				for y in range(room_top_left_tile.y + 2, room_top_left_tile.y + room_size_tiles_int.y * 2 - 2):
+				for y in range(room_top_left_tile.y + 2, room_top_left_tile.y + room_size_tiles_int.y * 2 - 2):	
 					Map.set_cell(0, Vector2i(x, y), 0, Vector2i(0, 0))
 
-			# Carve out corridors (unchanged)
+			# Carve out corridors 
 			var closest_point = path.get_closest_point(room.position)
 			for connection in path.get_point_connections(closest_point):
 				var key = str(min(closest_point, connection)) + "-" + str(max(closest_point, connection))
