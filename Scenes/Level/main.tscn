@@ -13,5 +13,4 @@ zoom = Vector2(0.05, 0.05)
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("2_y0ymk")
-collision_visibility_mode = 1
 format = 2

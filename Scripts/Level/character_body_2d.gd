@@ -9,3 +9,7 @@ func make_room(_pos, _size):
 	s.extents = size
 	s.custom_solver_bias = 0.75
 	$CollisionShape2D.shape = s
+
+
+#func spawn_enemies():
+	
