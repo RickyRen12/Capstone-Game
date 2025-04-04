@@ -5,13 +5,15 @@ var Player = preload("res://Scenes/player.tscn")
 
 
 var tile_size = 32
-var num_rooms = 50
+var num_rooms = 75
 var min_size  = 15
 var max_size = 20
 var hspread = 70
 var path_thickness = 7  # Set this to control the thickness of the paths (e.g., 2 for 2 tiles wide)
 var cull = 0.5 # chance to cull room
 var path  # AStar pathfinding object
+var current_room = null
+var door_collision_shapes = []  # Store all door collision shapes
 
 var start_room = null
 var end_room = null
@@ -59,98 +61,80 @@ func make_map():
 	print("Generating map...")
 	find_start_room()
 	find_end_room()
-	# Clear the TileMap
 	Map.clear()
 	
-	# Fill TileMap with walls and carve out empty spaces
-	var full_rect = Rect2()
 	for room in $Rooms.get_children():
 		var collision_shape = room.get_node("CollisionShape2D")
-		collision_shape.set_deferred("disabled", true)
-		if collision_shape and collision_shape.shape:
-			# Calculate the room's bounding rectangle in world coordinates
-			var room_size = collision_shape.shape.size * 2
-			var room_rect = Rect2(room.position - room.size, room_size)
-			full_rect = full_rect.merge(room_rect)
-		else:
-			print("Warning: Room missing CollisionShape2D or shape:", room.name)
-
-	# Convert world coordinates to tilemap coordinates
-	var topleft = Map.local_to_map(full_rect.position)
-	var bottomright = Map.local_to_map(full_rect.end)
+		if collision_shape:
+			collision_shape.disabled = true
 	
-
-	# Fill the TileMap with walls (tile ID 1)
-	for x in range(topleft.x/3, bottomright.x / 3 + 1):
-		for y in range(topleft.y/3, bottomright.y + 1/3 + 1):
-			Map.set_cell(0, Vector2i(x*3, y*3), 1, Vector2i(0, 0))
-			
-
-	# Carve rooms and corridors
-	var carved_connections = {}  # Track which connections have already been carved
+	var floor_tiles = {}
+	
+	var carved_connections = {}
 	for room in $Rooms.get_children():
 		var collision_shape = room.get_node("CollisionShape2D")
 		
 		if collision_shape and collision_shape.shape:
-			# Scale up the room size (e.g., 1.75x bigger)
-			var scale_factor = 1.75  # Adjust this value to make rooms bigger or smaller
+			var scale_factor = 1.75
 			var scaled_room_size = room.size * scale_factor
-			
-			# Calculate room size in tiles (scaled)
 			var room_size_tiles = (scaled_room_size / tile_size).floor()
 			var room_size_tiles_int = Vector2i(room_size_tiles)
-
-			# Calculate the room's top-left corner in tile coordinates
 			var room_center_tile = Map.local_to_map(room.position)
 			var room_top_left_tile = room_center_tile - room_size_tiles_int
 
-			# Carve out the INNER part of the room (leaving a 2-tile border) idk why it doesnt work tho
 			for x in range(room_top_left_tile.x + 2, room_top_left_tile.x + room_size_tiles_int.x * 2 - 2):
 				for y in range(room_top_left_tile.y + 2, room_top_left_tile.y + room_size_tiles_int.y * 2 - 2):	
+					floor_tiles[Vector2i(x, y)] = true
 					Map.set_cell(0, Vector2i(x, y), 0, Vector2i(0, 0))
 
-			# Carve out corridors 
 			var closest_point = path.get_closest_point(room.position)
 			for connection in path.get_point_connections(closest_point):
 				var key = str(min(closest_point, connection)) + "-" + str(max(closest_point, connection))
 				if not carved_connections.has(key):
 					var start = Map.local_to_map(path.get_point_position(closest_point))
 					var end = Map.local_to_map(path.get_point_position(connection))
-					carve_path(start, end)
+					carve_path(start, end, floor_tiles)
 					carved_connections[key] = true
-		else:
-			print("Warning: Room missing CollisionShape2D or shape:", room.name)
 
-	print("Map generation complete.")
+	var directions = [
+		Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT,
+		Vector2i(-1, -1), Vector2i(-1, 1), Vector2i(1, -1), Vector2i(1, 1)
+	]
+	
+	var wall_tiles = {}
+	
+	for floor_pos in floor_tiles:
+		for dir in directions:
+			var wall_pos = floor_pos + dir
+			if not floor_tiles.has(wall_pos):
+				wall_tiles[wall_pos] = true
+	
+	for wall_pos in wall_tiles:
+		Map.set_cell(0, wall_pos, 1, Vector2i(0, 0))
 
-
-
-
-func carve_path(pos1, pos2):
-	# Carve a straight horizontal or vertical path between two points
+func carve_path(pos1, pos2, floor_tiles):
 	var x1 = pos1.x
 	var y1 = pos1.y
 	var x2 = pos2.x
 	var y2 = pos2.y
 	
-	# Carve horizontally first, then vertically
 	if x1 != x2:
-		# Horizontal path
 		var step = 1 if x2 > x1 else -1
 		for x in range(x1, x2 + step, step):
-			# Carve a path_thickness x path_thickness area to widen the corridor
 			for i in range(path_thickness):
 				for j in range(path_thickness):
-					Map.set_cell(0, Vector2i(x + i, y1 + j), 0, Vector2i(0, 0))
+					var pos = Vector2i(x + i, y1 + j)
+					floor_tiles[pos] = true
+					Map.set_cell(0, pos, 0, Vector2i(0, 0))
 	
 	if y1 != y2:
-		# Vertical path
 		var step = 1 if y2 > y1 else -1
 		for y in range(y1, y2 + step, step):
-			# Carve a path_thickness x path_thickness area to widen the corridor
 			for i in range(path_thickness):
 				for j in range(path_thickness):
-					Map.set_cell(0, Vector2i(x2 + i, y + j), 0, Vector2i(0, 0))
+					var pos = Vector2i(x2 + i, y + j)
+					floor_tiles[pos] = true
+					Map.set_cell(0, pos, 0, Vector2i(0, 0))
 
 
 func find_start_room():
