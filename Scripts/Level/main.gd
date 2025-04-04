@@ -81,9 +81,9 @@ func make_map():
 	
 
 	# Fill the TileMap with walls (tile ID 1)
-	for x in range(topleft.x/1, bottomright.x / 1 + 1):
-		for y in range(topleft.y/1, bottomright.y + 1/1 + 1):
-			Map.set_cell(0, Vector2i(x*1, y*1), 1, Vector2i(0, 0))
+	for x in range(topleft.x/3, bottomright.x / 3 + 1):
+		for y in range(topleft.y/3, bottomright.y + 1/3 + 1):
+			Map.set_cell(0, Vector2i(x*3, y*3), 1, Vector2i(0, 0))
 			
 
 	# Carve rooms and corridors
@@ -141,7 +141,7 @@ func carve_path(pos1, pos2):
 			# Carve a path_thickness x path_thickness area to widen the corridor
 			for i in range(path_thickness):
 				for j in range(path_thickness):
-					Map.set_cell(0, Vector2i(x + i, y1 + j), 0, Vector2i(1, 0))
+					Map.set_cell(0, Vector2i(x + i, y1 + j), 0, Vector2i(0, 0))
 	
 	if y1 != y2:
 		# Vertical path
@@ -150,7 +150,7 @@ func carve_path(pos1, pos2):
 			# Carve a path_thickness x path_thickness area to widen the corridor
 			for i in range(path_thickness):
 				for j in range(path_thickness):
-					Map.set_cell(0, Vector2i(x2 + i, y + j), 0, Vector2i(1, 0))
+					Map.set_cell(0, Vector2i(x2 + i, y + j), 0, Vector2i(0, 0))
 
 
 func find_start_room():
