@@ -13,7 +13,7 @@ var path_thickness = 7  # Set this to control the thickness of the paths (e.g., 
 var cull = 0.5 # chance to cull room
 var path  # AStar pathfinding object
 var current_room = null
-var door_collision_shapes = []  # Store all door collision shapes
+var door_areas = []  # Store all door collision shapes
 
 var start_room = null
 var end_room = null
@@ -21,10 +21,17 @@ var play_mode = false
 var player = null
 
 @onready var Map = $TileMap
+@onready var doors_node = $Doors
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	randomize()
+	# Ensure we have a node to hold doors
+	if not has_node("Doors"):
+		var doors = Node.new()
+		doors.name = "Doors"
+		add_child(doors)
+		doors_node = doors
 	make_rooms()
 
 func _process(delta):
@@ -51,6 +58,14 @@ func make_rooms():
 		else:
 			room.freeze = true
 			room_positions.append(Vector2(room.position.x, room.position.y))
+			
+	var pos = Vector2(randf_range(-hspread, hspread), 0)
+	var r = Room.instantiate()
+	var w = min_size + randi() % (max_size - min_size)
+	var h = min_size + randi() % (max_size - min_size)
+	r.make_room(pos, Vector2(w,h) * tile_size) 
+	$Rooms.add_child(r)
+	
 	await get_tree().process_frame
 	# generate spanning tree (path)
 	path = find_mst(room_positions)
@@ -69,8 +84,8 @@ func make_map():
 			collision_shape.disabled = true
 	
 	var floor_tiles = {}
-	
 	var carved_connections = {}
+	
 	for room in $Rooms.get_children():
 		var collision_shape = room.get_node("CollisionShape2D")
 		
@@ -111,6 +126,10 @@ func make_map():
 	
 	for wall_pos in wall_tiles:
 		Map.set_cell(0, wall_pos, 1, Vector2i(0, 0))
+		
+	# Add door areas after map generation
+	for room in $Rooms.get_children():
+		add_door_areas(room)
 
 func carve_path(pos1, pos2, floor_tiles):
 	var x1 = pos1.x
@@ -135,6 +154,49 @@ func carve_path(pos1, pos2, floor_tiles):
 					var pos = Vector2i(x2 + i, y + j)
 					floor_tiles[pos] = true
 					Map.set_cell(0, pos, 0, Vector2i(0, 0))
+
+
+func add_door_areas(room: Node2D) -> void:
+	if not path or not is_instance_valid(room):
+		return
+
+	var room_point = path.get_closest_point(room.position)
+	
+	for connected_point in path.get_point_connections(room_point):
+		var room_pos = path.get_point_position(room_point)
+		var other_room_pos = path.get_point_position(connected_point)
+		var direction = (other_room_pos - room_pos).normalized()
+		
+		# Calculate exact door position
+		var door_pos = room_pos
+		var shape_extents = Vector2.ZERO
+		
+		if abs(direction.x) > abs(direction.y):  # Horizontal corridor
+			shape_extents = Vector2(tile_size * 0.25, path_thickness * tile_size * 2)
+			door_pos.x += sign(direction.x) * (room.size.x - tile_size)
+		else:  # Vertical corridor
+			shape_extents = Vector2(path_thickness * tile_size * 2, tile_size * 0.25)
+			door_pos.y += sign(direction.y) * (room.size.y - tile_size)
+		
+		# Create and configure door area
+		var door_area = Area2D.new()
+		door_area.name = "DoorArea_%s" % connected_point
+		door_area.collision_mask = 1
+		door_area.position = door_pos
+		
+		# Set up collision
+		var collision = CollisionShape2D.new()
+		var shape = RectangleShape2D.new()
+		shape.extents = shape_extents
+		collision.shape = shape
+		door_area.add_child(collision)
+		
+		# Add to scene tree
+		doors_node.add_child(door_area)
+		
+		# Connect signals
+		door_area.connect("body_entered", Callable(self, "area_entered"))
+		door_area.connect("body_exited", Callable(self, "area_exited").bind(room))
 
 
 func find_start_room():
