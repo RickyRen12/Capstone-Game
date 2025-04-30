@@ -2,6 +2,7 @@ extends Node2D
 
 var Room = preload("res://Scenes/Level/character_body_2d.tscn")
 var Player = preload("res://Scenes/player.tscn")
+var enemy = preload("res://Scenes/REALenemy.tscn")
 
 
 var tile_size = 32
@@ -217,6 +218,9 @@ func _on_door_exited(body: Node, door_area: Area2D):
 		var exited_room = door_area.get_meta("room")
 		current_room = exited_room
 		
+		var enemy_temp = enemy.instantiate()
+		enemy.position = Vector2(randf_range(), randf_range())
+		
 		for door in doors_node.get_children():
 			if door.has_meta("room") and door.get_meta("room") == current_room:
 				door.queue_free()
@@ -251,6 +255,8 @@ func find_end_room():
 		if room.position.x > max_x:
 			end_room = room
 			max_x = room.position.x
+
+
 	
 
 
