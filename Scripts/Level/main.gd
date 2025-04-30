@@ -133,7 +133,9 @@ func make_map():
 		
 	# Add door areas after map generation
 	for room in $Rooms.get_children():
-		add_door_areas(room)
+		if room != start_room:
+			add_door_areas(room)
+
 
 func carve_path(pos1, pos2, floor_tiles):
 	var x1 = pos1.x
@@ -217,9 +219,23 @@ func _on_door_exited(body: Node, door_area: Area2D):
 		print("Player exited a door!")
 		var exited_room = door_area.get_meta("room")
 		current_room = exited_room
+		var temp_closest_room = get_closest_room_to_player()
 		
-		var enemy_temp = enemy.instantiate()
-		enemy.position = Vector2(randf_range(), randf_range())
+		for i in range (3, 7):
+			var enemy_temp = enemy.instantiate()
+			# Get the room center and size
+			var room_pos = temp_closest_room.position
+			var room_size = temp_closest_room.size
+
+			# Define a spawn area within the room (e.g., avoid edges by padding)
+			var padding = 32
+			var spawn_x = randf_range(room_pos.x - room_size.x / 2 + padding, room_pos.x + room_size.x / 2 - padding)
+			var spawn_y = randf_range(room_pos.y - room_size.y / 2 + padding, room_pos.y + room_size.y / 2 - padding)
+			enemy_temp.position = Vector2(spawn_x, spawn_y)
+			add_child(enemy_temp)
+
+
+
 		
 		for door in doors_node.get_children():
 			if door.has_meta("room") and door.get_meta("room") == current_room:
@@ -257,7 +273,25 @@ func find_end_room():
 			max_x = room.position.x
 
 
-	
+func get_closest_room_to_player() -> Node2D:
+	if not is_instance_valid(player):
+		return null
+
+	var closest_room = null
+	var min_distance = INF
+
+	for room in $Rooms.get_children():
+		if not is_instance_valid(room):
+			continue
+		var room_center = room.position  # Assuming room.position is the center
+		var distance = player.position.distance_to(room_center)
+		
+		if distance < min_distance:
+			min_distance = distance
+			closest_room = room
+
+	return closest_room
+
 
 
 func find_mst(nodes):
