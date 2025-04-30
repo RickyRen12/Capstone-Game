@@ -15,6 +15,7 @@ var path  # AStar pathfinding object
 var current_room = null
 var door_areas = []  # Store all door collision shapes
 
+
 var start_room = null
 var end_room = null
 var play_mode = false
@@ -48,8 +49,15 @@ func make_rooms():
 		$Rooms.add_child(r)
 		#wait for rooms to stop moving
 	print("POOOOOOOOOOOOOO")
+	var pos = Vector2(randf_range(-hspread, hspread), 0)
+	var shop = Room.instantiate()
+	var w = min_size + randi() % (max_size - min_size)
+	var h = min_size + randi() % (max_size - min_size)
+	shop.make_room(pos, Vector2(w,h) * tile_size) 
+	$Rooms.add_child(shop)
 	await get_tree().create_timer(1.1).timeout
 	print("POOOOOO")
+	
 	#kill rooms
 	var room_positions = []
 	for room in $Rooms.get_children():
@@ -59,12 +67,7 @@ func make_rooms():
 			room.freeze = true
 			room_positions.append(Vector2(room.position.x, room.position.y))
 			
-	var pos = Vector2(randf_range(-hspread, hspread), 0)
-	var r = Room.instantiate()
-	var w = min_size + randi() % (max_size - min_size)
-	var h = min_size + randi() % (max_size - min_size)
-	r.make_room(pos, Vector2(w,h) * tile_size) 
-	$Rooms.add_child(r)
+	
 	
 	await get_tree().process_frame
 	# generate spanning tree (path)
@@ -157,46 +160,67 @@ func carve_path(pos1, pos2, floor_tiles):
 
 
 func add_door_areas(room: Node2D) -> void:
-	if not path or not is_instance_valid(room):
+	if not is_instance_valid(room):
 		return
 
-	var room_point = path.get_closest_point(room.position)
-	
-	for connected_point in path.get_point_connections(room_point):
-		var room_pos = path.get_point_position(room_point)
-		var other_room_pos = path.get_point_position(connected_point)
-		var direction = (other_room_pos - room_pos).normalized()
-		
-		# Calculate exact door position
-		var door_pos = room_pos
-		var shape_extents = Vector2.ZERO
-		
-		if abs(direction.x) > abs(direction.y):  # Horizontal corridor
-			shape_extents = Vector2(tile_size * 0.25, path_thickness * tile_size * 2)
-			door_pos.x += sign(direction.x) * (room.size.x - tile_size)
-		else:  # Vertical corridor
-			shape_extents = Vector2(path_thickness * tile_size * 2, tile_size * 0.25)
-			door_pos.y += sign(direction.y) * (room.size.y - tile_size)
-		
-		# Create and configure door area
+	var pos = room.position
+	var size = room.size
+
+	var gap = tile_size * 5.7   # distance from room edge
+	var border_thickness = tile_size * 1 # how thick the door area strips are
+
+	var sides = [
+		{
+			"name": "Top",
+			"offset": Vector2(0, -size.y * 0.5 - gap),
+			"extents": Vector2(size.x * 0.5 + gap, border_thickness * 0.5)
+		},
+		{
+			"name": "Bottom",
+			"offset": Vector2(0, size.y * 0.5 + gap),
+			"extents": Vector2(size.x * 0.5 + gap, border_thickness * 0.5)
+		},
+		{
+			"name": "Left",
+			"offset": Vector2(-size.x * 0.5 - gap, 0),
+			"extents": Vector2(border_thickness * 0.5, size.y * 0.5 + gap)
+		},
+		{
+			"name": "Right",
+			"offset": Vector2(size.x * 0.5 + gap, 0),
+			"extents": Vector2(border_thickness * 0.5, size.y * 0.5 + gap)
+		}
+	]
+
+
+	for side in sides:
 		var door_area = Area2D.new()
-		door_area.name = "DoorArea_%s" % connected_point
+		door_area.name = "DoorArea_%s" % side["name"]
+		door_area.set_meta("room", room)
 		door_area.collision_mask = 1
-		door_area.position = door_pos
-		
-		# Set up collision
+		door_area.collision_layer = 0
+		door_area.position = pos + side["offset"]
+
 		var collision = CollisionShape2D.new()
 		var shape = RectangleShape2D.new()
-		shape.extents = shape_extents
+		shape.extents = side["extents"]
 		collision.shape = shape
 		door_area.add_child(collision)
-		
-		# Add to scene tree
+
 		doors_node.add_child(door_area)
+		door_area.body_exited.connect(_on_door_exited.bind(door_area))
+
+
+func _on_door_exited(body: Node, door_area: Area2D):
+	if body == player:
+		print("Player exited a door!")
+		var exited_room = door_area.get_meta("room")
+		current_room = exited_room
 		
-		# Connect signals
-		door_area.connect("body_entered", Callable(self, "area_entered"))
-		door_area.connect("body_exited", Callable(self, "area_exited").bind(room))
+		for door in doors_node.get_children():
+			if door.has_meta("room") and door.get_meta("room") == current_room:
+				door.queue_free()
+
 
 
 func find_start_room():
@@ -227,6 +251,7 @@ func find_end_room():
 		if room.position.x > max_x:
 			end_room = room
 			max_x = room.position.x
+	
 
 
 func find_mst(nodes):
@@ -288,7 +313,7 @@ func _input(event):
 		make_map()
 		
 	if event.is_action_pressed("ui_cancel"):
-		var player = Player.instantiate()  # Instantiate the player scene
+		player = Player.instantiate()  # Instantiate the player scene
 		add_child(player)  # Add the player to the scene tree
 		
 		# Ensure the start_room is valid
@@ -296,6 +321,7 @@ func _input(event):
 			# Calculate the center of the start room
 			var start_room_center = start_room.position + (start_room.size / 2)
 			player.position = start_room_center  # Set the player's position to the center of the start room
+			current_room = start_room
 		else:
 			print("Error: No start room found!")
 		
