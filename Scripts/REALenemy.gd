@@ -35,12 +35,46 @@ func _physics_process(delta):
 	if player_chase and player:
 		if nav_agent.is_navigation_finished():
 			velocity = Vector2.ZERO
-		else:
-			var next_path_pos := nav_agent.get_next_path_position()
-			var direction := global_position.direction_to(next_path_pos)
-			knockback = knockback.move_toward(Vector2.ZERO, knockback_decay * delta)
-			velocity = direction * chase_speed
-			move_and_slide()
+	
+#THIS IS NEW ENEMY PATHFINDER VIA VECTORS!!!
+#new array[] simpleVectors = [(0,1),(1,-1),(1,0),(1,1), (0,1), (-1,1), (-1,0), (-1,-1)]
+#
+#localPosX = nav_agent.getNode().globalPositionX - player.getNode().globalPositionX
+#localPosY = nav_agent.getNode().globalPositionY - player.getNode().globalPositionY
+#
+#new Vector2D localPos = [localPosX, localPosY]
+#
+#var normalizedX = localPosX / sqrt((localPosX)^2 + (localPosY)^2)
+#var normalizedY = localPosY / sqrt((localPosX)^2 + (localPosY)^2)
+#
+#new array[] interestVector = [(-normalizedY), (normalizedX*1 - normalizedY*-1), (normalizedX), (normalizedX - normalizedY), (normalizedY), (-1*normalized - normalizedY), (-normalizedX), (-normalizedX - normalizedY)]
+#
+#
+#if (raycast detects smth on their vector){
+	#specific ray cast = 5
+	#specific ray cast + 1 = 2
+	#specific ray cast - 1 = 2
+#new array[] contextVector = [0, 2, 5, 2, 0, 0, 0, 0]
+#}
+#
+#new array[] contextMap = interestVector - contextVector
+#
+#largest = contextMap[0]
+	#for element in arr:
+		#if element > largest:
+			#largest = element
+#
+#var index1 = contextMap.index(largest)
+#
+#Vector2D enemyGoHere = simpleVectors(index1)
+
+#velocity = enemyGoHere
+		#else:
+			#var next_path_pos := nav_agent.get_next_path_position()
+			#var direction := global_position.direction_to(next_path_pos)
+			#knockback = knockback.move_toward(Vector2.ZERO, knockback_decay * delta)
+			#velocity = direction * chase_speed
+			#move_and_slide()
 		
 	#enemy shooting
 	if will_shoot and gun_cooldown and player:
