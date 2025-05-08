@@ -69,12 +69,12 @@ func _physics_process(delta):
 #Vector2D enemyGoHere = simpleVectors(index1)
 
 #velocity = enemyGoHere
-		#else:
-			#var next_path_pos := nav_agent.get_next_path_position()
-			#var direction := global_position.direction_to(next_path_pos)
-			#knockback = knockback.move_toward(Vector2.ZERO, knockback_decay * delta)
-			#velocity = direction * chase_speed
-			#move_and_slide()
+		else:
+			var next_path_pos := nav_agent.get_next_path_position()
+			var direction := global_position.direction_to(next_path_pos)
+			knockback = knockback.move_toward(Vector2.ZERO, knockback_decay * delta)
+			velocity = direction * chase_speed
+			move_and_slide()
 		
 	#enemy shooting
 	if will_shoot and gun_cooldown and player:
