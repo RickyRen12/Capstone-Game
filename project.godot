@@ -90,6 +90,7 @@ ability={
 2d_physics/layer_2="PLAYER"
 2d_physics/layer_3="ENEMIES"
 2d_physics/layer_4="Enemy Detection Area"
+avoidance/layer_3="Recognize other enemies with this layer"
 
 [physics]
 

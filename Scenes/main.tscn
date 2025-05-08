@@ -17,7 +17,7 @@ script = ExtResource("1_dtmxe")
 position = Vector2(1, 1)
 
 [node name="Player" parent="." instance=ExtResource("1_rphlv")]
-position = Vector2(1289, 755)
+position = Vector2(1799, 296)
 
 [node name="Node2D" parent="." instance=ExtResource("2_uvu4f")]
 z_index = -2
@@ -39,7 +39,7 @@ position = Vector2(231, 764)
 position = Vector2(-25, 572)
 
 [node name="ENEMY3" parent="." instance=ExtResource("5_k1t14")]
-position = Vector2(956, 756)
+position = Vector2(1796, 841)
 
 [node name="ENEMY4" parent="." instance=ExtResource("5_k1t14")]
 position = Vector2(259, 565)

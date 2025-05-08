@@ -215,31 +215,35 @@ func add_door_areas(room: Node2D) -> void:
 
 
 func _on_door_exited(body: Node, door_area: Area2D):
-	if body == player:
+	if body.is_in_group("player"):
 		print("Player exited a door!")
 		var exited_room = door_area.get_meta("room")
 		current_room = exited_room
 		var temp_closest_room = get_closest_room_to_player()
 		
+		
 		for i in range (3, 7):
+			print("awdhbkawdhbjawdhbkdhbkj")
 			var enemy_temp = enemy.instantiate()
 			# Get the room center and size
 			var room_pos = temp_closest_room.position
 			var room_size = temp_closest_room.size
 
 			# Define a spawn area within the room (e.g., avoid edges by padding)
-			var padding = 32
+			var padding = 16
 			var spawn_x = randf_range(room_pos.x - room_size.x / 2 + padding, room_pos.x + room_size.x / 2 - padding)
 			var spawn_y = randf_range(room_pos.y - room_size.y / 2 + padding, room_pos.y + room_size.y / 2 - padding)
 			enemy_temp.position = Vector2(spawn_x, spawn_y)
 			add_child(enemy_temp)
 
 
-
 		
 		for door in doors_node.get_children():
 			if door.has_meta("room") and door.get_meta("room") == current_room:
 				door.queue_free()
+
+
+
 
 
 
