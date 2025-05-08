@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c0i538cetsg2x" path="res://Scenes/UI/healthbar.tscn" id="3_bkhu7"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7y5h8"]
-radius = 3.60555
+radius = 33.0151
 
 [sub_resource type="Animation" id="Animation_d3cnx"]
 length = 0.4
