@@ -3,19 +3,23 @@ extends Node2D
 var Room = preload("res://Scenes/Level/character_body_2d.tscn")
 var Player = preload("res://Scenes/player.tscn")
 var enemy = preload("res://Scenes/REALenemy.tscn")
-var merchant= preload("res://Scenes/Interactions/shop_npc.tscn")
+var merchant = preload("res://Scenes/Interactions/shop_npc.tscn")
+var purchase_shotgun = preload("res://Scenes/Interactions/Shop_buy_shotgun.tscn")
+var purchase_TSMG = preload("res://Scenes/Interactions/Shop_buy_TSMG.tscn")
 
 
 var tile_size = 32
-var num_rooms = 65
+var num_rooms = 55
 var min_size  = 15
 var max_size = 20
 var hspread = 70
-var path_thickness = 7  # Set this to control the thickness of the paths (e.g., 2 for 2 tiles wide)
+var path_thickness = 7  # Set this to control the thickness of the paths 
 var cull = 0.5 # chance to cull room
 var path  # AStar pathfinding object
 var current_room = null
-var door_areas = []  # Store all door collision shapes
+var door_areas = [] # Stores all door collision shapes
+var allow_enemy_spawning = false
+
 
 
 var start_room = null
@@ -37,6 +41,9 @@ func _ready() -> void:
 		add_child(doors)
 		doors_node = doors
 	make_rooms()
+	await get_tree().create_timer(1.5).timeout
+	print("test")
+	allow_enemy_spawning = true
 
 func _process(delta):
 	pass
@@ -218,7 +225,10 @@ func add_door_areas(room: Node2D) -> void:
 
 
 func _on_door_exited(body: Node, door_area: Area2D):
+	if not allow_enemy_spawning:
+		return
 	if body.is_in_group("player"):
+		print("Door exited at time: ", Time.get_ticks_msec())
 		print("Player exited a door!")
 		var exited_room = door_area.get_meta("room")
 		current_room = exited_room
@@ -308,8 +318,16 @@ func find_store_room():
 	shop_keep.shop_opened.connect(open_store)
 	
 
-func open_store():
+func open_store(merchant_node):
 	print("print so run")
+	if merchant_node.has_opened_store:
+		return
+	merchant_node.has_opened_store = true
+	#making shotgun purchasable
+	var shotgun = purchase_shotgun.instantiate()
+	var offset = Vector2(-200, 100)  # left 30 pixels, down 20 pixels
+	shotgun.global_position = merchant_node.global_position + offset
+	add_child(shotgun)
 
 func _sort_by_center_distance(a: Node2D, b: Node2D) -> bool:
 	return abs(a.position.x) < abs(b.position.x)
@@ -369,7 +387,7 @@ func find_mst(nodes):
 	
 	return path
 
-
+#DRAWS THE ROOMS AND PATHFINDING LOGIC BETWEEN THEM
 #func _draw():
 	#for room in $Rooms.get_children():
 		#draw_rect(Rect2(room.position - room.size, room.size * 2),
@@ -394,6 +412,29 @@ func _input(event):
 	if event.is_action_pressed('ui_focus_next'):
 		make_map()
 		
+		#UNCOMMENT THIS WHEN NO MORE TESTING, ADDS PLAYER AUTIMATICALLY
+		#player = Player.instantiate()  # Instantiate the player scene
+		#add_child(player)  # Add the player to the scene tree
+		#
+		## Ensure the start_room is valid
+		#if start_room:
+			## Calculate the center of the start room
+			#var start_room_center = start_room.position + (start_room.size / 2)
+			#player.position = start_room_center  # Set the player's position to the center of the start room
+			#current_room = start_room
+		#else:
+			#print("Error: No start room found!")
+		#
+		## Switch to the player's camera
+		#if player.has_node("Camera2D"):  # Ensure the player has a Camera2D node
+			#print("Player Position: ", player.position) 
+			#var player_camera = player.get_node("Camera2D")
+			#player_camera.make_current()  # Set the player's camera as the active camera
+		#
+		#play_mode = true  # Enable play mode
+		
+		
+	#for seeing the map before adding player
 	if event.is_action_pressed("ui_cancel"):
 		player = Player.instantiate()  # Instantiate the player scene
 		add_child(player)  # Add the player to the scene tree
