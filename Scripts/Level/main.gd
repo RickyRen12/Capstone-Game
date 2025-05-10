@@ -323,11 +323,16 @@ func open_store(merchant_node):
 	if merchant_node.has_opened_store:
 		return
 	merchant_node.has_opened_store = true
-	#making shotgun purchasable
+	#create purchasable shotgun
 	var shotgun = purchase_shotgun.instantiate()
-	var offset = Vector2(-200, 100)  # left 30 pixels, down 20 pixels
-	shotgun.global_position = merchant_node.global_position + offset
+	var shotgun_offset = Vector2(-150, 100) 
+	shotgun.global_position = merchant_node.global_position + shotgun_offset
 	add_child(shotgun)
+	#create purchasable TSMG
+	var TSMG = purchase_TSMG.instantiate()
+	var TSMG_offset = Vector2(150, 100) 
+	TSMG.global_position = merchant_node.global_position + TSMG_offset
+	add_child(TSMG)
 
 func _sort_by_center_distance(a: Node2D, b: Node2D) -> bool:
 	return abs(a.position.x) < abs(b.position.x)

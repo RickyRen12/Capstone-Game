@@ -114,7 +114,7 @@ func _physics_process(delta):
 
 
 func shoot_tsmg_burst():
-	var angle_offset = deg_to_rad(randf_range(-10, 10))  # Random cone within 30 degrees
+	var angle_offset = deg_to_rad(randf_range(-20, 20))  # Random cone within 30 degrees
 	for i in range(2):
 		var proj_instance = proj.instantiate()
 		proj_instance.rotation = $Marker2D.rotation + angle_offset
