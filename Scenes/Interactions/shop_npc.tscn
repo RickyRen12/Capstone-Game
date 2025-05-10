@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://bs51h2q514pym"]
 
-[ext_resource type="Script" path="res://Scripts/InteractionsAndGameElements/ShopKeep.gd" id="1_vcyfc"]
-[ext_resource type="Texture2D" uid="uid://cmd3ylw5nbqpg" path="res://Assets/Level/Untitled.png" id="2_ff57f"]
-[ext_resource type="PackedScene" uid="uid://b3a3263wgj0ht" path="res://Scenes/Interactions/Interaction_area.tscn" id="3_d1ese"]
+[ext_resource type="Script" path="res://Scripts/InteractionsAndGameElements/ShopKeep.gd" id="1_gpwjk"]
+[ext_resource type="Texture2D" uid="uid://cmd3ylw5nbqpg" path="res://Assets/Level/Untitled.png" id="2_qe4ve"]
+[ext_resource type="PackedScene" uid="uid://b3a3263wgj0ht" path="res://Scenes/Interactions/Interaction_area.tscn" id="3_2bx30"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vxrh8"]
 size = Vector2(52, 63)
@@ -11,7 +11,7 @@ size = Vector2(52, 63)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_ff57f")
+"texture": ExtResource("2_qe4ve")
 }],
 "loop": true,
 "name": &"default",
@@ -22,7 +22,7 @@ animations = [{
 size = Vector2(205, 167)
 
 [node name="shop_NPC" type="CharacterBody2D"]
-script = ExtResource("1_vcyfc")
+script = ExtResource("1_gpwjk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)
@@ -32,7 +32,7 @@ shape = SubResource("RectangleShape2D_vxrh8")
 scale = Vector2(0.0761493, 0.0761493)
 sprite_frames = SubResource("SpriteFrames_3g6a8")
 
-[node name="InteractionArea" parent="." instance=ExtResource("3_d1ese")]
+[node name="InteractionArea" parent="." instance=ExtResource("3_2bx30")]
 action_name = "shop"
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="InteractionArea"]

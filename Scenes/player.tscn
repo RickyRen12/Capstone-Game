@@ -18,7 +18,6 @@ var proj = preload(\"res://Scenes/knife.tscn\")
 var ability_manager = AbilityManager
 
 var equipped_ability
-var projectile_damage: int = 1
 var last_direction = Vector2.ZERO
 var speed = 250
 var weapon_equipped = false
@@ -32,10 +31,20 @@ var knockback_power = 300
 var invincible = false
 var control_state = true
 var damage_multiplier = 1
+var damage_taken_multiplier = 1
 
+#weapon damages
+var weapon_damages = {
+	\"default_gun\": 2,
+	\"shotgun\": 4,
+	\"TSMG\": 1
+}
 #checks for weapons
-var default_gun = true
-var shotgun = false
+var weapons = {
+	\"default_gun\": true,
+	\"shotgun\": false,
+	\"TSMG\": false
+	}
 
 func is_player():
 	return
@@ -64,45 +73,56 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed(\"ui_q\") and dash_cooldown and control_state:
 		Dash()
 	move_and_slide()
-	
 	#Shooting mechanic
 	if Input.is_action_just_pressed(\"e\"):
 		if weapon_equipped:
 			weapon_equipped = false
 		else:
 			weapon_equipped = true
-	
 	var mouse_pos = get_global_mouse_position()
 	$Marker2D.look_at(mouse_pos)
-	
-	#default gun
-	if Input.is_action_just_pressed(\"left_mouse\") and weapon_equipped and weapon_cooldown and default_gun and control_state:
+	if Input.is_action_just_pressed(\"left_mouse\") and weapon_equipped and weapon_cooldown and control_state:
 		weapon_cooldown = false
-		var proj_instance = proj.instantiate()
-		proj_instance.rotation = $Marker2D.rotation
-		proj_instance.global_position = $Marker2D.global_position
-		proj_instance.set_damage_amount(projectile_damage)
-		add_child(proj_instance)
-		await get_tree().create_timer(0.4).timeout
-		weapon_cooldown = true
-	#shotgun
-	if Input.is_action_just_pressed(\"left_mouse\") and weapon_equipped and weapon_cooldown and shotgun and control_state:
-		weapon_cooldown = false
-		var spread_angle = 0.3
-		for i in range(3):#number of bullets
+		if weapons[\"shotgun\"]:
+			var spread_angle = 0.3
+			for i in range(3):
+				var proj_instance = proj.instantiate()
+				proj_instance.rotation = $Marker2D.rotation + (i - 1) * spread_angle
+				proj_instance.global_position = $Marker2D.global_position
+				proj_instance.set_damage_amount(weapon_damages[\"shotgun\"] * damage_multiplier)
+				add_child(proj_instance)
+				await get_tree().create_timer(0.05).timeout
+			await get_tree().create_timer(1.0).timeout
+		elif weapons[\"default_gun\"]:
 			var proj_instance = proj.instantiate()
-			proj_instance.rotation = $Marker2D.rotation + (i - 1) * spread_angle
+			proj_instance.rotation = $Marker2D.rotation
 			proj_instance.global_position = $Marker2D.global_position
-			proj_instance.set_damage_amount(projectile_damage)
+			proj_instance.set_damage_amount(weapon_damages[\"default_gun\"] * damage_multiplier)
 			add_child(proj_instance)
-			await get_tree().create_timer(0.05).timeout
-		await get_tree().create_timer(1).timeout
+			await get_tree().create_timer(0.4).timeout
+		elif weapons[\"TSMG\"]:
+			weapon_cooldown = false
+			shoot_tsmg_burst()
+			await get_tree().create_timer(0.2).timeout  # cooldown before another burst
 		weapon_cooldown = true
+	#ability input handling
 	if Input.is_action_just_pressed(\"ability\"):
 		if equipped_ability != ability_manager.Ability_nums.none:
 			ability_manager.use_ability(equipped_ability)
 		else:
 			print(\"No ability equipped boy\")
+
+
+func shoot_tsmg_burst():
+	var angle_offset = deg_to_rad(randf_range(-10, 10))  # Random cone within 30 degrees
+	for i in range(2):
+		var proj_instance = proj.instantiate()
+		proj_instance.rotation = $Marker2D.rotation + angle_offset
+		proj_instance.global_position = $Marker2D.global_position
+		proj_instance.set_damage_amount(weapon_damages[\"TSMG\"] * damage_multiplier)
+		add_child(proj_instance)
+		await get_tree().create_timer(0.2).timeout  # This only delays this function, not the next shot
+
 
 func equip_ability(ability):
 	if ability in ability_manager.ability_cooldowns.keys():
@@ -111,10 +131,16 @@ func equip_ability(ability):
 	else:
 		print(\"Are you fucking slow\")
 
+
 #functions to swap between shooting type/weapon
-func swap_to_shotgun():
-	shotgun = true
-	default_gun = false
+func set_active_weapon(name: String) -> void:
+	for key in weapons.keys():
+		weapons[key] = false
+	if weapons.has(name):
+		weapons[name] = true
+	else:
+		print(\"No such weapon:\", name)
+
 
 func Dash():
 	print(\"dash\")
@@ -144,12 +170,12 @@ func _on_detection_area_area_entered(area: Area2D) -> void:
 	if invincible == false:
 		if area.has_method(\"get_damage_amount_player\") and control_state:
 			var node = area as Node
-			health_amount -= node.get_damage_amount_player() * damage_multiplier
+			health_amount -= node.get_damage_amount_player() * damage_taken_multiplier
 			HealthBar.health = health_amount
 			print(\":D\", health_amount)
 		#taking touching damage
 		if area.name == \"Hurt_box\":
-			health_amount -= damage_multiplier
+			health_amount -= damage_taken_multiplier
 			HealthBar.health = health_amount
 			knockback(area.global_position)
 	#player dies
@@ -199,17 +225,20 @@ func change_currency_amt(num1: int) -> int:
 	return false
 
 func return_damage_amt_player():
-	return projectile_damage
+	for weapon in weapons.keys():
+		if weapons[weapon]:
+			return weapon_damages[weapon]
 
+#idk what this does bruh
 func change_damage_amt_player(num1: int) -> int:
-	projectile_damage = num1
+	damage_multiplier = num1
 	return false
 
 func return_damage_taken_mult_player():
-	return damage_multiplier
+	return damage_taken_multiplier
 
 func change_damage_taken_mult_player(num1: int) -> int:
-	damage_multiplier = num1
+	damage_taken_multiplier = num1
 	return false
 "
 

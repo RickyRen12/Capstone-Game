@@ -3,10 +3,11 @@ extends Node2D
 var Room = preload("res://Scenes/Level/character_body_2d.tscn")
 var Player = preload("res://Scenes/player.tscn")
 var enemy = preload("res://Scenes/REALenemy.tscn")
+var merchant= preload("res://Scenes/Interactions/shop_npc.tscn")
 
 
 var tile_size = 32
-var num_rooms = 75
+var num_rooms = 65
 var min_size  = 15
 var max_size = 20
 var hspread = 70
@@ -19,6 +20,7 @@ var door_areas = []  # Store all door collision shapes
 
 var start_room = null
 var end_room = null
+var store_room = null
 var play_mode = false
 var player = null
 
@@ -80,6 +82,7 @@ func make_map():
 	print("Generating map...")
 	find_start_room()
 	find_end_room()
+	find_store_room()
 	Map.clear()
 	
 	for room in $Rooms.get_children():
@@ -133,8 +136,8 @@ func make_map():
 		
 	# Add door areas after map generation
 	for room in $Rooms.get_children():
-		if room != start_room:
-			add_door_areas(room)
+		if room != start_room and room != end_room and room != store_room:
+				add_door_areas(room)
 
 
 func carve_path(pos1, pos2, floor_tiles):
@@ -223,13 +226,12 @@ func _on_door_exited(body: Node, door_area: Area2D):
 		
 		
 		for i in range (3, 7):
-			print("awdhbkawdhbjawdhbkdhbkj")
 			var enemy_temp = enemy.instantiate()
 			# Get the room center and size
 			var room_pos = temp_closest_room.position
 			var room_size = temp_closest_room.size
 
-			# Define a spawn area within the room (e.g., avoid edges by padding)
+			#spawn room padding
 			var padding = 16
 			var spawn_x = randf_range(room_pos.x - room_size.x / 2 + padding, room_pos.x + room_size.x / 2 - padding)
 			var spawn_y = randf_range(room_pos.y - room_size.y / 2 + padding, room_pos.y + room_size.y / 2 - padding)
@@ -241,9 +243,7 @@ func _on_door_exited(body: Node, door_area: Area2D):
 		for door in doors_node.get_children():
 			if door.has_meta("room") and door.get_meta("room") == current_room:
 				door.queue_free()
-
-
-
+	
 
 
 
@@ -275,6 +275,38 @@ func find_end_room():
 		if room.position.x > max_x:
 			end_room = room
 			max_x = room.position.x
+	var temp_shop_keep = merchant.instantiate()
+	var room_pos = end_room.position
+	var room_size = end_room.size
+	var spawn_x = room_pos.x - room_size.x / 6
+	var spawn_y = room_pos.y - room_size.y / 2
+	temp_shop_keep.position = Vector2(spawn_x, spawn_y)
+	add_child(temp_shop_keep)
+
+func find_store_room():
+	var candidate_rooms: Array[Node2D] = []
+	for room in $Rooms.get_children():
+		if room != start_room and room != end_room:
+			candidate_rooms.append(room)
+
+	if candidate_rooms.is_empty():
+		print("No available rooms for store.")
+		return
+	# Sort by distance to x = 0 (center)
+	candidate_rooms.sort_custom(_sort_by_center_distance)
+	store_room = candidate_rooms[0]
+	print("Store Room Found: ", store_room.name)
+	print("Store Room Position: ", store_room.position)
+	var shopkeep := merchant.instantiate()
+	var room_pos = store_room.position
+	var room_size = store_room.size
+	var spawn_x = room_pos.x
+	var spawn_y = room_pos.y
+	shopkeep.position = Vector2(spawn_x, spawn_y)
+	add_child(shopkeep)
+
+func _sort_by_center_distance(a: Node2D, b: Node2D) -> bool:
+	return abs(a.position.x) < abs(b.position.x)
 
 
 func get_closest_room_to_player() -> Node2D:
@@ -287,7 +319,7 @@ func get_closest_room_to_player() -> Node2D:
 	for room in $Rooms.get_children():
 		if not is_instance_valid(room):
 			continue
-		var room_center = room.position  # Assuming room.position is the center
+		var room_center = room.position 
 		var distance = player.position.distance_to(room_center)
 		
 		if distance < min_distance:
@@ -332,18 +364,18 @@ func find_mst(nodes):
 	return path
 
 
-func _draw():
-	for room in $Rooms.get_children():
-		draw_rect(Rect2(room.position - room.size, room.size * 2),
-			Color(0, 1, 0), false)
-	if path:
-		for p in path.get_point_ids():
-			for c in path.get_point_connections(p):
-				var pp = path.get_point_position(p)
-				var cp = path.get_point_position(c)
-				draw_line(Vector2(pp.x, pp.y),
-					Vector2(cp.x, cp.y),
-					Color(1, 1, 0, 1), 15, true)
+#func _draw():
+	#for room in $Rooms.get_children():
+		#draw_rect(Rect2(room.position - room.size, room.size * 2),
+			#Color(0, 1, 0), false)
+	#if path:
+		#for p in path.get_point_ids():
+			#for c in path.get_point_connections(p):
+				#var pp = path.get_point_position(p)
+				#var cp = path.get_point_position(c)
+				#draw_line(Vector2(pp.x, pp.y),
+					#Vector2(cp.x, cp.y),
+					#Color(1, 1, 0, 1), 15, true)
 
 
 

@@ -1,14 +1,15 @@
-[gd_scene load_steps=10 format=3 uid="uid://c00sxktkl1qp5"]
+[gd_scene load_steps=11 format=3 uid="uid://c00sxktkl1qp5"]
 
 [ext_resource type="Script" path="res://Scenes/main.gd" id="1_dtmxe"]
 [ext_resource type="PackedScene" uid="uid://crt118532wteg" path="res://Scenes/player.tscn" id="1_rphlv"]
 [ext_resource type="PackedScene" uid="uid://bbsusbmuav3vp" path="res://Scenes/Tile.tscn" id="2_uvu4f"]
 [ext_resource type="PackedScene" uid="uid://53uwa7gg3etl" path="res://Scenes/world.tscn" id="3_1g42h"]
-[ext_resource type="PackedScene" uid="uid://bs51h2q514pym" path="res://Scenes/shop_npc.tscn" id="5_isbtw"]
+[ext_resource type="PackedScene" uid="uid://bs51h2q514pym" path="res://Scenes/Interactions/shop_npc.tscn" id="5_isbtw"]
 [ext_resource type="PackedScene" uid="uid://cw318a1br2pnd" path="res://Scenes/REALenemy.tscn" id="5_k1t14"]
 [ext_resource type="PackedScene" uid="uid://dgbu383lnl00v" path="res://Scenes/GamblingMachine1.tscn" id="6_qy5oe"]
-[ext_resource type="PackedScene" uid="uid://brwikuddmqcqf" path="res://Scenes/Interactions/Shop_buy.tscn" id="7_j2grr"]
+[ext_resource type="PackedScene" uid="uid://brwikuddmqcqf" path="res://Scenes/Interactions/Shop_buy_shotgun.tscn" id="7_j2grr"]
 [ext_resource type="PackedScene" uid="uid://cxpm0yni6xl5m" path="res://Scenes/big_boss.tscn" id="9_imbcj"]
+[ext_resource type="PackedScene" uid="uid://b7orwq7akmb2j" path="res://Scenes/Interactions/Shop_buy_TSMG.tscn" id="10_264vo"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_dtmxe")
@@ -46,3 +47,6 @@ position = Vector2(259, 565)
 
 [node name="BigBoss" parent="." instance=ExtResource("9_imbcj")]
 position = Vector2(1259, 1217)
+
+[node name="ShopBuyTsmg" parent="." instance=ExtResource("10_264vo")]
+position = Vector2(1094, 328)

@@ -12,7 +12,7 @@ var rng = RandomNumberGenerator.new()
 var player_chase = false
 var will_shoot = false
 var gun_cooldown = true
-var health_amount : int = 10
+var health_amount : int = 15
 var chase_speed = 100
 var knockback_power = 1200
 #if you wanna make the enemy run away when hit make the knockback decay smaller
@@ -93,6 +93,7 @@ func _on_hurt_box_area_entered(area: Area2D):
 		hit_flash_animation.play("hit_flash")
 		var knockback_direction = (global_position - area.global_position).normalized()
 		knockback = knockback_direction * knockback_power
+		area.queue_free()
 		
 	#kills enemy
 	if health_amount <= 0:

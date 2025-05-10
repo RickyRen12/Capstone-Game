@@ -19,3 +19,4 @@ func _on_interact():
 	sprite.flip_h = true if interaction_area.get_overlapping_bodies()[0].global_position.x < global_position.x else false
 	await DialogManager.dialog_finished
 	
+	

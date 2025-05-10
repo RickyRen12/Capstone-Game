@@ -52,18 +52,18 @@ func end_ability():
 func double_or_nothing():
 	if player:
 		#how much damage player is doing
-		player.change_damage_amt_player(player.return_damage_amt_player() * 2)
+		player.change_damage_amt_player(player.damage_multiplier * 2)
 		#how much damage player is taking
-		player.change_damage_taken_mult_player(player.return_damage_taken_mult_player() * 4)
+		player.change_damage_taken_mult_player(player.return_damage_taken_mult_player() * 3)
 		print("dmg " + str(player.return_damage_amt_player()))
 		print("dmg taken " + str(player.return_damage_taken_mult_player()))
 		
 		await get_tree().create_timer(5.0).timeout
 		
-		#how much damage player is doing
-		player.change_damage_amt_player(player.return_damage_amt_player() / 2)
-		#how much damage player is taking
-		player.change_damage_taken_mult_player(player.return_damage_taken_mult_player() / 4)
+		#revert damage dealt
+		player.change_damage_amt_player(player.damage_multiplier / 2)
+		#revert damage taken
+		player.change_damage_taken_mult_player(player.return_damage_taken_mult_player() / 3)
 		print("dmg " + str(player.return_damage_amt_player()))
 		print("dmg taken " + str(player.return_damage_taken_mult_player()))
 	end_ability()

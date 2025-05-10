@@ -21,7 +21,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wp5vo"]
 size = Vector2(71, 67)
 
-[node name="Shop_buy" type="StaticBody2D"]
+[node name="Shop_buy_shotgun" type="StaticBody2D"]
 script = ExtResource("1_wvu7g")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -34,7 +34,7 @@ scale = Vector2(0.0229514, 0.0229514)
 sprite_frames = SubResource("SpriteFrames_7kkew")
 
 [node name="InteractionArea" parent="." instance=ExtResource("3_762ob")]
-action_name = "purchase the shotgun"
+action_name = "purchase the shotgun for $10"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
 shape = SubResource("RectangleShape2D_wp5vo")

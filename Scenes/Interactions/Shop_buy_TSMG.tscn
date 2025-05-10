@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://b7orwq7akmb2j"]
+
+[ext_resource type="Texture2D" uid="uid://cddmnwjnsjy5o" path="res://Assets/Player/tommygun.png" id="1_5y8kv"]
+[ext_resource type="Script" path="res://Scripts/shop_buy_tsmg.gd" id="1_nkj3c"]
+[ext_resource type="PackedScene" uid="uid://b3a3263wgj0ht" path="res://Scenes/Interactions/Interaction_area.tscn" id="2_0gt2i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i485i"]
+size = Vector2(95, 81)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gus7m"]
+size = Vector2(62, 22)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bhkdi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_5y8kv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="ShopBuyTsmg" type="StaticBody2D"]
+script = ExtResource("1_nkj3c")
+
+[node name="InteractionArea" parent="." instance=ExtResource("2_0gt2i")]
+action_name = "purchase the Tommy gun for $15"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("RectangleShape2D_i485i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_gus7m")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_bhkdi")
