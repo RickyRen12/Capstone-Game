@@ -140,6 +140,30 @@ debug_enabled = true
 wait_time = 0.1
 autostart = true
 
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(38, -40)
+
+[node name="RayCast2D2" type="RayCast2D" parent="."]
+target_position = Vector2(43, 43)
+
+[node name="RayCast2D3" type="RayCast2D" parent="."]
+target_position = Vector2(0, 54)
+
+[node name="RayCast2D4" type="RayCast2D" parent="."]
+target_position = Vector2(-41, 41)
+
+[node name="RayCast2D5" type="RayCast2D" parent="."]
+target_position = Vector2(-57, 0)
+
+[node name="RayCast2D6" type="RayCast2D" parent="."]
+target_position = Vector2(-36, -40)
+
+[node name="RayCast2D7" type="RayCast2D" parent="."]
+target_position = Vector2(0, -52)
+
+[node name="RayCast2D8" type="RayCast2D" parent="."]
+target_position = Vector2(52, -1)
+
 [connection signal="body_entered" from="Chasing_area" to="." method="_on_chasing_area_body_entered"]
 [connection signal="body_exited" from="Chasing_area" to="." method="_on_chasing_area_body_exited"]
 [connection signal="body_entered" from="Shooting_area" to="." method="_on_area_2d_body_entered"]
