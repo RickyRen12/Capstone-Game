@@ -1,20 +1,20 @@
 [gd_scene load_steps=7 format=3 uid="uid://b7orwq7akmb2j"]
 
-[ext_resource type="Texture2D" uid="uid://cddmnwjnsjy5o" path="res://Assets/Player/tommygun.png" id="1_5y8kv"]
 [ext_resource type="Script" path="res://Scripts/shop_buy_tsmg.gd" id="1_nkj3c"]
 [ext_resource type="PackedScene" uid="uid://b3a3263wgj0ht" path="res://Scenes/Interactions/Interaction_area.tscn" id="2_0gt2i"]
+[ext_resource type="Texture2D" uid="uid://d2j2db47y06y" path="res://Assets/Player/tommy gun-Photoroom.png" id="3_dnyep"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i485i"]
 size = Vector2(95, 81)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gus7m"]
-size = Vector2(62, 22)
+size = Vector2(56, 20)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_bhkdi"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_5y8kv")
+"texture": ExtResource("3_dnyep")
 }],
 "loop": true,
 "name": &"default",
@@ -34,4 +34,6 @@ shape = SubResource("RectangleShape2D_i485i")
 shape = SubResource("RectangleShape2D_gus7m")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-4.76837e-07, 1.19209e-07)
+scale = Vector2(0.891304, 0.891304)
 sprite_frames = SubResource("SpriteFrames_bhkdi")

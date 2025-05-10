@@ -39,7 +39,7 @@ func _ready() -> void:
 	make_rooms()
 
 func _process(delta):
-	queue_redraw()
+	pass
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func make_rooms():
@@ -275,13 +275,14 @@ func find_end_room():
 		if room.position.x > max_x:
 			end_room = room
 			max_x = room.position.x
-	var temp_shop_keep = merchant.instantiate()
+	var shop_keep = merchant.instantiate()
 	var room_pos = end_room.position
 	var room_size = end_room.size
-	var spawn_x = room_pos.x - room_size.x / 6
-	var spawn_y = room_pos.y - room_size.y / 2
-	temp_shop_keep.position = Vector2(spawn_x, spawn_y)
-	add_child(temp_shop_keep)
+	var spawn_x = room_pos.x
+	var spawn_y = room_pos.y
+	shop_keep.position = Vector2(spawn_x, spawn_y)
+	add_child(shop_keep)
+	shop_keep.shop_opened.connect(open_store)
 
 func find_store_room():
 	var candidate_rooms: Array[Node2D] = []
@@ -297,13 +298,18 @@ func find_store_room():
 	store_room = candidate_rooms[0]
 	print("Store Room Found: ", store_room.name)
 	print("Store Room Position: ", store_room.position)
-	var shopkeep := merchant.instantiate()
+	var shop_keep = merchant.instantiate()
 	var room_pos = store_room.position
 	var room_size = store_room.size
 	var spawn_x = room_pos.x
 	var spawn_y = room_pos.y
-	shopkeep.position = Vector2(spawn_x, spawn_y)
-	add_child(shopkeep)
+	shop_keep.position = Vector2(spawn_x, spawn_y)
+	add_child(shop_keep)
+	shop_keep.shop_opened.connect(open_store)
+	
+
+func open_store():
+	print("print so run")
 
 func _sort_by_center_distance(a: Node2D, b: Node2D) -> bool:
 	return abs(a.position.x) < abs(b.position.x)

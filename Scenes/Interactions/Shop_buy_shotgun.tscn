@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b3a3263wgj0ht" path="res://Scenes/Interactions/Interaction_area.tscn" id="3_762ob"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vlffg"]
-size = Vector2(44, 11)
+size = Vector2(58, 17)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7kkew"]
 animations = [{
@@ -19,18 +19,19 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wp5vo"]
-size = Vector2(71, 67)
+size = Vector2(77.5, 72.5)
 
 [node name="Shop_buy_shotgun" type="StaticBody2D"]
 script = ExtResource("1_wvu7g")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -0.5)
+position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_vlffg")
 debug_color = Color(0.863812, 0.32623, 0.392763, 0.42)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.0229514, 0.0229514)
+position = Vector2(4.76837e-07, -2.38419e-07)
+scale = Vector2(0.0302257, 0.0302257)
 sprite_frames = SubResource("SpriteFrames_7kkew")
 
 [node name="InteractionArea" parent="." instance=ExtResource("3_762ob")]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cddmnwjnsjy5o"
-path="res://.godot/imported/tommygun.png-15d5324466ab5ea79a5d23639ac3d277.ctex"
+uid="uid://d2j2db47y06y"
+path="res://.godot/imported/tommy gun-Photoroom.png-6941895cd289a614facfd40a4ea03e53.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Player/tommygun.png"
-dest_files=["res://.godot/imported/tommygun.png-15d5324466ab5ea79a5d23639ac3d277.ctex"]
+source_file="res://Assets/Player/tommy gun-Photoroom.png"
+dest_files=["res://.godot/imported/tommy gun-Photoroom.png-6941895cd289a614facfd40a4ea03e53.ctex"]
 
 [params]
 
