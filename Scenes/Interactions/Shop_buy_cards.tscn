@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://k4wvwhigsfhr"]
 
-[ext_resource type="Script" path="res://Scenes/Interactions/cards_weapon.gd" id="1_jfbfe"]
+[ext_resource type="Script" path="res://Scripts/cards_weapon.gd" id="1_jfbfe"]
 [ext_resource type="Texture2D" uid="uid://rgntoy4sw5m5" path="res://Assets/Player/cards2_monochrome.png" id="1_o8kdn"]
 [ext_resource type="PackedScene" uid="uid://b3a3263wgj0ht" path="res://Scenes/Interactions/Interaction_area.tscn" id="2_f4onn"]
 

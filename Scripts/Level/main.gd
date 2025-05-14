@@ -6,7 +6,7 @@ var enemy = preload("res://Scenes/REALenemy.tscn")
 var merchant = preload("res://Scenes/Interactions/shop_npc.tscn")
 var purchase_shotgun = preload("res://Scenes/Interactions/Shop_buy_shotgun.tscn")
 var purchase_TSMG = preload("res://Scenes/Interactions/Shop_buy_TSMG.tscn")
-var purchase_cards = preload(card)
+var purchase_cards = preload("res://Scenes/Interactions/Shop_buy_cards.tscn")
 
 
 
@@ -321,20 +321,30 @@ func find_store_room():
 	
 
 func open_store(merchant_node):
-	print("print so run")
 	if merchant_node.has_opened_store:
 		return
 	merchant_node.has_opened_store = true
-	#create purchasable shotgun
-	var shotgun = purchase_shotgun.instantiate()
-	var shotgun_offset = Vector2(-150, 100) 
-	shotgun.global_position = merchant_node.global_position + shotgun_offset
-	add_child(shotgun)
-	#create purchasable TSMG
-	var TSMG = purchase_TSMG.instantiate()
-	var TSMG_offset = Vector2(150, 100) 
-	TSMG.global_position = merchant_node.global_position + TSMG_offset
-	add_child(TSMG)
+	print("Opening store...")
+	# List of weapon scenes
+	var weapon_scenes = [
+		purchase_shotgun,
+		purchase_TSMG,
+		purchase_cards
+	]
+	# Pick 2 different random weapons
+	weapon_scenes.shuffle()
+	var first_weapon = weapon_scenes[0].instantiate()
+	var second_weapon = weapon_scenes[1].instantiate()
+	# Position offsets
+	var first_offset = Vector2(-150, 100)
+	var second_offset = Vector2(150, 100)
+	# Set positions based on merchant
+	first_weapon.global_position = merchant_node.global_position + first_offset
+	second_weapon.global_position = merchant_node.global_position + second_offset
+	# Add them to the scene
+	add_child(first_weapon)
+	add_child(second_weapon)
+
 
 func _sort_by_center_distance(a: Node2D, b: Node2D) -> bool:
 	return abs(a.position.x) < abs(b.position.x)

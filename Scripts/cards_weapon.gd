@@ -26,8 +26,8 @@ func _on_interact():
 		await DialogManager.dialog_finished
 		
 	else:
-		player_node.change_currency_amt(-10)
-		player_node.set_active_weapon("shotgun")
+		player_node.change_currency_amt(-17)
+		player_node.set_active_weapon("Cards")
 		print("wow")
 		is_empty = true
 		queue_free()

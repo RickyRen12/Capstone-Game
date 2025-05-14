@@ -42,10 +42,10 @@ var weapon_damages = {
 }
 #checks for weapons
 var weapons = {
-	\"default_gun\": false,
+	\"default_gun\": true,
 	\"shotgun\": false,
 	\"TSMG\": false,
-	\"cards\":true
+	\"cards\":false
 	}
 
 func is_player():
