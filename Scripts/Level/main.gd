@@ -6,6 +6,8 @@ var enemy = preload("res://Scenes/REALenemy.tscn")
 var merchant = preload("res://Scenes/Interactions/shop_npc.tscn")
 var purchase_shotgun = preload("res://Scenes/Interactions/Shop_buy_shotgun.tscn")
 var purchase_TSMG = preload("res://Scenes/Interactions/Shop_buy_TSMG.tscn")
+var purchase_cards = preload(card)
+
 
 
 var tile_size = 32

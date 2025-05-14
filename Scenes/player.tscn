@@ -37,13 +37,15 @@ var damage_taken_multiplier = 1
 var weapon_damages = {
 	\"default_gun\": 2,
 	\"shotgun\": 4,
-	\"TSMG\": 1
+	\"TSMG\": 1,
+	\"cards\": 1
 }
 #checks for weapons
 var weapons = {
-	\"default_gun\": true,
+	\"default_gun\": false,
 	\"shotgun\": false,
-	\"TSMG\": false
+	\"TSMG\": false,
+	\"cards\":true
 	}
 
 func is_player():
@@ -92,18 +94,28 @@ func _physics_process(delta):
 				proj_instance.set_damage_amount(weapon_damages[\"shotgun\"] * damage_multiplier)
 				add_child(proj_instance)
 				await get_tree().create_timer(0.05).timeout
-			await get_tree().create_timer(1.0).timeout
+			await get_tree().create_timer(1.0).timeout# cooldown
 		elif weapons[\"default_gun\"]:
 			var proj_instance = proj.instantiate()
 			proj_instance.rotation = $Marker2D.rotation
 			proj_instance.global_position = $Marker2D.global_position
 			proj_instance.set_damage_amount(weapon_damages[\"default_gun\"] * damage_multiplier)
 			add_child(proj_instance)
-			await get_tree().create_timer(0.4).timeout
+			await get_tree().create_timer(0.4).timeout# cooldown
 		elif weapons[\"TSMG\"]:
 			weapon_cooldown = false
 			shoot_tsmg_burst()
 			await get_tree().create_timer(0.2).timeout  # cooldown before another burst
+		elif weapons[\"cards\"]:
+			var spread_angle = .75
+			for i in range(7):
+				var proj_instance = proj.instantiate()
+				proj_instance.rotation = $Marker2D.rotation + (i - 3) * spread_angle
+				proj_instance.global_position = $Marker2D.global_position
+				proj_instance.set_damage_amount(weapon_damages[\"shotgun\"] * damage_multiplier)
+				add_child(proj_instance)
+			await get_tree().create_timer(1.25).timeout# cooldown
+			
 		weapon_cooldown = true
 	#ability input handling
 	if Input.is_action_just_pressed(\"ability\"):
