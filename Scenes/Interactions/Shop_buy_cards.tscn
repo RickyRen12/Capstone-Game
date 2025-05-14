@@ -29,10 +29,11 @@ position = Vector2(4.76837e-07, 0)
 scale = Vector2(0.307099, 0.307099)
 sprite_frames = SubResource("SpriteFrames_mlfry")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_cdycf")
 
-[node name="InteractionArea" parent="CollisionShape2D" instance=ExtResource("2_f4onn")]
+[node name="InteractionArea" parent="." instance=ExtResource("2_f4onn")]
+action_name = "purchase the deck of cards for $17"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionShape2D/InteractionArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
 shape = SubResource("RectangleShape2D_7mnei")

@@ -27,7 +27,7 @@ func _on_interact():
 		
 	else:
 		player_node.change_currency_amt(-17)
-		player_node.set_active_weapon("Cards")
+		player_node.set_active_weapon("cards")
 		print("wow")
 		is_empty = true
 		queue_free()
