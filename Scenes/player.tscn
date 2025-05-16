@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://crt118532wteg"]
+[gd_scene load_steps=9 format=3 uid="uid://crt118532wteg"]
 
 [ext_resource type="Script" path="res://Scripts/InteractionsAndGameElements/dynamic_cam.gd" id="1_sdejc"]
 [ext_resource type="Texture2D" uid="uid://1fnj36ywrnnx" path="res://Assets/Player/king-penguin-7795519_640.jpg" id="2_8kuay"]
 [ext_resource type="PackedScene" uid="uid://c0i538cetsg2x" path="res://Scenes/UI/healthbar.tscn" id="3_ywxrm"]
 [ext_resource type="PackedScene" uid="uid://d26by3t5qswud" path="res://Scenes/UI/ability_bar.tscn" id="4_s6ffl"]
+[ext_resource type="Texture2D" uid="uid://c67jiglankiy" path="res://Assets/poker_ship.png" id="5_d4mt1"]
 
 [sub_resource type="GDScript" id="GDScript_l0uhj"]
 script/source = "### Player.gd
@@ -20,7 +21,7 @@ var ability_manager = AbilityManager
 var equipped_ability
 var last_direction = Vector2.ZERO
 var speed = 250
-var weapon_equipped = false
+var weapon_equipped = true
 var weapon_cooldown = true
 var dash_cooldown = true
 var health_amount : int = 15
@@ -72,7 +73,7 @@ func _physics_process(delta):
 			velocity = velocity.move_toward(direction * speed, accel * delta)
 		else:
 			velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
-	if Input.is_action_just_pressed(\"ui_q\") and dash_cooldown and control_state:
+	if Input.is_action_just_pressed(\"dash\") and dash_cooldown and control_state:
 		Dash()
 	move_and_slide()
 	#Shooting mechanic
@@ -175,7 +176,9 @@ func Dash():
 	friction = friction * 10
 	await get_tree().create_timer(0.15).timeout
 	friction = friction / 10
+	await get_tree().create_timer(0.25).timeout
 	dash_cooldown = true
+	
 
 func _on_detection_area_area_entered(area: Area2D) -> void:
 	#taking projectile damage
@@ -325,5 +328,13 @@ offset_left = 1020.0
 offset_top = 426.0
 offset_right = 1118.0
 offset_bottom = 568.0
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+offset_left = 763.0
+offset_top = 582.0
+offset_right = 804.0
+offset_bottom = 619.0
+texture = ExtResource("5_d4mt1")
+expand_mode = 1
 
 [connection signal="area_entered" from="Detection_area" to="." method="_on_detection_area_area_entered"]

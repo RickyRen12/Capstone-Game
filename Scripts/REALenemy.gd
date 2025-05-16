@@ -14,7 +14,7 @@ var will_shoot = false
 var gun_cooldown = true
 var health_amount : int = 15
 var chase_speed = 100
-var knockback_power = 500
+var knockback_power = 400
 #if you wanna make the enemy run away when hit make the knockback decay smaller
 var knockback_decay = 1000
 var is_knocked_back = false  # Track knockback state

@@ -16,17 +16,17 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cdycf"]
-size = Vector2(42, 25)
+size = Vector2(50, 30.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7mnei"]
-size = Vector2(71, 65)
+size = Vector2(88.5, 73)
 
 [node name="CardsWeapon" type="StaticBody2D"]
 script = ExtResource("1_jfbfe")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(4.76837e-07, 0)
-scale = Vector2(0.307099, 0.307099)
+position = Vector2(0, 2.38419e-07)
+scale = Vector2(0.357929, 0.375772)
 sprite_frames = SubResource("SpriteFrames_mlfry")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]

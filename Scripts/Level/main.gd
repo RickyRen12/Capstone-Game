@@ -260,7 +260,7 @@ func _on_door_exited(body: Node, door_area: Area2D):
 
 
 func find_start_room():
-	var min_x = INF  # Initialize with a very large value
+	var min_x = INF  
 	start_room = null  # Reset the start_room variable
 	
 	# Loop through all rooms to find the leftmost room
