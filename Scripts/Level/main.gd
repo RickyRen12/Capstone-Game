@@ -237,7 +237,7 @@ func _on_door_exited(body: Node, door_area: Area2D):
 		var temp_closest_room = get_closest_room_to_player()
 		
 		
-		for i in range (3, 7):
+		for i in randf_range (4, 8):
 			var enemy_temp = enemy.instantiate()
 			# Get the room center and size
 			var room_pos = temp_closest_room.position

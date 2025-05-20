@@ -20,7 +20,7 @@ func _on_interact():
 		print("Player node not found!")
 		return
 		
-	if player_node.return_currency_amt() <= 0:
+	if player_node.return_currency_amt() - 10 < 0:
 		DialogManager.start_dialog(global_position, lines, speech_sound)
 		sprite.flip_h = true if interaction_area.get_overlapping_bodies()[0].global_position.x < global_position.x else false
 		await DialogManager.dialog_finished
