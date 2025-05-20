@@ -7,6 +7,14 @@ var proj = preload("res://Scenes/enemyProj.tscn")
 @onready var player: Node2D
 @onready var nav_agent := $NavigationAgent2D as NavigationAgent2D
 @onready var hit_flash_animation = $Hit_flash_animation
+@onready var raycast1 = $RayCast2D
+@onready var raycast2 = $RayCast2D2
+@onready var raycast3 = $RayCast2D3
+@onready var raycast4 = $RayCast2D4
+@onready var raycast5 = $RayCast2D5
+@onready var raycast6 = $RayCast2D6
+@onready var raycast7 = $RayCast2D7
+@onready var raycast8 = $RayCast2D8
 
 var rng = RandomNumberGenerator.new()
 var player_chase = false
@@ -30,45 +38,48 @@ func _ready():
 	nav_agent.path_desired_distance = 20  # pixels away from walls
 	nav_agent.target_desired_distance = 4  # how close to get to the target before stopping
 
+func _enemy_tracker():
+	var simpleVectorX = [0,1,1,1,0,-1,-1,-1]
+	var simpleVectorY = [1,-1,0,1,1,1,0,-1]
+	var simpleVectors = [simpleVectorX, simpleVectorY]
+	
+	localPosX = nav_agent.getNode().globalPositionX - player.getNode().globalPositionX
+	localPosY = nav_agent.getNode().globalPositionY - player.getNode().globalPositionY
+
+	var localPos = [localPosX, localPosY]
+
+	var normalizedX = localPosX / sqrt((localPosX)^2 + (localPosY)^2)
+	var normalizedY = localPosY / sqrt((localPosX)^2 + (localPosY)^2)
+
+	var interestVector = [(-normalizedY), (normalizedX*1 - normalizedY*-1), (normalizedX), (normalizedX - normalizedY), (normalizedY), (-1*normalized - normalizedY), (-normalizedX), (-normalizedX - normalizedY)]
+
+
+	if (raycast detects smth on their vector){
+		specific ray cast = 5
+		specific ray cast + 1 = 2
+		specific ray cast - 1 = 2
+		new array[] contextVector = [0, 2, 5, 2, 0, 0, 0, 0]
+}
+
+	var contextMap = interestVector - contextVector
+
+largest = contextMap[0]
+	for element in arr:
+		if element > largest:
+			largest = element
+
+var index1 = contextMap.index(largest)
+
+Vector2D enemyGoHere = simpleVectors(index1)
+
+velocity = enemyGoHere
 
 func _physics_process(delta):
 	if player_chase and player:
 		if nav_agent.is_navigation_finished():
 			velocity = Vector2.ZERO
 	
-#THIS IS NEW ENEMY PATHFINDER VIA VECTORS!!!
-#new array[] simpleVectors = [(0,1),(1,-1),(1,0),(1,1), (0,1), (-1,1), (-1,0), (-1,-1)]
-#
-#localPosX = nav_agent.getNode().globalPositionX - player.getNode().globalPositionX
-#localPosY = nav_agent.getNode().globalPositionY - player.getNode().globalPositionY
-#
-#new Vector2D localPos = [localPosX, localPosY]
-#
-#var normalizedX = localPosX / sqrt((localPosX)^2 + (localPosY)^2)
-#var normalizedY = localPosY / sqrt((localPosX)^2 + (localPosY)^2)
-#
-#new array[] interestVector = [(-normalizedY), (normalizedX*1 - normalizedY*-1), (normalizedX), (normalizedX - normalizedY), (normalizedY), (-1*normalized - normalizedY), (-normalizedX), (-normalizedX - normalizedY)]
-#
-#
-#if (raycast detects smth on their vector){
-	#specific ray cast = 5
-	#specific ray cast + 1 = 2
-	#specific ray cast - 1 = 2
-#new array[] contextVector = [0, 2, 5, 2, 0, 0, 0, 0]
-#}
-#
-#new array[] contextMap = interestVector - contextVector
-#
-#largest = contextMap[0]
-	#for element in arr:
-		#if element > largest:
-			#largest = element
-#
-#var index1 = contextMap.index(largest)
-#
-#Vector2D enemyGoHere = simpleVectors(index1)
 
-#velocity = enemyGoHere
 		else:
 			var next_path_pos := nav_agent.get_next_path_position()
 			var direction := global_position.direction_to(next_path_pos)
