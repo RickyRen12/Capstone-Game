@@ -1,9 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bo2ch4dixulpv"]
+[gd_scene load_steps=6 format=3 uid="uid://bo2ch4dixulpv"]
 
 [ext_resource type="Texture2D" uid="uid://c67jiglankiy" path="res://Assets/poker_ship.png" id="1_f36fj"]
 [ext_resource type="Script" path="res://Scripts/InteractionsAndGameElements/coin.gd" id="2_ihnyc"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_mdlk8"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_uhmrm"]
 animations = [{
 "frames": [{
 "duration": 1.0,
@@ -14,19 +14,32 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_irf0e"]
-size = Vector2(436, 390)
+[sub_resource type="CircleShape2D" id="CircleShape2D_cm4ff"]
+radius = 53.9081
 
-[node name="coin" type="AnimatedSprite2D"]
-position = Vector2(-2.38419e-07, 0)
-scale = Vector2(0.174359, 0.174359)
-sprite_frames = SubResource("SpriteFrames_mdlk8")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_irf0e"]
+size = Vector2(137.879, 121.034)
+
+[node name="coin" type="CharacterBody2D"]
+scale = Vector2(0.148718, 0.148718)
+collision_layer = 128
+collision_mask = 129
 script = ExtResource("2_ihnyc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0.413788, -1.52588e-05)
+scale = Vector2(0.310345, 0.310345)
+sprite_frames = SubResource("SpriteFrames_uhmrm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.306046, 1.52588e-05)
+shape = SubResource("CircleShape2D_cm4ff")
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1.12929, 0)
+scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_irf0e")
 
-[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

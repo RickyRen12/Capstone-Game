@@ -34,7 +34,7 @@ var currency_amt = 10
 var knockback_power = 300
 var invincible = false
 var control_state = true
-var damage_multiplier = 1
+var damage_multiplier = 100
 var damage_taken_multiplier = 1
 
 #weapon damages

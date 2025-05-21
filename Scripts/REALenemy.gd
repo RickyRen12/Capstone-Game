@@ -38,41 +38,41 @@ func _ready():
 	nav_agent.path_desired_distance = 20  # pixels away from walls
 	nav_agent.target_desired_distance = 4  # how close to get to the target before stopping
 
-func _enemy_tracker():
-	var simpleVectorX = [0,1,1,1,0,-1,-1,-1]
-	var simpleVectorY = [1,-1,0,1,1,1,0,-1]
-	var simpleVectors = [simpleVectorX, simpleVectorY]
-	
-	localPosX = nav_agent.getNode().globalPositionX - player.getNode().globalPositionX
-	localPosY = nav_agent.getNode().globalPositionY - player.getNode().globalPositionY
-
-	var localPos = [localPosX, localPosY]
-
-	var normalizedX = localPosX / sqrt((localPosX)^2 + (localPosY)^2)
-	var normalizedY = localPosY / sqrt((localPosX)^2 + (localPosY)^2)
-
-	var interestVector = [(-normalizedY), (normalizedX*1 - normalizedY*-1), (normalizedX), (normalizedX - normalizedY), (normalizedY), (-1*normalized - normalizedY), (-normalizedX), (-normalizedX - normalizedY)]
-
-
-	if (raycast detects smth on their vector){
-		specific ray cast = 5
-		specific ray cast + 1 = 2
-		specific ray cast - 1 = 2
-		new array[] contextVector = [0, 2, 5, 2, 0, 0, 0, 0]
-}
-
-	var contextMap = interestVector - contextVector
-
-largest = contextMap[0]
-	for element in arr:
-		if element > largest:
-			largest = element
-
-var index1 = contextMap.index(largest)
-
-Vector2D enemyGoHere = simpleVectors(index1)
-
-velocity = enemyGoHere
+#func _enemy_tracker():
+	#var simpleVectorX = [0,1,1,1,0,-1,-1,-1]
+	#var simpleVectorY = [1,-1,0,1,1,1,0,-1]
+	#var simpleVectors = [simpleVectorX, simpleVectorY]
+	#
+	#localPosX = nav_agent.getNode().globalPositionX - player.getNode().globalPositionX
+	#localPosY = nav_agent.getNode().globalPositionY - player.getNode().globalPositionY
+#
+	#var localPos = [localPosX, localPosY]
+#
+	#var normalizedX = localPosX / sqrt((localPosX)^2 + (localPosY)^2)
+	#var normalizedY = localPosY / sqrt((localPosX)^2 + (localPosY)^2)
+#
+	#var interestVector = [(-normalizedY), (normalizedX*1 - normalizedY*-1), (normalizedX), (normalizedX - normalizedY), (normalizedY), (-1*normalized - normalizedY), (-normalizedX), (-normalizedX - normalizedY)]
+#
+#
+	#if (raycast detects smth on their vector){
+		#specific ray cast = 5
+		#specific ray cast + 1 = 2
+		#specific ray cast - 1 = 2
+		#new array[] contextVector = [0, 2, 5, 2, 0, 0, 0, 0]
+#}
+#
+	#var contextMap = interestVector - contextVector
+#
+#largest = contextMap[0]
+	#for element in arr:
+		#if element > largest:
+			#largest = element
+#
+#var index1 = contextMap.index(largest)
+#
+#Vector2D enemyGoHere = simpleVectors(index1)
+#
+#velocity = enemyGoHere
 
 func _physics_process(delta):
 	if player_chase and player:
@@ -147,11 +147,19 @@ func _on_hurt_box_area_entered(area: Area2D):
 		EnemyDeath_instance.global_position = global_position
 		get_parent().add_child(EnemyDeath_instance)
 		
-		var my_random_number = rng.randf_range(0, 10.0)
-		
-		if(my_random_number < 5):
-			var coin_instance = coin.instantiate() as Node2D
-			coin_instance.global_position = global_position
+		var coin_count = rng.randi_range(3, 5)
+		for i in range(coin_count):
+			var coin_instance = coin.instantiate()
+			var offset = Vector2(randf_range(-8, 8), randf_range(-8, 8))  # Adjust range as needed
+			coin_instance.global_position = global_position + offset
 			get_parent().add_child(coin_instance)
+			# Give it an initial velocity to simulate spreading
+			var angle = TAU * i / float(coin_count)  # evenly spaced around circle
+			var speed = randf_range(80, 150)
+			var direction = Vector2(cos(angle), sin(angle))
+			
+			if coin_instance.has_method("set_initial_velocity"):
+				coin_instance.set_initial_velocity(direction * speed)
+
 		
 		queue_free()
