@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bo2ch4dixulpv"]
+[gd_scene load_steps=7 format=3 uid="uid://bo2ch4dixulpv"]
 
 [ext_resource type="Texture2D" uid="uid://c67jiglankiy" path="res://Assets/poker_ship.png" id="1_f36fj"]
 [ext_resource type="Script" path="res://Scripts/InteractionsAndGameElements/coin.gd" id="2_ihnyc"]
@@ -20,6 +20,9 @@ radius = 53.9081
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_irf0e"]
 size = Vector2(137.879, 121.034)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_n53kk"]
+radius = 255.517
+
 [node name="coin" type="CharacterBody2D"]
 scale = Vector2(0.148718, 0.148718)
 collision_layer = 128
@@ -39,7 +42,12 @@ shape = SubResource("CircleShape2D_cm4ff")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(1.12929, 0)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_irf0e")
 
+[node name="Area2D2" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+shape = SubResource("CircleShape2D_n53kk")
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Area2D2" to="." method="_on_area_2d_2_body_entered"]
