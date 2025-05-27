@@ -37,12 +37,12 @@ func _ready():
 	player = get_tree().get_first_node_in_group("player")
 	make_path()
 	
-	nav_agent.path_desired_distance = 20  # pixels away from walls
+	nav_agent.path_desired_distance = 100  # pixels away from walls
 	nav_agent.target_desired_distance = 4  # how close to get to the target before stopping
 
 func _enemy_tracker():
-	var simpleVectorX = [0,1,1,1,0,-1,-1,-1]
-	var simpleVectorY = [1,-1,0,1,1,1,0,-1]
+	var simpleVectorX = [0,1,1, 1, 0,-1,-1,-1]
+	var simpleVectorY = [1,1,0,-1,-1,-1, 0, 1]
 	var simpleVectors = [simpleVectorX, simpleVectorY]
 	
 	var localPosX = self.position.x - player.position.x
@@ -52,31 +52,38 @@ func _enemy_tracker():
 	var normalizedY = localPosY / sqrt((localPosX*localPosX) + (localPosY*localPosY))
 	
 	
-	var interestVector = [(-normalizedY), (normalizedX*1 - normalizedY*-1), (normalizedX), (normalizedX - normalizedY), (normalizedY), (-1*normalizedX - normalizedY), (-normalizedX), (-normalizedX - normalizedY)]
+	var interestVector = [(normalizedY), (normalizedX*1 + normalizedY*1), (normalizedX), (normalizedX - normalizedY), (-normalizedY), (-1*normalizedX - normalizedY), (-normalizedX), (-normalizedX + normalizedY)]
 	var contextVector = [0, 0, 0, 0, 0, 0, 0, 0]
 
 	if ($RayCast2D1.is_colliding()):
-		contextVector = [5, 2, 0, 0, 0, 0, 0, 2]
-	if ($RayCast2D3.is_colliding()):
-		contextVector = [0, 2, 5, 2, 0, 0, 0, 0]
-	if ($RayCast2D5.is_colliding()):
-		contextVector = [0, 0, 0, 2, 5, 2, 0, 0]
-	if ($RayCast2D7.is_colliding()):
-		contextVector = [2, 0, 0, 0, 0, 0, 5, 2]
-
+		contextVector = [50, 20, 0, 0, 0, 0, 0, 20]
+	elif ($RayCast2D2.is_colliding()):
+		contextVector = [20, 50, 20, 0, 0, 0, 0, 0]
+	elif ($RayCast2D3.is_colliding()):
+		contextVector = [0, 20, 50, 20, 0, 0, 0, 0]
+	elif ($RayCast2D4.is_colliding()):
+		contextVector = [0, 0, 20, 50, 20, 0, 0, 0]
+	elif ($RayCast2D5.is_colliding()):
+		contextVector = [0, 0, 0, 20, 50, 20, 0, 0]
+	elif ($RayCast2D6.is_colliding()):
+		contextVector = [0, 0, 0, 0, 20, 50, 20, 0]
+	elif ($RayCast2D7.is_colliding()):
+		contextVector = [20, 0, 0, 0, 0, 0, 50, 20]
+	elif ($RayCast2D8.is_colliding()):
+		contextVector = [20, 0, 0, 0, 0, 0, 20, 50]
 
 	var contextMap = []
-	for x in range(0, interestVector.size()):
+	for x in range(0, interestVector.size() - 1):
 		contextMap.insert(x, interestVector[x] - contextVector[x])
 
-	var largest = contextMap[0]
-	for x in contextMap:
-		if x > largest:
+	var largest = 0
+	for x in range(0, contextMap.size() - 1):
+		if contextMap[x] > contextMap[largest]:
 			largest = x
-	var index1 = contextMap[largest]
-	var veloVectorY = simpleVectorY[index1]
-	var veloVectorX = simpleVectorX[index1]
-	self.velocity = Vector2(veloVectorX, veloVectorY)
+	var veloVectorY = simpleVectorY[largest]
+	var veloVectorX = simpleVectorX[largest]
+	print(largest)
+	self.velocity = Vector2(veloVectorX*-100, veloVectorY*-100)
 	
 func _physics_process(delta):
 	if player_chase and player:
@@ -88,7 +95,7 @@ func _physics_process(delta):
 			direction = global_position.direction_to(next_path_pos)
 			_enemy_tracker()
 			knockback = knockback.move_toward(Vector2.ZERO, knockback_decay * delta)
-			velocity = direction * chase_speed
+			#velocity = direction * chase_speed
 			move_and_collide((velocity + knockback) * delta)
 		
 	#enemy shooting
