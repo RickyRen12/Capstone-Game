@@ -76,7 +76,10 @@ func _enemy_tracker():
 	var index1 = contextMap[largest]
 	var veloVectorY = simpleVectorY[index1]
 	var veloVectorX = simpleVectorX[index1]
-	self.velocity = Vector2(veloVectorX, veloVectorY)
+	self.velocity = Vector2(veloVectorX * -100, veloVectorY * -100)
+	print("pre velo", velocity)
+	print(veloVectorX)
+	print(veloVectorY)
 	
 func _physics_process(delta):
 	if player_chase and player:
@@ -88,7 +91,8 @@ func _physics_process(delta):
 			direction = global_position.direction_to(next_path_pos)
 			_enemy_tracker()
 			knockback = knockback.move_toward(Vector2.ZERO, knockback_decay * delta)
-			velocity = direction * chase_speed
+			#velocity = direction * chase_speed
+			print("post velo", velocity)
 			move_and_collide((velocity + knockback) * delta)
 		
 	#enemy shooting
