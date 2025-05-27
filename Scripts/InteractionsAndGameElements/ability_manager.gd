@@ -67,3 +67,12 @@ func double_or_nothing():
 		print("dmg " + str(player.return_damage_amt_player()))
 		print("dmg taken " + str(player.return_damage_taken_mult_player()))
 	end_ability()
+
+func waddahell():
+	if player:
+		# double crit rate, half base damage
+		# temporailty have no enemies agro
+		# bullets pierce enemies
+		# 
+		print()
+	end_ability()

@@ -34,7 +34,7 @@ var currency_amt = 10
 var knockback_power = 300
 var invincible = false
 var control_state = true
-var damage_multiplier = 100
+var damage_multiplier = 1
 var damage_taken_multiplier = 1
 
 #weapon damages
@@ -130,7 +130,7 @@ func _physics_process(delta):
 
 
 func shoot_tsmg_burst():
-	var angle_offset = deg_to_rad(randf_range(-20, 20))  # Random cone within 30 degrees
+	var angle_offset = deg_to_rad(randf_range(-20, 20))
 	for i in range(2):
 		var proj_instance = proj.instantiate()
 		proj_instance.rotation = $Marker2D.rotation + angle_offset
