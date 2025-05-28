@@ -39,7 +39,6 @@ var invincible = false
 var control_state = true
 var damage_multiplier = 1
 var damage_taken_multiplier = 1
-var coin_mult = 1
 
 #weapon damages
 var weapon_damages = {
@@ -70,7 +69,6 @@ func _ready():
 	equipped_ability = ability_manager.Ability_nums.double_or_nothing
 
 func _physics_process(delta):
-	passive_manager.process_passives(delta)
 	print(health_amount)
 	#update direction and velocity
 	if(control_state):

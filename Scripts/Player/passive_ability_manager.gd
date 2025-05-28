@@ -12,16 +12,19 @@ func remove_passive(passive: String) -> void:
 	active_passives.erase(passive)
 
 func process_passives(delta: float) -> void:
-	player.speed = base_speed
 	for passive in active_passives:
+		if player.dash_cooldown == true:
+			player.speed = base_speed
+		player.coin_mult = 1
 		match passive:
 			"health_regen":
 				_apply_regen(delta)
 			"extra_speed":
 				player.speed += 150  # just an example
 			"double_loot":
-				pass
+				player.coin_mult = player.coin_mult * 2
 
 func _apply_regen(delta):
-	player.health_amount = clamp(player.health_amount + delta * 1.5, 0, player.HealthBar.max_health)
-	player.HealthBar.health = player.health_amount
+	if player.health_amount < player.max_health - 10:
+		player.health_amount = player.health_amount + 1
+		player.HealthBar.health = player.health_amount

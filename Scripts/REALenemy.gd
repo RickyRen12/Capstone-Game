@@ -21,6 +21,7 @@ var player_chase = false
 var will_shoot = false
 var gun_cooldown = true
 var health_amount : int = 15
+var coin_range_center = 5
 var chase_speed = 100
 var knockback_power = 400
 #if you wanna make the enemy run away when hit make the knockback decay smaller
@@ -158,19 +159,20 @@ func _on_hurt_box_area_entered(area: Area2D):
 		EnemyDeath_instance.global_position = global_position
 		get_parent().add_child(EnemyDeath_instance)
 		
-		var coin_count = rng.randi_range(3, 5)
-		for i in range(coin_count):
-			var coin_instance = coin.instantiate()
-			var offset = Vector2(randf_range(-8, 8), randf_range(-8, 8))  # Adjust range as needed
-			coin_instance.global_position = global_position + offset
-			get_parent().add_child(coin_instance)
-			# Give it an initial velocity to simulate spreading
-			var angle = TAU * i / float(coin_count)  # evenly spaced around circle
-			var speed = randf_range(80, 150)
-			var direction = Vector2(cos(angle), sin(angle))
-			
-			if coin_instance.has_method("set_initial_velocity"):
-				coin_instance.set_initial_velocity(direction * speed)
+		if player:
+			var coin_count = rng.randi_range((coin_range_center - 3) * player.coin_mult, (coin_range_center + 3) * player.coin_mult)
+			for i in range(coin_count):
+				var coin_instance = coin.instantiate()
+				var offset = Vector2(randf_range(-8, 8), randf_range(-8, 8))  # Adjust range as needed
+				coin_instance.global_position = global_position + offset
+				get_parent().add_child(coin_instance)
+				# Give it an initial velocity to simulate spreading
+				var angle = TAU * i / float(coin_count)  # evenly spaced around circle
+				var speed = randf_range(80, 150)
+				var direction = Vector2(cos(angle), sin(angle))
+				
+				if coin_instance.has_method("set_initial_velocity"):
+					coin_instance.set_initial_velocity(direction * speed)
 
 		
 		queue_free()

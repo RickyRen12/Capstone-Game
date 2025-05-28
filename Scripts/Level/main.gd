@@ -16,7 +16,7 @@ var min_size  = 15
 var max_size = 20
 var hspread = 70
 var path_thickness = 7  # Set this to control the thickness of the paths 
-var cull = 0.5 # chance to cull room
+var cull = 0.65 # chance to cull room
 var path  # AStar pathfinding object
 var current_room = null
 var door_areas = [] # Stores all door collision shapes
@@ -46,6 +46,28 @@ func _ready() -> void:
 	await get_tree().create_timer(1.5).timeout
 	print("test")
 	allow_enemy_spawning = true
+	
+	#UNCOMMENT THIS WHEN NO MORE TESTING, ADDS PLAYER AUTIMATICALLY AND AUTO BUILDS MAP WHEN YOU START THE GAME
+	make_map()
+	player = Player.instantiate()  # Instantiate the player scene
+	add_child(player)  # Add the player to the scene tree
+	
+	# Ensure the start_room is valid
+	if start_room:
+		# Calculate the center of the start room
+		var start_room_center = start_room.position + (start_room.size / 2)
+		player.position = start_room_center  # Set the player's position to the center of the start room
+		current_room = start_room
+	else:
+		print("Error: No start room found!")
+	
+	# Switch to the player's camera
+	if player.has_node("Camera2D"):  # Ensure the player has a Camera2D node
+		print("Player Position: ", player.position) 
+		var player_camera = player.get_node("Camera2D")
+		player_camera.make_current()  # Set the player's camera as the active camera
+	
+	play_mode = true  # Enable play mode
 
 func _process(delta):
 	pass
