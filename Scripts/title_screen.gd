@@ -1,7 +1,7 @@
 extends Control
 
 func _on_StartButton_pressed():
-	SceneSwitcher.switch_scene("res://Scenes/main.tscn")
+	SceneSwitcher.switch_scene("res://Scenes/Level/main.tscn")
 	pass
 
 func _on_QuitButton_pressed():
