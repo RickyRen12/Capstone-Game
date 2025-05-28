@@ -18,6 +18,8 @@ var PlayerDeath = preload(\"res://Scenes/player_death.tscn\")
 var proj = preload(\"res://Scenes/knife.tscn\")
 @onready var HealthBar = $CanvasLayer/Healthbar
 @onready var ability_bar = $CanvasLayer/ProgressBar
+var PassiveAbilityManager = preload(\"res://Scripts/Player/passive_ability_manager.gd\")
+var passive_manager = PassiveAbilityManager.new()
 var ability_manager = AbilityManager
 signal currency_gained(int)
 
@@ -56,6 +58,9 @@ func is_player():
 	return
 
 func _ready():
+	passive_manager.player = self
+	passive_manager.add_passive(\"health_regen\")
+	passive_manager.add_passive(\"double_loot\")
 	HealthBar.init_health(health_amount)
 	PlayerManager.set_player(self)
 	ability_manager.player = self
@@ -63,6 +68,7 @@ func _ready():
 	equipped_ability = ability_manager.Ability_nums.double_or_nothing
 
 func _physics_process(delta):
+	
 	#update direction and velocity
 	if(control_state):
 		var direction = Vector2.ZERO
