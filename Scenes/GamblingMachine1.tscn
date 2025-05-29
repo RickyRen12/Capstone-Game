@@ -33,6 +33,7 @@ sprite_frames = SubResource("SpriteFrames_u1nrw")
 shape = SubResource("RectangleShape2D_2b7e0")
 
 [node name="InteractionArea" parent="." instance=ExtResource("2_bgj5e")]
+action_name = "???"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
 shape = SubResource("CircleShape2D_00txs")

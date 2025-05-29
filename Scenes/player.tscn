@@ -61,8 +61,8 @@ func is_player():
 
 func _ready():
 	passive_manager.player = self
-	passive_manager.add_passive(\"health_regen\")
-	passive_manager.add_passive(\"double_loot\")
+	#passive_manager.add_passive(\"health_regen\")
+	#passive_manager.add_passive(\"double_loot\")
 	HealthBar.init_health(health_amount)
 	PlayerManager.set_player(self)
 	ability_manager.player = self
@@ -70,8 +70,8 @@ func _ready():
 	equipped_ability = ability_manager.Ability_nums.double_or_nothing
 
 func _physics_process(delta):
-	passive_manager.process_passives(delta)
 	print(health_amount)
+	passive_manager.process_passives(delta)
 	#update direction and velocity
 	if(control_state):
 		var direction = Vector2.ZERO
@@ -287,6 +287,7 @@ position = Vector2(-6.5, 0)
 shape = SubResource("RectangleShape2D_4n4jn")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.6, 0.6)
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 script = ExtResource("1_sdejc")

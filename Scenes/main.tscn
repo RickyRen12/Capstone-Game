@@ -43,14 +43,11 @@ position = Vector2(231, 764)
 [node name="ENEMY2" parent="." instance=ExtResource("5_k1t14")]
 position = Vector2(-25, 572)
 
-[node name="ENEMY3" parent="." instance=ExtResource("5_k1t14")]
-position = Vector2(1796, 841)
-
 [node name="ENEMY4" parent="." instance=ExtResource("5_k1t14")]
 position = Vector2(259, 565)
 
 [node name="BigBoss" parent="." instance=ExtResource("9_imbcj")]
-position = Vector2(1259, 1217)
+position = Vector2(1830, 1676)
 
 [node name="ShopBuyTsmg" parent="." instance=ExtResource("10_264vo")]
 position = Vector2(1094, 328)

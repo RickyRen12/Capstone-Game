@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://op7opiwefecx"]
+
+[ext_resource type="Texture2D" uid="uid://c7sb03sa5off2" path="res://Assets/Level/teleporter.png" id="1_nxjl0"]
+
+[node name="EndTeleporter" type="StaticBody2D"]
+
+[node name="Teleporter2" type="Sprite2D" parent="." groups=["end_teleporter"]]
+position = Vector2(-1.90735e-06, 1.90735e-06)
+scale = Vector2(0.0791015, 0.0791015)
+texture = ExtResource("1_nxjl0")

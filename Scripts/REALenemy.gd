@@ -21,7 +21,7 @@ var player_chase = false
 var will_shoot = false
 var gun_cooldown = true
 var health_amount : int = 15
-var coin_range_center = 5
+var coin_range_center = 3
 var chase_speed = 100
 var knockback_power = 400
 #if you wanna make the enemy run away when hit make the knockback decay smaller
@@ -94,9 +94,9 @@ func _physics_process(delta):
 		else:
 			var next_path_pos := nav_agent.get_next_path_position()
 			direction = global_position.direction_to(next_path_pos)
-			_enemy_tracker()
+			#_enemy_tracker()
 			knockback = knockback.move_toward(Vector2.ZERO, knockback_decay * delta)
-			#velocity = direction * chase_speed
+			velocity = direction * chase_speed
 			move_and_collide((velocity + knockback) * delta)
 		
 	#enemy shooting
@@ -155,9 +155,10 @@ func _on_hurt_box_area_entered(area: Area2D):
 		
 	#kills enemy
 	if health_amount <= 0:
-		var EnemyDeath_instance = EnemyDeath.instantiate() as Node2D
-		EnemyDeath_instance.global_position = global_position
-		get_parent().add_child(EnemyDeath_instance)
+#		#play a death animation
+		#var EnemyDeath_instance = EnemyDeath.instantiate() as Node2D
+		#EnemyDeath_instance.global_position = global_position
+		#get_parent().add_child(EnemyDeath_instance)
 		
 		if player:
 			var coin_count = rng.randi_range((coin_range_center - 3) * player.coin_mult, (coin_range_center + 3) * player.coin_mult)

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bvd5qn8pmemix"]
 
 [ext_resource type="Script" path="res://Scripts/title_screen.gd" id="1_1ck12"]
-[ext_resource type="Texture2D" uid="uid://bvo85xfto75j0" path="res://Assets/UI/TitleCard.png" id="2_c6q7x"]
+[ext_resource type="Texture2D" uid="uid://c84tjkjimruqh" path="res://Assets/UI/start.png" id="2_rdmac"]
 
 [node name="TitleScreen" type="Control"]
 layout_mode = 3
@@ -37,10 +37,10 @@ offset_right = 653.0
 offset_bottom = 463.0
 text = "OPTIONS BC YOU SUCK"
 
-[node name="TitleCard" type="Sprite2D" parent="."]
-position = Vector2(577, 270)
-scale = Vector2(0.524782, 0.441788)
-texture = ExtResource("2_c6q7x")
+[node name="Start" type="Sprite2D" parent="."]
+position = Vector2(560, 264)
+scale = Vector2(2.82099, 2.82099)
+texture = ExtResource("2_rdmac")
 
 [connection signal="pressed" from="StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="QuitButton" to="." method="_on_QuitButton_pressed"]

@@ -25,6 +25,7 @@ func process_passives(delta: float) -> void:
 				player.coin_mult = player.coin_mult * 2
 
 func _apply_regen(delta):
-	if player.health_amount < player.max_health - 10:
-		player.health_amount = player.health_amount + 1
-		player.HealthBar.health = player.health_amount
+	if player.health_amount != 0:
+		if player.health_amount < player.max_health - 10:
+			player.health_amount = player.health_amount + 1
+			player.HealthBar.health = player.health_amount

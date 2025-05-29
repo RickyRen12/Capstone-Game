@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://06owesxen8n3"]
+[gd_scene load_steps=5 format=3 uid="uid://06owesxen8n3"]
 
 [ext_resource type="Script" path="res://Scripts/Level/main.gd" id="1_iyd5s"]
 [ext_resource type="TileSet" uid="uid://diuc361phhicu" path="res://Assets/Level/tiles.tres" id="2_y0ymk"]
 [ext_resource type="PackedScene" uid="uid://c6kjbhswmgryv" path="res://Scenes/Level/Boss_level.tscn" id="3_t2myf"]
 [ext_resource type="PackedScene" uid="uid://op7opiwefecx" path="res://Scenes/Level/end_teleporter.tscn" id="4_12v7h"]
-[ext_resource type="PackedScene" uid="uid://cxpm0yni6xl5m" path="res://Scenes/big_boss.tscn" id="5_ch5dn"]
 
 [node name="MAIN" type="Node2D"]
 script = ExtResource("1_iyd5s")
@@ -23,6 +22,3 @@ position = Vector2(-10342, 7366)
 
 [node name="EndTeleporter" parent="." instance=ExtResource("4_12v7h")]
 position = Vector2(-11385, 7411)
-
-[node name="BigBoss" parent="." instance=ExtResource("5_ch5dn")]
-position = Vector2(-10239, 7359)

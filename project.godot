@@ -30,6 +30,7 @@ window/stretch/mode="canvas_items"
 
 player=""
 walls=""
+end_teleporter=""
 
 [input]
 

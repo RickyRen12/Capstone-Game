@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://cpo2520ojgxmw"]
+
+[ext_resource type="Script" path="res://Scripts/UI/win_screen.gd" id="1_exkwt"]
+[ext_resource type="Texture2D" uid="uid://c4eewhsy1166r" path="res://Assets/UI/win.png" id="1_u13x6"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_exkwt")
+
+[node name="Win" type="Sprite2D" parent="."]
+position = Vector2(558, 299)
+scale = Vector2(3.59877, 3.59877)
+texture = ExtResource("1_u13x6")
+
+[node name="quit button" type="Button" parent="."]
+offset_left = 469.0
+offset_top = 503.0
+offset_right = 625.0
+offset_bottom = 534.0
+text = "QUIT"

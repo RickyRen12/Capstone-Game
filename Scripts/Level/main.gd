@@ -11,12 +11,12 @@ var purchase_cards = preload("res://Scenes/Interactions/Shop_buy_cards.tscn")
 
 
 var tile_size = 32
-var num_rooms = 55
+var num_rooms = 10
 var min_size  = 15
 var max_size = 20
 var hspread = 70
 var path_thickness = 7  # Set this to control the thickness of the paths 
-var cull = 0.65 # chance to cull room
+var cull = 0.5 # chance to cull room
 var path  # AStar pathfinding object
 var current_room = null
 var door_areas = [] # Stores all door collision shapes
@@ -47,8 +47,9 @@ func _ready() -> void:
 	print("test")
 	allow_enemy_spawning = true
 	
-	#UNCOMMENT THIS WHEN NO MORE TESTING, ADDS PLAYER AUTIMATICALLY AND AUTO BUILDS MAP WHEN YOU START THE GAME
 	make_map()
+	
+	#UNCOMMENT THIS WHEN NO MORE TESTING, ADDS PLAYER AUTIMATICALLY
 	player = Player.instantiate()  # Instantiate the player scene
 	add_child(player)  # Add the player to the scene tree
 	
@@ -66,8 +67,8 @@ func _ready() -> void:
 		print("Player Position: ", player.position) 
 		var player_camera = player.get_node("Camera2D")
 		player_camera.make_current()  # Set the player's camera as the active camera
-	
-	play_mode = true  # Enable play mode
+	#
+	#play_mode = true  # Enable play mode
 
 func _process(delta):
 	pass
@@ -317,6 +318,12 @@ func find_end_room():
 	shop_keep.position = Vector2(spawn_x, spawn_y)
 	add_child(shop_keep)
 	shop_keep.shop_opened.connect(open_store)
+	
+	var start_teleporter = preload("res://Scenes/Level/start_teleporter.tscn").instantiate()
+	var teleporter_offset = Vector2(300, 0) 
+	start_teleporter.position = Vector2(spawn_x, spawn_y) + teleporter_offset
+	add_child(start_teleporter)
+	start_teleporter.add_to_group("start_teleporter")
 
 func find_store_room():
 	var candidate_rooms: Array[Node2D] = []

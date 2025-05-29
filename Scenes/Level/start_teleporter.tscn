@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://7o3ov2qifhaw"]
+
+[ext_resource type="Script" path="res://Scripts/InteractionsAndGameElements/start_teleporter.gd" id="1_7cpur"]
+[ext_resource type="Texture2D" uid="uid://c7sb03sa5off2" path="res://Assets/Level/teleporter.png" id="2_ey68m"]
+[ext_resource type="PackedScene" uid="uid://b3a3263wgj0ht" path="res://Scenes/Interactions/Interaction_area.tscn" id="3_pk33r"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tv15w"]
+size = Vector2(68, 82)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vfvji"]
+size = Vector2(134, 129)
+
+[node name="StaticBody2D" type="StaticBody2D"]
+script = ExtResource("1_7cpur")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, -1)
+shape = SubResource("RectangleShape2D_tv15w")
+
+[node name="Teleporter" type="Sprite2D" parent="."]
+position = Vector2(-1.90735e-06, 1.90735e-06)
+scale = Vector2(0.0791015, 0.0791015)
+texture = ExtResource("2_ey68m")
+
+[node name="InteractionArea" parent="." instance=ExtResource("3_pk33r")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("RectangleShape2D_vfvji")
