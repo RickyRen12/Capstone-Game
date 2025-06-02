@@ -94,7 +94,7 @@ func _physics_process(delta):
 		else:
 			var next_path_pos := nav_agent.get_next_path_position()
 			direction = global_position.direction_to(next_path_pos)
-			#_enemy_tracker()
+			_enemy_tracker()
 			knockback = knockback.move_toward(Vector2.ZERO, knockback_decay * delta)
 			velocity = direction * chase_speed
 			move_and_collide((velocity + knockback) * delta)
